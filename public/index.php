@@ -21,6 +21,11 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
+if (file_exists(__DIR__.'/../install/index.php')) {
+    require __DIR__.'/../install/index.php';
+    die;
+}
+
 require __DIR__.'/../vendor/autoload.php';
 
 /*
