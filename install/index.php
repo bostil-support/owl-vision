@@ -1,6 +1,6 @@
 <?php
 
-require 'functions.php';
+require_once 'functions.php';
 
 $checkParams = !empty($_POST['db_host'])
     && !empty($_POST['db_name'])
@@ -12,17 +12,18 @@ $checkParams = !empty($_POST['db_host'])
 
 if ($checkParams) {
     try {
-        if ($_POST['admin_password'] !== $_POST['admin_password_confirmation']) {
+        if (strlen($_POST['admin_password']) < 8) {
+            throw new Exception("password must be greater than or equal to 8 characters");
+        } elseif ($_POST['admin_password'] !== $_POST['admin_password_confirmation']) {
             throw new Exception("passwords do not match");
         }
 
         // Check database connection
         $db = new PDO("mysql:host={$_POST['db_host']};dbname={$_POST['db_name']}", $_POST['db_user'], ($_POST['db_password'] ?? ''));
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 //        echo "Database connection successful.";
 
-        // Create .env file if not exists
+        // Create .env file
         if (file_exists(__DIR__.'/../.env.example')) {
             $envContent = file_get_contents(__DIR__.'/../.env.example');
 
@@ -46,51 +47,30 @@ if ($checkParams) {
         }
 
         // Install composer dependencies
-        if (composerInstall() !== false) {
+        $withSeed = isset($_POST['sample_data']);
+        if (($comp = composerInstall($withSeed)) !== null) {
 //            echo "Composer dependencies installed successfully.";
         } else {
             throw new Exception("composer dependencies not installed");
         }
 
-        // Artisan commands
-        if (configCache() !== false) {
-//            echo "Config cached successfully.";
-        } else {
-            throw new Exception("config not cached");
-        }
-
-        if (migrate() !== false) {
-//            echo "Migrations applied successfully.";
-        } else {
-            throw new Exception("migrations not applied");
-        }
-
-        do {
-            keyGenerate() and configCache();
-            sleep(1);
-            $envContent = file_get_contents(__DIR__.'/../.env');
-        } while (preg_match("APP_KEY=\n", $envContent) !== false);
-
-//        if (keyGenerate() !== false && configCache() !== false) {
-////            echo "Application key generated successfully.";
-//        } else {
-//            throw new Exception("application key not generated");
-//        }
-
         // Insert admin to database
-        $stmt = $db->prepare ("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+        $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$_POST['admin_email']]);
 
-        if ($stmt->execute(['Admin', $_POST['admin_email'], bcrypt($_POST['admin_password'])])) {
+        if ($stmt->fetch() === false) {
+            $stmt = $db->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+            if ($stmt->execute([
+                    'Admin',
+                    $_POST['admin_email'],
+                    bcrypt($_POST['admin_password'])
+            ])) {
 //            echo "Admin inserted successfully.";
+            } else {
+                throw new Exception("admin not inserted to database.");
+            }
         } else {
-            throw new Exception("Admin not inserted to database.");
-        }
-
-        // Delete install folder
-        if (shell_exec('cd '.__DIR__.'/.. && rm -rf install') !== false) {
-//            echo "Install folder deleted successfully.";
-        } else {
-            throw new Exception("install folder not deleted");
+            throw new Exception("admin with the same email already exists");
         }
 
         // Redirect to main page
@@ -98,6 +78,8 @@ if ($checkParams) {
     } catch (PDOException $exception) {
         $error = "Database connection failed: " . $exception->getMessage();
     } catch (Exception $exception) {
+        shell_exec('cd '.__DIR__.'/.. && rm .env');
+
         $error = "Error: " . $exception->getMessage() . '.';
     }
 } else {
@@ -168,7 +150,7 @@ if ($checkParams) {
                 </div>
                 <div class="form-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="create_sample_data">
+                        <input class="form-check-input" name="sample_data" type="checkbox" id="create_sample_data" <?= isset($_POST['sample_data']) ? 'checked' : '' ?>>
                         <label class="form-check-label" for="create_sample_data">Create sample data</label>
                     </div>
                 </div>
@@ -179,7 +161,7 @@ if ($checkParams) {
                     <div class="card-body">
                         <div class="form-group">
                             <label for="db_host">Server name:</label>
-                            <input type="text" name="db_host" value="<?= oldValue('db_host') ?>" class="form-control" id="db_host">
+                            <input type="text" name="db_host" value="<?= oldValue('db_host', '127.0.0.1') ?>" class="form-control" id="db_host">
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
@@ -204,7 +186,7 @@ if ($checkParams) {
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="db_user">Server username:</label>
-                                    <input type="text" name="db_user" value="<?= oldValue('db_user') ?>" class="form-control" id="db_user">
+                                    <input type="text" name="db_user" value="<?= oldValue('db_user', 'root') ?>" class="form-control" id="db_user">
                                 </div>
                             </div>
                             <div class="col-sm-6">

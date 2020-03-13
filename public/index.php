@@ -21,7 +21,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-if (file_exists(__DIR__.'/../install/index.php')) {
+if (!file_exists(__DIR__.'/../.env')) {
     require __DIR__.'/../install/index.php';
     die;
 }

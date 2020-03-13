@@ -60,6 +60,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-install": [
+          "@php artisan config:cache --ansi",
+          "@php artisan migrate --ansi",
+          "@php artisan key:generate --ansi",
+          "@php artisan config:cache --ansi"
+        ],
+        "post-install-seed": [
+          "@php artisan db:seed --class=CategoriesTableSeeder --ansi"
         ]
     }
 }
