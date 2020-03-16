@@ -20,11 +20,11 @@ mix
   .sass('resources/sass/app.scss', 'public/css')
 
   // admin
-  .js('resources/js/admin.js', 'public/js/admin')
-  // .sass('resources/sass/admin/admin.scss', 'public/css/admin')
+  .js('resources/js/admin/admin.js', 'public/js/admin')
+  .sass('resources/sass/admin/admin.scss', 'public/css/admin')
 
   .browserSync({
-    proxy: 'owl-vision.loc',
+    proxy: 'localhost:8000',
     open: false,
     host: 'localhost',
     "watchOptions": {

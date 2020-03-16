@@ -9,7 +9,7 @@ Route::group([
 //    'middleware' => ['auth']
 ], function () {
 
-    Route::get('/', 'IndexController@index')->name('index');
+    Route::get('{any?}', 'IndexController@index')->where('any', '.*');
 
 });
 
