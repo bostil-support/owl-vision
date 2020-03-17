@@ -1,9 +1,11 @@
-export default function guest ({ next, store }){
-    if(store.getters.GET_USER.loggedIn){
-        return next({
-            name: 'admin.dashboard'
-        });
-    }
+export default async function guest ({ next, store }) {
+  await store.dispatch('auth/fetchUser')
 
-    return next();
+  if (store.getters['auth/user'] !== null) {
+    return next({
+      name: 'admin.dashboard'
+    })
+  }
+
+  return next()
 }

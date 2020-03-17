@@ -1,11 +1,13 @@
 "use strict";
 
+window.BACKEND_URL = 'http://owl-vision.loc'
 window.$ = window.jQuery = require('jquery');
 
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.withCredentials = true;
+window.axios.defaults.baseURL = BACKEND_URL + '/api/admin';
 
 window.Vue = require('vue');
 

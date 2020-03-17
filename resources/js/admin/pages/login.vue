@@ -44,23 +44,24 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                form: {
-                    email: '',
-                    password: '',
-                    remember_me: false
-                }
-            }
-        },
-        methods: {
-            login() {
-                axios
-                    .post('/login', this.form)
-                    .then(response => this.$router.go(0))
-                    .catch(error =>  console.error(error));
-            }
+  export default {
+    data () {
+      return {
+        form: {
+          email: '',
+          password: '',
+          remember_me: false
         }
+      }
+    },
+    methods: {
+      login () {
+        axios.get(BACKEND_URL+'/airlock/csrf-cookie').then(response => {
+          axios.post('auth/login', this.form).then(response => {
+            this.$router.go(0)
+          }).catch(error => console.error(error))
+        }).catch(error => console.error(error))
+      }
     }
+  }
 </script>

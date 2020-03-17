@@ -25,6 +25,8 @@ if ($checkParams) {
 
         // Create .env file
         if (file_exists(__DIR__.'/../.env.example')) {
+            $appUrl = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}";
+
             $envContent = file_get_contents(__DIR__.'/../.env.example');
 
             $envContent = str_replace([
@@ -33,12 +35,16 @@ if ($checkParams) {
                     'DB_DATABASE=',
                     'DB_USERNAME=',
                     'DB_PASSWORD=',
+                    'SESSION_DOMAIN=.localhost',
+                    'AIRLOCK_STATEFUL_DOMAINS=localhost',
             ], [
-                    "APP_URL={$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}",
+                    "APP_URL={$appUrl}",
                     "DB_HOST={$_POST['db_host']}",
                     "DB_DATABASE={$_POST['db_name']}",
                     "DB_USERNAME={$_POST['db_user']}",
                     "DB_PASSWORD={$_POST['db_password']}",
+                    "SESSION_DOMAIN=.{$appUrl}",
+                    "AIRLOCK_STATEFUL_DOMAINS={$appUrl}",
             ], $envContent);
 
             if (file_put_contents(__DIR__.'/../.env', $envContent)){

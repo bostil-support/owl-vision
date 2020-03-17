@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\JsonMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Airlock\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -40,6 +41,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            JsonMiddleware::class,
             EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,

@@ -12,45 +12,58 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
 
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirm'],
-            'device_name' => ['required', 'string']
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed'
         ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
 
         $request->merge(['password' => bcrypt($request->password)]);
 
         /** @var User $user */
-        $user  = User::query()->create($request->all());
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $user = User::query()->create($request->all());
 
-        return response()->json(['token' => $token], 200);
+        return response()->json(['user' => $user], 201);
     }
 
-    public function token(Request $request)
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'device_name' => 'required'
+        $data = $request->validate([
+            'email'    => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
-        $user = User::query()->where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+        if(auth()->attempt($data)) {
+            return response()->json(['user' => auth()->user()]);
+        } else {
+            throw new \Exception("Email or password is incorrect.", 400);
         }
+    }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+    public function logout()
+    {
+        auth()->guard('web')->logout();
+
+        return response()->json(['message' => 'You are logged out.']);
+    }
+
+    public function getUser()
+    {
+        return response()->json(['user' => auth()->user()]);
     }
 
 }
