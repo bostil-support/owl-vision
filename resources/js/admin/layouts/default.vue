@@ -15,8 +15,14 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom d-block">
                 <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                <div class="float-right">
+                    <div class="d-flex align-items-center">
+                        <div class="col-auto">You are logged in as: {{ $store.getters.GET_USER.user.name }}</div>
+                        <button @click="logout" class="btn btn-danger">Logout</button>
+                    </div>
+                </div>
             </nav>
             <div class="container-fluid">
                 <router-view/>
@@ -29,6 +35,14 @@
 
 <script>
     export default {
+        methods: {
+            logout() {
+                axios
+                    .post('/logout', this.form)
+                    .then(response => this.$router.go(0))
+                    .catch(error =>  console.error(error));
+            }
+        },
         mounted() {
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();

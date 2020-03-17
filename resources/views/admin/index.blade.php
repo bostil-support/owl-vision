@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="{{ mix('css/admin/admin.css') }}"/>
 </head>
 <body>
+    @if (Auth::check())
+        <script>
+            window.user = {
+                loggedIn: true,
+                user: {!! Auth::user() !!}
+            }
+        </script>
+    @else
+        <script>
+            window.user = {loggedIn: false}
+        </script>
+    @endif
     <div id="app"></div>
-    <script src="{{ mix('js/admin/admin.js') }}"></script>
+    <script defer src="{{ mix('js/admin/admin.js') }}"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+"use strict";
+
 window.$ = window.jQuery = require('jquery');
 
 window.axios = require('axios');
@@ -15,8 +17,8 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const files = require.context('./', true, /\.vue$/i);
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
@@ -26,12 +28,12 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import {store} from './store';
-import {router} from './router';
-import Default from './layouts/default'
+import {store} from './store/index';
+import {router} from './router/index';
+import App from "./components/App";
 
 new Vue({
     router,
     store,
-    render: h => h(Default)
+    render: h => h(App)
 }).$mount('#app');
