@@ -13,9 +13,12 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "laravel/airlock": "^1.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.0"
+        "laravel/ui": "^2.0",
+        "laravelcollective/html": "^6.1",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -60,15 +63,6 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "post-install": [
-          "@php artisan config:cache --ansi",
-          "@php artisan migrate --ansi",
-          "@php artisan key:generate --ansi",
-          "@php artisan config:cache --ansi"
-        ],
-        "post-install-seed": [
-          "@php artisan db:seed --class=CategoriesTableSeeder --ansi"
         ]
     }
 }
