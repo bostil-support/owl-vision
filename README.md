@@ -1,3 +1,9 @@
-# owl-vision-ecommerce-platform
+# Owl Vision e-Commerce Platform
 
-- add `fastcgi_read_timeout 300;` to nginx config for successful installing composer dependencies
+## Installation
+
+- clone project from repository
+- run `composer install`
+- run `cp .env.example .env`
+- run `php artisan key:generate`
+- go to the `/install` page of your site and follow the instruction, example `http://site.com/install`

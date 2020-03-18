@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::any('install', 'InstallController@index')->name('install');
 
 Route::get('/', function () {
     return view('welcome');
