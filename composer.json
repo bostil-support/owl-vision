@@ -65,12 +65,12 @@
         ],
         "post-install": [
           "@php artisan config:cache --ansi",
-          "@php artisan migrate --ansi",
+          "echo y | php artisan migrate --ansi",
           "@php artisan key:generate --ansi",
           "@php artisan config:cache --ansi"
         ],
         "post-install-seed": [
-          "@php artisan db:seed --class=CategoriesTableSeeder --ansi"
+          "echo y | php artisan db:seed --class=CategoriesTableSeeder --ansi"
         ]
     }
 }

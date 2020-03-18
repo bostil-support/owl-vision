@@ -13,7 +13,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
     });
 
     Route::group(['middleware' => ['auth:airlock']], function () {
-        Route::put('categories/{category}/restore', 'CategoryController@restore')->name('categories.restore');
         Route::apiResource('categories', 'CategoryController');
     });
 });
