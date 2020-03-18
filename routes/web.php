@@ -7,9 +7,10 @@ require_once 'admin/web.php';
 
 // Site routes
 Route::group(['as' => 'site.'], function () {
-    Route::any('install', 'InstallController@index')->name('install');
 
     Route::get('/', 'HomeController@index')->name('home');
 });
+
+Route::any('install', 'InstallController@index')->name('install');
 
 Auth::routes();

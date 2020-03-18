@@ -12,7 +12,6 @@ class InstallController extends Controller
 
     public function index(InstallRequest $request)
     {
-        dd($request);
         try {
             \DB::connection()->getPdo();
 
