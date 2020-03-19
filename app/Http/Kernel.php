@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\JsonMiddleware;
+use App\Middleware\CanInstall;
+use App\Middleware\CanUpdate;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Airlock\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -45,6 +47,14 @@ class Kernel extends HttpKernel
             EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
+        'install' => [
+            CanInstall::class
+        ],
+
+        'update' => [
+            CanUpdate::class
         ],
     ];
 
