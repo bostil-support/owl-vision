@@ -99,6 +99,7 @@ class InstallController extends Controller
 
     /**
      * @param  \App\Helpers\Install\DatabaseManager  $manager
+     * @param  \Illuminate\Routing\Redirector  $redirector
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -112,14 +113,11 @@ class InstallController extends Controller
 
     /**
      * @param  \App\Helpers\Install\InstalledFileManager  $fileManager
-     * @param  \App\Helpers\Install\EnvironmentManager  $environment
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function finish(
-        InstalledFileManager $fileManager,
-        EnvironmentManager $environment
-    ) {
+    public function finish(InstalledFileManager $fileManager)
+    {
         $finalStatusMessage = $fileManager->update();
 
         event(new InstallerFinished);

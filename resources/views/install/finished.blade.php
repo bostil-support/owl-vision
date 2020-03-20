@@ -11,16 +11,19 @@
 
 @section('container')
 
-    @if(session('message')['dbOutputLog'])
+    @if(optional(session('message'))['dbOutputLog'])
         <p><strong><small>{{ trans('installer_messages.final.migration') }}</small></strong></p>
         <pre><code>{{ session('message')['dbOutputLog'] }}</code></pre>
     @endif
 
-    <p><strong><small>{{ trans('installer_messages.final.log') }}</small></strong></p>
-    <pre><code>{{ $finalStatusMessage }}</code></pre>
+    <p><strong>{{ $finalStatusMessage }}</strong></p>
 
     <div class="buttons">
-        <a href="{{ url('/') }}" class="button">{{ trans('installer_messages.final.exit') }}</a>
+        @if(session()->has('message') && (session('message')['message'] === 'error'))
+         <a href="{{ url('/install') }}" class="button">{{ trans('installer_messages.final.reinstall') }}</a>
+        @else
+            <a href="{{ url('/') }}" class="button">{{ trans('installer_messages.final.exit') }}</a>
+        @endif
     </div>
 
 @endsection

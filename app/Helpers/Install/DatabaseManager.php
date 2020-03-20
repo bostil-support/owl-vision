@@ -39,7 +39,7 @@ class DatabaseManager
                 Artisan::call('db:seed', ['--force' => true], $outputLog);
             }
 
-            if (session()->has('sampleData')) {
+            if (session('sampleData')) {
                 Artisan::call('db:seed',  [
                     '--force' => true,
                     '--class' => 'CategoriesTableSeeder'
@@ -54,6 +54,8 @@ class DatabaseManager
                 session()->forget('adminData');
             }
         } catch (Exception $e) {
+            session()->forget(['sampleData', 'adminData']);
+
             return [
                 'status'      => $e->getMessage(),
                 'message'     => 'error',
