@@ -29,7 +29,7 @@
                 <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
                 <div class="float-right">
                     <div class="d-flex align-items-center">
-                        <div class="col-auto">You are logged in as: {{ user.name }}</div>
+                        <div v-if="user" class="col-auto">You are logged in as: {{ user.name }}</div>
                         <button @click="logout" class="btn btn-danger">Logout</button>
                     </div>
                 </div>
