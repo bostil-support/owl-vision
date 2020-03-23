@@ -1,7 +1,12 @@
 <template>
-    <div>
-        <h1 class="mt-4">Catalog Page</h1>
-    </div>
+    <main class="categories">
+        <div>Categories</div>
+        <router-link :to="{name: 'admin.catalog.add'}">
+            <button class="add-new">
+                <i class="fas fa-plus"></i> Add New
+            </button>
+        </router-link>
+    </main>
 </template>
 
 <script>

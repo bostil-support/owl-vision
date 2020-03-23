@@ -24,9 +24,9 @@ mix
   .sass('resources/sass/admin/admin.scss', 'public/css/admin')
 
   .browserSync({
-    proxy: 'owl-vision.loc',
+    proxy: process.env.MIX_APP_URL.split('://')[1],
     open: false,
-    host: 'owl-vision.loc',
+    host: process.env.MIX_APP_URL.split('://')[1],
     "watchOptions": {
       usePolling: true
     },

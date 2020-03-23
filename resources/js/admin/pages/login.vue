@@ -56,10 +56,8 @@
     },
     methods: {
       login () {
-        axios.get(BACKEND_URL+'/airlock/csrf-cookie').then(response => {
-          axios.post('auth/login', this.form).then(response => {
-            this.$router.go(0)
-          }).catch(error => console.error(error))
+        axios.post(BACKEND_URL + '/login', this.form).then(response => {
+          this.$router.go(0)
         }).catch(error => console.error(error))
       }
     }

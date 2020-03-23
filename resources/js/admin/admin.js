@@ -1,6 +1,6 @@
 "use strict";
 
-window.BACKEND_URL = 'http://owl-vision.loc'
+window.BACKEND_URL = process.env.MIX_APP_URL;
 window.$ = window.jQuery = require('jquery');
 
 window.axios = require('axios');

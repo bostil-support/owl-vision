@@ -54,6 +54,7 @@ class EnvironmentManager
             $this->setEnv('APP_DEBUG', "false");
             $this->setEnv('APP_NAME', "\"{$request->app_name}\"");
             $this->setEnv('APP_URL', $request->app_url);
+            $this->setEnv('MIX_APP_URL', $request->app_url);
             $this->setEnv('DB_CONNECTION', $request->database_connection);
             $this->setEnv('DB_HOST', $request->database_hostname);
             $this->setEnv('DB_PORT', $request->database_port);
