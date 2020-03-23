@@ -163,7 +163,7 @@
         </aside>
         <div class="section">
             <header class="header">
-                <button class="toggle" onclick="toggle1()">
+                <button class="toggle" @click="toggle1">
                     <i class="fas fa-bars" style="font-size:15px;color:white;"></i>
                 </button>
                 <a v-if="$store.getters['auth/user']" href="#" class="name">{{ user.name }}</a>
