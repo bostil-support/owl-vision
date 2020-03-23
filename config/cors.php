@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'airlock/csrf-cookie'],
+    'paths' => ['api/*'],
 
     'allowed_methods' => ['*'],
 
@@ -29,6 +29,6 @@ return [
 
     'max_age' => false,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];

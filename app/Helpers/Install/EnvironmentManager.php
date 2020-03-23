@@ -60,8 +60,6 @@ class EnvironmentManager
             $this->setEnv('DB_DATABASE', $request->database_name);
             $this->setEnv('DB_USERNAME', $request->database_username);
             $this->setEnv('DB_PASSWORD', $request->database_password);
-            $this->setEnv('SESSION_DOMAIN', '.'.$request->server('HTTP_HOST'));
-            $this->setEnv('AIRLOCK_STATEFUL_DOMAINS', $request->server('HTTP_HOST'));
 
             $results = trans('installer_messages.environment.success');
         } catch (Exception $e) {
