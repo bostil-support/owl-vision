@@ -148,7 +148,7 @@
                     </ul>
                 </div>
                 <div class="item-container">
-                    <li @click="showItems('help').bind(this)" @mouseover="(e) => show(e, 'help')">
+                    <li @click="(e) => showItems(e, 'help')" @mouseover="(e) => show(e, 'help')">
                         <i class="fas fa-question-circle"></i>
                         <span class="item">Help <i class="fas fa-angle-left"></i></span>
                     </li>
