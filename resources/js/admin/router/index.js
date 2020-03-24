@@ -12,8 +12,9 @@ import dashboard from '../pages/dashboard'
 import configuration from '../pages/configuration'
 import system from '../pages/system'
 import customers from '../pages/customers'
-import catalog from '../pages/catalog'
-import catalogAdd from '../pages/catalog-add'
+import categories from '../pages/categories'
+import categoriesAdd from '../pages/categories-add'
+import NotFound from '../pages/NotFound'
 
 Vue.use(VueRouter)
 
@@ -77,9 +78,9 @@ let routerConfig = new VueRouter({
       }
     },
     {
-      path: '/admin/catalog',
-      name: 'admin.catalog',
-      component: catalog,
+      path: '/admin/catalog/categories',
+      name: 'admin.catalog.categories',
+      component: categories,
       meta: {
         middleware: [
           auth
@@ -87,14 +88,26 @@ let routerConfig = new VueRouter({
       },
     },
     {
-      path: '/admin/catalog/add',
-      name: 'admin.catalog.add',
-      component: catalogAdd,
+      path: '/admin/catalog/categories/add',
+      name: 'admin.catalog.categories.add',
+      component: categoriesAdd,
       meta: {
         middleware: [
           auth
         ]
       },
+    },
+    {
+      path: '/admin/404',
+      name: 'admin.404',
+      component: NotFound,
+      meta: {
+        layout: 'clean'
+      }
+    },
+    {
+      path: '/admin/*',
+      redirect: { name: 'admin.404' }
     }
   ]
 })

@@ -19,7 +19,7 @@
                         <li><i class="far fa-dot-circle"></i> Products</li>
                         <li>
                             <i class="far fa-dot-circle"></i>
-                            <router-link :to="{name: 'admin.catalog'}">Categories</router-link>
+                            <router-link :to="{name: 'admin.catalog.categories'}">Categories</router-link>
                         </li>
                         <li><i class="far fa-dot-circle"></i> Manufacturers</li>
                         <li><i class="far fa-dot-circle"></i> Product reviews</li>
