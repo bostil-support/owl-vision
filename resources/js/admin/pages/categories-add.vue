@@ -21,8 +21,8 @@
 
                 <span class="name-input">Parent category <i class="fas fa-info-circle"></i></span>
                 <select name="" id="">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="">No category</option>
+                    <option v-for="option in categoriesList" :value="option.id">{{ option.name }}</option>
                 </select>
 
                 <span class="name-input">Price ranges <i class="fas fa-info-circle"></i></span>
@@ -60,7 +60,15 @@
 </template>
 
 <script>
-  export default {}
+  import { mapGetters } from 'vuex'
+
+  export default {
+    computed: {
+      ...mapGetters({
+        categoriesList: 'category/categoriesList'
+      })
+    }
+  }
 </script>
 
 <style scoped>

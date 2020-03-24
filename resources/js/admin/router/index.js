@@ -79,23 +79,34 @@ let routerConfig = new VueRouter({
     },
     {
       path: '/admin/catalog/categories',
-      name: 'admin.catalog.categories',
-      component: categories,
+      component: () => import('~/admin/pages/category/index'),
       meta: {
         middleware: [
           auth
         ]
       },
-    },
-    {
-      path: '/admin/catalog/categories/add',
-      name: 'admin.catalog.categories.add',
-      component: categoriesAdd,
-      meta: {
-        middleware: [
-          auth
-        ]
-      },
+      children: [
+        {
+          path: '/',
+          name: 'admin.catalog.categories.list',
+          component: () => import('~/admin/pages/category/list'),
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
+        },
+        {
+          path: 'add',
+          name: 'admin.catalog.categories.add',
+          component: categoriesAdd,
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
+        },
+      ]
     },
     {
       path: '/admin/404',

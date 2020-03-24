@@ -2,13 +2,10 @@
 
 namespace App\Middleware;
 
-use App\Helpers\Install\MigrationsHelper;
 use Closure;
 
 class CanUpdate
 {
-    use MigrationsHelper;
-
     /**
      * Handle an incoming request.
      *

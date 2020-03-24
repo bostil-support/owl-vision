@@ -12,7 +12,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::get('user', 'AuthController@getUser')->middleware(['auth'])->name('user');
     });
 
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group([/*'middleware' => ['auth']*/], function () {
         Route::apiResource('categories', 'CategoryController');
+        Route::get('categories-list', 'CategoryController@list');
     });
 });
