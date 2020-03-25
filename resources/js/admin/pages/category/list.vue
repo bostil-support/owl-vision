@@ -1,5 +1,5 @@
 <template>
-    <DraggableTree :data="categoriesTree" draggable="draggable">
+    <DraggableTree :data="draggableTreeCategories" draggable="draggable">
         <div slot-scope="{data, store}">
             <template v-if="!data.isDragPlaceHolder">
                 <b v-if="data.children && data.children.length" @click="store.toggleOpen(data)">{{ data.open ? '-' : '+' }}&nbsp;</b>
@@ -18,36 +18,7 @@
     components: { ListItem, DraggableTree },
     data() {
       return {
-        categoriesTree: [
-          {text: 'node 1'},
-          {text: 'node 2'},
-          {text: 'node 3 undraggable', draggable: false},
-          {text: 'node 4'},
-          {text: 'node 4 undroppable', droppable: false},
-          {text: 'node 5', children: [
-              {text: 'node 1'},
-              {text: 'node 2', children: [
-                  {text: 'node 3'},
-                  {text: 'node 4'},
-                ]},
-              {text: 'node 2 undroppable', droppable: false, children: [
-                  {text: 'node 3'},
-                  {text: 'node 4'},
-                ]},
-              {text: 'node 2', children: [
-                  {text: 'node 3'},
-                  {text: 'node 4 undroppable', droppable: false},
-                ]},
-              {text: 'node 3'},
-              {text: 'node 4'},
-              {text: 'node 5'},
-              {text: 'node 6'},
-              {text: 'node 7'},
-              {text: 'node 8'},
-              {text: 'node 9'},
-              {text: 'node 10'},
-            ]},
-        ]
+        draggableTreeCategories: []
       }
     },
     computed: {
@@ -57,7 +28,7 @@
     },
     watch: {
       categories(value) {
-        this.categoriesTree = value.map(({id, name, children}) => ({id, name, children}))
+        this.draggableTreeCategories = value.map(({id, name, children}) => ({id, name, children}))
       }
     }
   }
