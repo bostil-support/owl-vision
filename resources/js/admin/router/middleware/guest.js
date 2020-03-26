@@ -1,7 +1,5 @@
 export default async function guest ({ next, store }) {
-  await store.dispatch('auth/fetchUser')
-
-  if (store.getters['auth/user'] !== null) {
+  if (store.getters['auth/user']) {
     return next({
       name: 'admin.dashboard'
     })

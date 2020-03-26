@@ -14,6 +14,15 @@ mix.options({
   // clearConsole: false
 });
 
+mix.webpackConfig({
+  resolve: {
+    extensions: ['.js', '.json', '.vue'],
+    alias: {
+      '~': path.join(__dirname, './resources/js')
+    }
+  }
+});
+
 mix
   // site
   .js('resources/js/app.js', 'public/js')
@@ -24,9 +33,9 @@ mix
   .sass('resources/sass/admin/admin.scss', 'public/css/admin')
 
   .browserSync({
-    proxy: 'localhost:8000',
+    proxy: process.env.MIX_APP_URL.split('://')[1],
     open: false,
-    host: 'localhost',
+    host: process.env.MIX_APP_URL.split('://')[1],
     "watchOptions": {
       usePolling: true
     },

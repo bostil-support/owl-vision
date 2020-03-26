@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div class="app-wrap" id="app">
         <component :is="layout">
             <router-view/>
         </component>
@@ -15,3 +15,9 @@
     }
   }
 </script>
+
+<style>
+    .app-wrap {
+        width: 100%;
+    }
+</style>

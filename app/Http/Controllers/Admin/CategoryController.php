@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryListResource;
+use App\Http\Resources\CategoryResource;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        //
+        return CategoryResource::collection(Category::parents()->get()->load('image'));
     }
 
     /**
@@ -60,5 +61,10 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function list()
+    {
+        return CategoryListResource::collection(Category::parents()->get());
     }
 }

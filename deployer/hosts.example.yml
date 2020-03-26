@@ -1,0 +1,45 @@
+.owl: &owl
+    repository: your_ssh_repo
+    keep_releases: 5
+    default_timeout: 1200
+    composer_action: install
+    shared_dirs: ['storage']
+    writable_dirs: ['bootstrap/cache',
+      'storage',
+      'storage/app',
+      'storage/app/public',
+      'storage/framework',
+      'storage/framework/cache',
+      'storage/framework/sessions',
+      'storage/framework/views',
+      'storage/logs']
+    shared_files: ['.env']
+
+
+prod:
+  <<: *owl
+  stage: prod
+  user: your_user
+  http_user: www-data
+  hostname: XXX.XXX.XXX.XX
+  deploy_path: /project/path
+  public: true
+  forwardAgent: true
+  multiplexing: true
+  sshOptions:
+    StrictHostKeyChecking: no
+  php_version: '7.4'
+
+dev:
+    <<: *owl
+    stage: dev
+    user: your_user
+    http_user: www-data
+    hostname: XXX.XXX.XXX.XX
+    deploy_path: /project/path
+    migrate: true
+    forwardAgent: true
+    multiplexing: true
+    sshOptions:
+        StrictHostKeyChecking: no
+    php_version: '7.4'
