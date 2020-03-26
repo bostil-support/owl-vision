@@ -14,6 +14,6 @@ trait Orderable
     }
 
     private function getOrderKeyName() {
-        return 'default_order';
+        return 'default_sort';
     }
 }
