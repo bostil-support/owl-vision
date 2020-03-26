@@ -15,9 +15,29 @@ set('use_relative_symlinks', false);
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
 
+// Tasks
+desc('Deploy clinic project');
+task('deploy', [
+    'deploy:prepare',
+    'deploy:lock',
+    'deploy:release',
+    'deploy:update_code',
+    'deploy:shared',
+    'deploy:vendors',
+    'deploy:writable',
+    'artisan:storage:link',
+    'artisan:view:clear',
+    'artisan:cache:clear',
+    'artisan:config:cache',
+    'artisan:migrate',
+    'deploy:symlink',
+    'deploy:unlock',
+    'cleanup'
+]);
+
 after('deploy:update_code', 'upload:env');
 after('deploy:failed', 'deploy:unlock');
-after('success', 'php-fpm:restart');
+after('deploy', 'php-fpm:restart');
 
 
 
