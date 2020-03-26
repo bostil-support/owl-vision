@@ -13,5 +13,7 @@ npm-debug.log
 yarn-error.log
 
 /.idea
+/.env.dev
+/.env.prod
 /public/css
 /public/js
