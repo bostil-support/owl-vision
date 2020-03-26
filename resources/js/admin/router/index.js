@@ -7,15 +7,6 @@ import middlewarePipeline from './middlewarePipeline'
 import guest from './middleware/guest'
 import auth from './middleware/auth'
 
-import login from '../pages/login'
-import dashboard from '../pages/dashboard'
-import configuration from '../pages/configuration'
-import system from '../pages/system'
-import customers from '../pages/customers'
-import categories from '../pages/categories'
-import categoriesAdd from '../pages/categories-add'
-import NotFound from '../pages/NotFound'
-
 Vue.use(VueRouter)
 
 let routerConfig = new VueRouter({
@@ -29,9 +20,9 @@ let routerConfig = new VueRouter({
     {
       path: '/admin/login',
       name: 'admin.login',
-      component: login,
+      component: () => import('~/admin/pages/Login'),
       meta: {
-        layout: 'auth',
+        layout: 'Clean',
         middleware: [
           guest
         ]
@@ -40,7 +31,7 @@ let routerConfig = new VueRouter({
     {
       path: '/admin/dashboard',
       name: 'admin.dashboard',
-      component: dashboard,
+      component: () => import('~/admin/pages/Dashboard'),
       meta: {
         middleware: [
           auth
@@ -50,7 +41,7 @@ let routerConfig = new VueRouter({
     {
       path: '/admin/configuration',
       name: 'admin.configuration',
-      component: configuration,
+      component: () => import('~/admin/pages/Configuration'),
       meta: {
         middleware: [
           auth
@@ -60,7 +51,7 @@ let routerConfig = new VueRouter({
     {
       path: '/admin/system',
       name: 'admin.system',
-      component: system,
+      component: () => import('~/admin/pages/System'),
       meta: {
         middleware: [
           auth
@@ -70,7 +61,7 @@ let routerConfig = new VueRouter({
     {
       path: '/admin/customers',
       name: 'admin.customers',
-      component: customers,
+      component: () => import('~/admin/pages/Customers'),
       meta: {
         middleware: [
           auth
@@ -79,7 +70,7 @@ let routerConfig = new VueRouter({
     },
     {
       path: '/admin/catalog/categories',
-      component: () => import('~/admin/pages/category/index'),
+      component: () => import('~/admin/pages/category/IndexComponent'),
       meta: {
         middleware: [
           auth
@@ -89,7 +80,7 @@ let routerConfig = new VueRouter({
         {
           path: '/',
           name: 'admin.catalog.categories.list',
-          component: () => import('~/admin/pages/category/list'),
+          component: () => import('~/admin/pages/category/ListComponent'),
           meta: {
             middleware: [
               auth
@@ -99,7 +90,17 @@ let routerConfig = new VueRouter({
         {
           path: 'add',
           name: 'admin.catalog.categories.add',
-          component: categoriesAdd,
+          component: () => import('~/admin/pages/category/FormComponent'),
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
+        },
+        {
+          path: ':id/edit',
+          name: 'admin.catalog.categories.edit',
+          component: () => import('~/admin/pages/category/FormComponent'),
           meta: {
             middleware: [
               auth
@@ -111,9 +112,9 @@ let routerConfig = new VueRouter({
     {
       path: '/admin/404',
       name: 'admin.404',
-      component: NotFound,
+      component: () => import('~/admin/pages/NotFound'),
       meta: {
-        layout: 'clean'
+        layout: 'Clean'
       }
     },
     {

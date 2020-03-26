@@ -1,7 +1,7 @@
 <template>
     <div class="app-inner">
         <aside class="panel">
-            <logo/>
+            <Logo/>
             <ul class="list">
                 <li>
                     <i class="fas fa-desktop"></i>
@@ -183,11 +183,11 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import logo from '../components/logo'
+  import Logo from '../components/Logo'
 
   export default {
     components: {
-      logo
+      Logo
     },
     data () {
       return {

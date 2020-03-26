@@ -1,5 +1,5 @@
 export const state = {
-  layout: 'default',
+  layout: 'Default',
   ajaxLoading: false
 }
 
