@@ -54,8 +54,9 @@
       }
     },
     methods: {
-      change(node, targetTree, oldTree) {
+      change(node, targetTree) {
         // TODO: Order tree
+        console.log(targetTree.data)
       }
     },
     computed: {
@@ -71,15 +72,13 @@
     .he-tree{
         padding: 15px;
     }
-    .tree-node{
-    }
+    .tree-node{}
     .tree-node-inner{
         padding: 5px;
         border: 1px solid #ccc;
         cursor: pointer;
     }
-    .draggable-placeholder{
-    }
+    .draggable-placeholder{}
     .draggable-placeholder-inner{
         border: 1px dashed #0088F8;
         box-sizing: border-box;
