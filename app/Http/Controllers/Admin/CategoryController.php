@@ -41,15 +41,13 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        return response()->json($category);
     }
 
     /**
@@ -66,5 +64,29 @@ class CategoryController extends Controller
     public function list()
     {
         return CategoryListResource::collection(Category::parents()->get());
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ordering(Request $request)
+    {
+        $parent = Category::findOrFail($request->get('id'));
+        $children = $request->get('children');
+        if ($children) {
+            $order = 1;
+            foreach ($request->get('children') as $child) {
+                $child = Category::findOrFail($child['id']);
+                $child->parent_id = $parent->id;
+                $child->default_sort = $order;
+                $child->save();
+                $order++;
+            }
+        }else {
+            $parent->parent_id = null;
+            $parent->save();
+        }
+        return response()->json(['message' => 'success']);
     }
 }
