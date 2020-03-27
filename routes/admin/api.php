@@ -15,5 +15,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
     Route::group([/*'middleware' => ['auth']*/], function () {
         Route::apiResource('categories', 'CategoryController');
         Route::get('categories-list', 'CategoryController@list');
+        Route::post('categories/ordering', 'CategoryController@ordering');
     });
 });
