@@ -28,7 +28,7 @@
                 <div class="panel-collapse">
                     <div class="tree">
                         <ol>
-                            <li><span><i class="fa fa-folder-open"></i> Menu</span>
+                            <li><span><i class="fa fa-folder-open"></i> Category tree</span>
                                 <vue-nestable v-model="nestableItems"
                                               @change="sorting">
                                     <vue-nestable-handle slot-scope="{ item }" :item="item" class="handle">
