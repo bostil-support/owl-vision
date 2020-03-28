@@ -26,6 +26,7 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "slug-generator": "^1.0.6",
     "vue-fragment": "^1.5.1",
     "vue-nestable": "^2.5.2",
     "vue-router": "^3.1.6",

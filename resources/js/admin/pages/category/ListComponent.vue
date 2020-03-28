@@ -22,7 +22,7 @@
                         <option v-for="category in categoriesList" :value="category.id">{{ category.name }}</option>
                     </select>
                 </div>
-                <button type="button" class="btn btn-success">Add new category</button>
+                <button @click="store" type="button" class="btn btn-success">Add new category</button>
             </div>
             <div class="col-sm-7 border-left">
                 <div class="panel-collapse">
@@ -47,6 +47,7 @@
 <script>
   import {mapGetters} from 'vuex'
   import {VueNestable, VueNestableHandle} from 'vue-nestable';
+  import slugify from 'slug-generator'
 
   export default {
     components: {
@@ -64,6 +65,29 @@
       }
     },
     methods: {
+      store() {
+        if (!this.addForm.name || !this.addForm.slug) {
+          this.$toasted.error('"Name" and "Slug" fields are required')
+          return
+        }
+        if (!this.addForm.parent_id) this.addForm.parent_id = null
+          axios
+          .post('categories', this.addForm)
+          .then(response => {
+            this.$toasted.success(response.data.message || 'Operation was successful')
+            this.$emit('fetch')
+            this.addForm.name = ''
+            this.addForm.slug = ''
+            this.addForm.parent_id = ''
+          })
+          .catch(error => {
+            if (error.response.data.errors) {
+              Object.values(error.response.data.errors).forEach(item => this.$toasted.error(item[0]))
+            }else {
+              this.$toasted.error(error.response.data.message || error.message)
+            }
+          })
+      },
       sorting(category, {items, pathTo}) {
         if (!pathTo) return
         let parent, data = {}
@@ -93,6 +117,9 @@
     watch: {
       categories(value) {
         this.nestableItems = value;
+      },
+      'addForm.name': function(value) {
+        this.addForm.slug = slugify(value)
       }
     }
   }
