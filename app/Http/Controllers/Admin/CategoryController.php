@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryListResource;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -69,14 +70,18 @@ class CategoryController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function ordering(Request $request)
     {
         $parent = Category::findOrFail($request->get('id'));
         $children = $request->get('children');
-        if ($children) {
+        if ($request->get('root')) {
+            $parent->parent_id = null;
+            $parent->save();
+        }elseif ($children) {
             $order = 1;
-            foreach ($request->get('children') as $child) {
+            foreach ($children as $child) {
                 $child = Category::findOrFail($child['id']);
                 $child->parent_id = $parent->id;
                 $child->default_sort = $order;
@@ -84,9 +89,9 @@ class CategoryController extends Controller
                 $order++;
             }
         }else {
-            $parent->parent_id = null;
-            $parent->save();
+            Log::error(sprintf('[%s] Something went wrong', __METHOD__), $request->all());
+            throw new \Exception('Something went wrong');
         }
-        return response()->json(['message' => 'success']);
+        return response()->json(['message' => 'Menu reordered']);
     }
 }
