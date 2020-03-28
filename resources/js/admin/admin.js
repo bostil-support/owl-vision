@@ -9,7 +9,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = BACKEND_URL + '/api/admin';
 
-window.Vue = require('vue');
+import Vue from 'vue'
+
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted, {
+    position: 'bottom-right',
+    duration: 3000
+})
 
 /**
  * The following block of code may be used to automatically register your
