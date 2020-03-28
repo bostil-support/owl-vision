@@ -1,6 +1,6 @@
 const flat = (item, parent) => {
   const resultItem = {
-    id: item.name,
+    id: item.id,
     name: parent.name ? parent.name + ' > ' + item.name: item.name,
   }
   return [resultItem, ...item.children.flatMap(child => flat(child, resultItem))]

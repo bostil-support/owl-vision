@@ -76,6 +76,8 @@ class Category extends Model
 {
     protected $with = ['children'];
 
+    protected $fillable = ['name', 'slug', 'parent_id'];
+
     public function scopeParents(Builder $query)
     {
         return $query->whereNull('parent_id');
