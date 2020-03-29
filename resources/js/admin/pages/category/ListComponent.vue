@@ -94,13 +94,16 @@
         pathTo.forEach((order, index) => {
           if (!parent) {
             parent = items[order]
-            if (pathTo.length === 1) data.root = true
+            if (pathTo.length === 1) {
+              data.root = true
+              parent = items
+            }
             return
           } else if (index === pathTo.length - 1) return
           parent = parent.children[order]
         })
-        data.id = parent.id
-        data.children = data.root ? undefined : parent.children.map(({id}) => ({id}))
+        data.id = data.root ? null : parent.id
+        data.children = data.root ? parent : parent.children.map(({id}) => ({id}))
         axios
           .post('categories/ordering', data)
           .then(response => this.$toasted.success(response.data.message || 'Operation was successful'))

@@ -80,7 +80,7 @@ class Category extends Model
 
     public function scopeParents(Builder $query)
     {
-        return $query->whereNull('parent_id');
+        return $query->whereNull('parent_id')->orderBy('default_sort');
     }
 
     public function parent()
