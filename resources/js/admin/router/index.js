@@ -101,6 +101,7 @@ let routerConfig = new VueRouter({
           path: ':id/edit',
           name: 'admin.catalog.categories.edit',
           component: () => import('~/admin/pages/category/FormComponent'),
+          props: true,
           meta: {
             middleware: [
               auth

@@ -32,7 +32,7 @@
                                 <vue-nestable v-model="nestableItems"
                                               @change="sorting">
                                     <vue-nestable-handle slot-scope="{ item }" :item="item" class="handle">
-                                        <span>{{ item.name }}</span>
+                                        <span><router-link :to="{name: 'admin.catalog.categories.edit', params: {id: item.id}}">{{ item.name }}</router-link></span>
                                     </vue-nestable-handle>
                                 </vue-nestable>
                             </li>
@@ -121,6 +121,9 @@
       'addForm.name': function(value) {
         this.addForm.slug = slugify(value)
       }
+    },
+    mounted() {
+      this.nestableItems = this.categories;
     }
   }
 </script>

@@ -31,14 +31,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return response()->json(new CategoryResource($category->load('parent')));
     }
 
     /**
