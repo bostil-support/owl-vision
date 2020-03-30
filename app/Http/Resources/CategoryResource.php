@@ -23,7 +23,7 @@ class CategoryResource extends JsonResource
           'meta_title' => $this->meta_title,
           'meta_description' => $this->meta_description,
           'meta_keywords' => $this->meta_keywords,
-//          'parent_id' => $this->parent_id,
+          'parent_id' => $this->parent_id,
           'image' => new ImageResource($this->whenLoaded('image')),
           'page_size' => $this->page_size,
           'allow_select_page_size' => $this->allow_select_page_size,

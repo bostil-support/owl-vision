@@ -24,6 +24,9 @@ export const mutations = {
   },
   setCategoriesList: (state, payload) => {
     state.categoriesList = payload
+  },
+  setCategory: (state, payload) => {
+    state.category = payload
   }
 }
 
@@ -33,6 +36,13 @@ export const actions = {
       .then(response => {
         commit('setCategories', response.data.data)
         commit('setCategoriesList', response.data.data.flatMap(flat))
+      })
+      .catch(e => console.log(e))
+  },
+  fetchCategory ({ commit }, payload) {
+    axios.get('categories/' + payload)
+      .then(response => {
+        commit('setCategory', response.data)
       })
       .catch(e => console.log(e))
   }
