@@ -17,3 +17,4 @@ yarn-error.log
 /.env.prod
 /public/css
 /public/js
+/resources/views/divisima/

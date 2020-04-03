@@ -71,6 +71,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Image|null $image
  * @property-read \App\Models\Category|null $parent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parents()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category topMenu()
  */
 class Category extends Model
 {
@@ -81,6 +82,11 @@ class Category extends Model
     public function scopeParents(Builder $query)
     {
         return $query->whereNull('parent_id')->orderBy('default_sort');
+    }
+
+    public function scopeTopMenu(Builder $query)
+    {
+        return $query->whereNull('parent_id')->where('show_on_top_menu', true)->orderBy('default_sort');
     }
 
     public function parent()
@@ -96,5 +102,14 @@ class Category extends Model
     public function image()
     {
         return $this->belongsTo(Image::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('published', function (Builder $builder) {
+            $builder->where('published', true);
+        });
     }
 }
