@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('sku')->nullable();
             $table->unsignedDecimal('price')->default(0);
             $table->integer('stock_quantity')->default(0);
-            $table->enum('product_type', \App\Product::PRODUCT_TYPES)
-                ->default(\App\Product::PRODUCT_TYPES[0]);
+            $table->enum('product_type', Product::PRODUCT_TYPES)
+                ->default(Product::DEFAULT_PRODUCT_TYPE);
             $table->unsignedBigInteger('image_id')->nullable();
             $table->foreign('image_id')->references('id')
                 ->on('images')->onDelete('set null');
