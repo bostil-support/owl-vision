@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
+const glob = require('glob-all')
 
 if (mix.inProduction()) {
   mix.version();
@@ -17,7 +18,7 @@ mix.webpackConfig({
 mix
   // site
   .js('resources/js/app.js', 'public/js')
-  .sass('resources/sass/app.scss', 'public/css')
+  .sass('resources/sass/site/app.scss', 'public/css')
 
   // admin
   .js('resources/js/admin/admin.js', 'public/js/admin')
@@ -31,8 +32,22 @@ mix
     ],
     // extractVueStyles: false,
     // uglify: {},
-    purifyCss: true,
-    // purifyCss: {},
+    // purifyCss: true,
+    purifyCss: {
+      moduleExtensions: ['php', 'vue', 'js'],
+      paths: glob.sync([
+        path.join(__dirname, 'resources/**/*.blade.php'),
+        path.join(__dirname, 'resources/**/*.vue'),
+        path.join(__dirname, 'resources/**/*.js')
+      ]),
+      purifyOptions: {
+      //   whitelist: [
+      //     'active', '*dropdown-content*', '*select-dropdown*', '*select-wrapper*', 'material-icons', '*material-icons.mi*', 'toast', 'progress*',
+      //     '*waves-light', '*type=checkbox*', '*switch*', 'loader*', '*chip*', '*indicators*', '*ymaps*', 'sidenav-overlay'
+      //   ],
+      //   rejected: true
+      }
+    },
     // clearConsole: false
   })
 
