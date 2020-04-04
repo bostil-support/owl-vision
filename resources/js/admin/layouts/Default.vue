@@ -16,7 +16,10 @@
                     </li>
                     <ul class="item-menu catalog" @mouseleave="hide('catalog')">
                         <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Products</li>
+                        <li>
+                            <i class="far fa-dot-circle"></i>
+                            <router-link :to="{name: 'admin.catalog.products.list'}">Products</router-link>
+                        </li>
                         <li>
                             <i class="far fa-dot-circle"></i>
                             <router-link :to="{name: 'admin.catalog.categories.list'}">Categories</router-link>

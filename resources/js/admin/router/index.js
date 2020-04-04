@@ -111,6 +111,48 @@ let routerConfig = new VueRouter({
       ]
     },
     {
+      path: '/admin/catalog/products',
+      component: () => import('~/admin/pages/product/IndexComponent'),
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
+      children: [
+        {
+          path: '/',
+          name: 'admin.catalog.products.list',
+          component: () => import('~/admin/pages/product/ListComponent'),
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
+        },
+        {
+          path: 'add',
+          name: 'admin.catalog.products.add',
+          component: () => import('~/admin/pages/product/FormComponent'),
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
+        },
+        {
+          path: ':id/edit',
+          name: 'admin.catalog.products.edit',
+          component: () => import('~/admin/pages/product/FormComponent'),
+          props: true,
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
+        },
+      ]
+    },
+    {
       path: '/admin/404',
       name: 'admin.404',
       component: () => import('~/admin/pages/NotFound'),
