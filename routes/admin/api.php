@@ -18,5 +18,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::post('categories/ordering', 'CategoryController@ordering');
 
         Route::apiResource('products', 'ProductController');
+        Route::post('products/{product}/restore', 'ProductController@restore')->name('products.restore');
+        Route::post('products/destroy-multiple', 'ProductController@destroyMultiple')->name('products.destroy_multiple');
+        Route::post('products/restore-multiple', 'ProductController@restoreMultiple')->name('products.restore_multiple');
     });
 });

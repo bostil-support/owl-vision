@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,68 +19,79 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\ProductRequest  $request
      */
-    public function create()
+    public function store(ProductRequest $request)
     {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param  \App\Models\Product  $product
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\ProductResource
      */
-    public function store(Request $request)
+    public function show(Product $product)
+    {
+        return new ProductResource($product);
+    }
+
+    /**
+     * @param  \App\Http\Requests\ProductRequest  $request
+     * @param  \App\Models\Product  $product
+     */
+    public function update(ProductRequest $request, Product $product)
     {
         //
     }
 
     /**
-     * Display the specified resource.
+     * @param  \App\Models\Product  $product
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function show($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return response()->json(null, 204);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroyMultiple(Request $request)
     {
-        //
+        $request->validate([
+            'products' => 'required|array',
+            'products.*' => 'required|integer|exists:products,id'
+        ]);
+
+        $productsQuery = Product::query()->whereIn('id', $request->products);
+
+        $count = $productsQuery->delete();
+
+        return response()->json(['deleted' => $count], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function restore($id)
     {
-        //
+        $product = Product::withTrashed()->findOrFail($id);
+
+        $product->restore();
+
+        return new ProductResource($product);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function restoreMultiple(Request $request)
     {
-        //
+        $request->validate([
+            'products' => 'required|array',
+            'products.*' => 'required|integer|exists:products,id'
+        ]);
+
+        $productsQuery = Product::withTrashed()->whereIn('id', $request->products);
+
+        $productsQuery->restore();
+
+        return response()->json(['restored' => $productsQuery->count()]);
     }
 }
