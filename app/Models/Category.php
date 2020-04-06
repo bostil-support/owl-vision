@@ -71,6 +71,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Image|null $image
  * @property-read \App\Models\Category|null $parent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parents()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category topMenu()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category published()
  */
 class Category extends Model
 {
@@ -78,9 +80,19 @@ class Category extends Model
 
     protected $fillable = ['name', 'slug', 'parent_id'];
 
+    public function scopePublished(Builder $query)
+    {
+        return $query->where('published', true);
+    }
+
     public function scopeParents(Builder $query)
     {
         return $query->whereNull('parent_id');
+    }
+
+    public function scopeTopMenu(Builder $query)
+    {
+        return $query->whereNull('parent_id')->where('show_on_top_menu', true);
     }
 
     public function parent()
@@ -90,11 +102,20 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(self::class, 'parent_id', 'id')->orderBy('default_sort');
+        return $this->hasMany(self::class, 'parent_id', 'id');
     }
 
     public function image()
     {
         return $this->belongsTo(Image::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('default_sort', function (Builder $builder) {
+            $builder->orderBy('default_sort');
+        });
     }
 }

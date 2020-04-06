@@ -73,16 +73,12 @@ class CategoryController extends Controller
      */
     public function ordering(Request $request)
     {
-        $parent = Category::findOrFail($request->get('id'));
-        $children = $request->get('children');
-        if ($request->get('root')) {
-            $parent->parent_id = null;
-            $parent->save();
-        }elseif ($children) {
+        $parentID = ($request->get('id')) ? Category::findOrFail($request->get('id'))->id : null;
+        if ($children = $request->get('children')) {
             $order = 1;
             foreach ($children as $child) {
                 $child = Category::findOrFail($child['id']);
-                $child->parent_id = $parent->id;
+                $child->parent_id = $parentID;
                 $child->default_sort = $order;
                 $child->save();
                 $order++;

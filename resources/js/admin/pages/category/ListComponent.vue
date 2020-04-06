@@ -21,7 +21,7 @@
                 <div class="panel-collapse">
                     <div class="tree">
                         <ol>
-                            <li><span><i class="fa fa-folder-open"></i> Menu</span>
+                            <li><span><i class="fa fa-folder-open"></i> Category tree</span>
                                 <vue-nestable v-model="nestableItems"
                                               @change="sorting">
                                     <vue-nestable-handle slot-scope="{ item }" :item="item" class="handle">
@@ -93,13 +93,16 @@
         pathTo.forEach((order, index) => {
           if (!parent) {
             parent = items[order]
-            if (pathTo.length === 1) data.root = true
+            if (pathTo.length === 1) {
+              data.root = true
+              parent = items
+            }
             return
           } else if (index === pathTo.length - 1) return
           parent = parent.children[order]
         })
-        data.id = parent.id
-        data.children = data.root ? undefined : parent.children.map(({id}) => ({id}))
+        data.id = data.root ? null : parent.id
+        data.children = data.root ? parent : parent.children.map(({id}) => ({id}))
         axios
           .post('categories/ordering', data)
           .then(response => this.$toasted.success(response.data.message || 'Operation was successful'))
