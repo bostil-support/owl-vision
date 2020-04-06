@@ -1,6 +1,10 @@
 <template>
     <main class="categoriesCreate">
-        <div>Categories Create</div>
+        <div class="flex items-center border-b pb-3">
+            <h3 class="px-4 text-3xl flex-initial">
+                Category {{id ? 'edit': 'create'}}
+            </h3>
+        </div>
         <div class="categoriesCreate-wrapper">
             <form class="form-create">
 

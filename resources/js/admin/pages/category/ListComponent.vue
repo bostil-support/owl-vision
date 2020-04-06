@@ -1,30 +1,48 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <h3 class="container-fluid pb-2 mt-2 mb-0 border-bottom">
+    <div class="w-full">
+        <div class="flex items-center border-b pt-2 pb-3">
+            <h3 class="px-4 text-3xl flex-initial">
                 Categories
             </h3>
         </div>
-        <div class="row border-bottom">
-            <div class="col-sm-5 pt-2">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input class="form-control" type="text" id="name" v-model="addForm.name">
+        <div class="flex border-b">
+            <div class="sm:w-5/12 px-5 pt-2">
+                <div class="pt-2 flex flex-col">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                        <input type="text" class="bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 border border-transparent focus:outline-none focus:border-gray-300 focus:bg-white"
+                               v-model="addForm.name">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Slug</label>
+                        <input type="text" class="bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 border border-transparent focus:outline-none focus:border-gray-300 focus:bg-white"
+                               v-model="addForm.slug">
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Parent category</label>
+                        <div class="relative">
+                            <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    v-model="addForm.parent_id">
+                                <option selected value="">No parent</option>
+                                <option v-for="category in categoriesList" :value="category.id">{{ category.name }}</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                @click="store">
+                            Add new category
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="slug">Slug</label>
-                    <input class="form-control" type="text" id="slug" v-model="addForm.slug">
-                </div>
-                <div class="form-group">
-                    <label for="parent">Parent category</label>
-                    <select class="form-control" id="parent" v-model="addForm.parent_id">
-                        <option selected value="">No parent</option>
-                        <option v-for="category in categoriesList" :value="category.id">{{ category.name }}</option>
-                    </select>
-                </div>
-                <button @click="store" type="button" class="btn btn-success">Add new category</button>
             </div>
-            <div class="col-sm-7 border-left">
+            <div class="flex-1 border-l">
                 <div class="panel-collapse">
                     <div class="tree">
                         <ol>
