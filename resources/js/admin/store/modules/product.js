@@ -31,5 +31,13 @@ export const actions = {
         commit('setProduct', response.data)
       })
       .catch(e => console.log(e))
+  },
+  updateProduct ({ commit, dispatch }, payload) {
+    axios.put('products/' + payload.id, payload)
+      .then(response => {
+        dispatch('fetchProducts')
+        commit('setProduct', response.data)
+      })
+      .catch(e => console.log(e))
   }
 }

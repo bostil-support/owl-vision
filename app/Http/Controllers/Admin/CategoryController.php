@@ -44,8 +44,9 @@ class CategoryController extends Controller
      * @param Category $category
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
+        $category->update($request->validated());
         return response()->json($category);
     }
 

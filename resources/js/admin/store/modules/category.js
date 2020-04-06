@@ -45,5 +45,13 @@ export const actions = {
         commit('setCategory', response.data)
       })
       .catch(e => console.log(e))
+  },
+  updateCategory ({ commit, dispatch }, payload) {
+    axios.put('categories/' + payload.id, payload)
+      .then(response => {
+        dispatch('fetchCategories')
+        commit('setCategory', response.data)
+      })
+      .catch(e => console.log(e))
   }
 }
