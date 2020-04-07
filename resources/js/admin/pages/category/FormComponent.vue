@@ -92,7 +92,7 @@
         update: 'category/updateCategory'
       }),
       save() {
-        this.update(this.category)
+        this.update(this.category).then(() => this.$toasted.success('Saved'))
       },
       store() {
         alert(1)

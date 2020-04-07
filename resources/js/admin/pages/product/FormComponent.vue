@@ -97,7 +97,7 @@
         update: 'product/updateProduct'
       }),
       save() {
-        this.update(this.product)
+        this.update(this.product).then(() => this.$toasted.success('Saved'))
       },
       store() {
         alert(1)
