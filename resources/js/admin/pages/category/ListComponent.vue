@@ -1,30 +1,23 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <h3 class="container-fluid pb-2 mt-2 mb-0 border-bottom">
+    <div class="w-full">
+        <div class="flex items-center border-b pt-2 pb-3">
+            <h3 class="px-4 text-3xl flex-initial">
                 Categories
             </h3>
         </div>
-        <div class="row border-bottom">
-            <div class="col-sm-5 pt-2">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input class="form-control" type="text" id="name" v-model="addForm.name">
+        <div class="flex border-b">
+            <div class="sm:w-5/12 px-5 pt-2">
+                <div class="pt-2 flex flex-col">
+                    <text-field label="Name" v-model="addForm.name" />
+                    <text-field label="Slug" v-model="addForm.slug" />
+                    <select-field label="Parent category" v-model="addForm.parent_id" :options="categoriesList.map(({id, name}) => ({value: id, text: name}))" />
+
+                    <div class="flex items-center justify-between mt-2">
+                        <success-button @click="store">Add new category</success-button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="slug">Slug</label>
-                    <input class="form-control" type="text" id="slug" v-model="addForm.slug">
-                </div>
-                <div class="form-group">
-                    <label for="parent">Parent category</label>
-                    <select class="form-control" id="parent" v-model="addForm.parent_id">
-                        <option selected value="">No parent</option>
-                        <option v-for="category in categoriesList" :value="category.id">{{ category.name }}</option>
-                    </select>
-                </div>
-                <button @click="store" type="button" class="btn btn-success">Add new category</button>
             </div>
-            <div class="col-sm-7 border-left">
+            <div class="flex-1 border-l">
                 <div class="panel-collapse">
                     <div class="tree">
                         <ol>
@@ -47,10 +40,16 @@
 <script>
   import {mapGetters} from 'vuex'
   import {VueNestable, VueNestableHandle} from 'vue-nestable';
+  import TextField from '~/admin/fields/TextField';
+  import SelectField from '~/admin/fields/SelectField';
+  import SuccessButton from '~/admin/components/SuccessButton';
   import slugify from 'slug-generator'
 
   export default {
     components: {
+      TextField,
+      SelectField,
+      SuccessButton,
       VueNestable,
       VueNestableHandle
     },
