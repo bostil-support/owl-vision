@@ -19,7 +19,14 @@
                     <div class="user-panel">
                         <div class="up-item">
                             <i class="flaticon-profile"></i>
-                            <a href="#">Sign</a> In or <a href="#">Create Account</a>
+                            @guest
+                                <a href="{{ route('login') }}">Sign In</a> or <a href="{{ route('register') }}">Create Account</a>
+                            @else
+                                <a href="{{ route('frontend.home') }}">Profile</a> or <a href="javascript:document.getElementById('logout').submit();">Logout</a>
+                                <form id="logout" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            @endguest
                         </div>
                         <div class="up-item">
                             <div class="shopping-card">
