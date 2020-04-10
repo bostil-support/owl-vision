@@ -16,7 +16,7 @@ Route::group(['as' => 'page.'], function () {
 });
 
 Route::group(['as' => 'frontend.'], function () {
-    Route::get('home', 'HomeController@index')->name('home');
+    Route::get('profile', 'ProfileController@index')->name('profile');
 });
 
 Auth::routes();

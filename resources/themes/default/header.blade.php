@@ -22,7 +22,7 @@
                             @guest
                                 <a href="{{ route('login') }}">Sign In</a> or <a href="{{ route('register') }}">Create Account</a>
                             @else
-                                <a href="{{ route('frontend.home') }}">Profile</a> or <a href="javascript:document.getElementById('logout').submit();">Logout</a>
+                                <a href="{{ route('frontend.profile') }}">Profile</a> or <a href="javascript:document.getElementById('logout').submit();">Logout</a>
                                 <form id="logout" action="{{ route('logout') }}" method="POST">
                                     @csrf
                                 </form>
