@@ -19,9 +19,7 @@
                     <div class="user-panel">
                         <div class="up-item">
                             <i class="flaticon-profile"></i>
-                            @guest
-                                <a href="{{ route('login') }}">Sign In</a> or <a href="{{ route('register') }}">Create Account</a>
-                            @else
+                            @auth
                                 <a href="{{ route('frontend.profile') }}">Profile</a> or <a href="javascript:document.getElementById('logout').submit();">Logout</a>
                                 <form id="logout" action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -29,6 +27,16 @@
                                         <input type="hidden" name="_guard" value="customer">
                                     @endauth
                                 </form>
+                            @elseauth('customer')
+                                <a href="{{ route('frontend.profile') }}">Profile</a> or <a href="javascript:document.getElementById('logout').submit();">Logout</a>
+                                <form id="logout" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    @auth('customer')
+                                        <input type="hidden" name="_guard" value="customer">
+                                    @endauth
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}">Sign In</a> or <a href="{{ route('register') }}">Create Account</a>
                             @endauth
                         </div>
                         <div class="up-item">
