@@ -28,6 +28,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('partials.top-menu', PartialTopMenuComposer::class);
-        View::composer(['category*'], CategoryComposer::class);
+        View::composer('category*', CategoryComposer::class);
     }
 }

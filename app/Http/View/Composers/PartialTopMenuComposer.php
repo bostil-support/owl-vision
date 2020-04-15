@@ -15,6 +15,6 @@ class PartialTopMenuComposer
      */
     public function compose(View $view)
     {
-        $view->with('categories', Category::published()->parents()->topMenu()->get());
+        $view->with('categories', Category::published()->parents()->topMenu()->get(['id', 'name', 'slug']));
     }
 }
