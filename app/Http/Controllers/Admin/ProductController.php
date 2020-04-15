@@ -37,12 +37,14 @@ class ProductController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\ProductRequest  $request
-     * @param  \App\Models\Product  $product
+     * @param ProductRequest $request
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(ProductRequest $request, Product $product)
     {
-        //
+        $product->update($request->validated());
+        return response()->json($product);
     }
 
     /**

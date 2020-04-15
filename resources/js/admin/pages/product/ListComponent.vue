@@ -36,7 +36,7 @@
                 <td class="border px-4 py-2 text-center">{{ product.stock_quantity }}</td>
                 <td class="border px-4 py-2 text-center">{{ product.product_type }}</td>
                 <td class="border px-4 py-2 text-center">
-                    <boolean :value="product.published"/>
+                    <boolean-field :value="product.published"/>
                 </td>
             </tr>
             </tbody>
@@ -46,11 +46,11 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import Boolean from '~/admin/fields/Boolean'
+  import BooleanField from '~/admin/fields/BooleanField'
 
   export default {
     components: {
-      Boolean
+      BooleanField
     },
     computed: {
       ...mapGetters({

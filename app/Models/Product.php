@@ -14,4 +14,6 @@ class Product extends Model
     ];
 
     const DEFAULT_PRODUCT_TYPE = 'Simple';
+
+    protected $fillable = ['name', 'slug', 'published'];
 }

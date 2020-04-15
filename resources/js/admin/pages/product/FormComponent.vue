@@ -6,7 +6,7 @@
             </h3>
         </div>
         <div class="categoriesCreate-wrapper">
-            <form class="form-create">
+            <div class="form-create">
 
                 <span class="name-input">Name <i class="fas fa-info-circle"></i></span>
                 <input type="text" v-model="product.name">
@@ -57,14 +57,28 @@
                 <span class="name-input">Hide category on category page <i class="fas fa-info-circle"></i></span>
                 <span> <input type="checkbox" v-model="product.hide_on_catalog" id="cb1"><label for="cb1"></label></span>
 
+                <span class="name-input">Published <i class="fas fa-info-circle"></i></span>
+                <span> <input type="checkbox" v-model="product.published" id="published"><label for="published"></label></span>
 
-            </form>
+
+            </div>
+            <div>
+                <button v-if="id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                        @click="save">
+                    Save
+                </button>
+                <button v-else class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                        @click="store">
+                    Create
+                </button>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </main>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
 
   export default {
     props: {
@@ -77,6 +91,17 @@
       ...mapGetters({
         product: 'product/product',
       })
+    },
+    methods: {
+      ...mapActions({
+        update: 'product/updateProduct'
+      }),
+      save() {
+        this.update(this.product).then(() => this.$toasted.success('Saved'))
+      },
+      store() {
+        alert(1)
+      }
     },
     mounted() {
       if (this.id) this.$store.dispatch('product/fetchProduct', this.id)

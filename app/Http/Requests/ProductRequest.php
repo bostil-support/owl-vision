@@ -24,7 +24,9 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:32',
+            'slug' => 'required|string|max:32',
+            'published' => 'nullable|boolean'
         ];
     }
 }

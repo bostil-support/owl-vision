@@ -8,37 +8,12 @@
         <div class="flex border-b">
             <div class="sm:w-5/12 px-5 pt-2">
                 <div class="pt-2 flex flex-col">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                        <input type="text" class="bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 border border-transparent focus:outline-none focus:border-gray-300 focus:bg-white"
-                               v-model="addForm.name">
-                    </div>
+                    <text-field label="Name" v-model="addForm.name" />
+                    <text-field label="Slug" v-model="addForm.slug" />
+                    <select-field label="Parent category" v-model="addForm.parent_id" :options="categoriesList.map(({id, name}) => ({value: id, text: name}))" />
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Slug</label>
-                        <input type="text" class="bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 border border-transparent focus:outline-none focus:border-gray-300 focus:bg-white"
-                               v-model="addForm.slug">
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Parent category</label>
-                        <div class="relative">
-                            <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    v-model="addForm.parent_id">
-                                <option selected value="">No parent</option>
-                                <option v-for="category in categoriesList" :value="category.id">{{ category.name }}</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                                @click="store">
-                            Add new category
-                        </button>
+                    <div class="flex items-center justify-between mt-2">
+                        <success-button @click="store">Add new category</success-button>
                     </div>
                 </div>
             </div>
@@ -46,7 +21,7 @@
                 <div class="panel-collapse">
                     <div class="tree">
                         <ol>
-                            <li><span><i class="fa fa-folder-open"></i> Menu</span>
+                            <li><span><i class="fa fa-folder-open"></i> Category tree</span>
                                 <vue-nestable v-model="nestableItems"
                                               @change="sorting">
                                     <vue-nestable-handle slot-scope="{ item }" :item="item" class="handle">
@@ -65,10 +40,16 @@
 <script>
   import {mapGetters} from 'vuex'
   import {VueNestable, VueNestableHandle} from 'vue-nestable';
+  import TextField from '~/admin/fields/TextField';
+  import SelectField from '~/admin/fields/SelectField';
+  import SuccessButton from '~/admin/components/SuccessButton';
   import slugify from 'slug-generator'
 
   export default {
     components: {
+      TextField,
+      SelectField,
+      SuccessButton,
       VueNestable,
       VueNestableHandle
     },
@@ -112,13 +93,16 @@
         pathTo.forEach((order, index) => {
           if (!parent) {
             parent = items[order]
-            if (pathTo.length === 1) data.root = true
+            if (pathTo.length === 1) {
+              data.root = true
+              parent = items
+            }
             return
           } else if (index === pathTo.length - 1) return
           parent = parent.children[order]
         })
-        data.id = parent.id
-        data.children = data.root ? undefined : parent.children.map(({id}) => ({id}))
+        data.id = data.root ? null : parent.id
+        data.children = data.root ? parent : parent.children.map(({id}) => ({id}))
         axios
           .post('categories/ordering', data)
           .then(response => this.$toasted.success(response.data.message || 'Operation was successful'))
