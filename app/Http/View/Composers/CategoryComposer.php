@@ -5,7 +5,7 @@ namespace App\Http\View\Composers;
 use App\Models\Category;
 use Illuminate\View\View;
 
-class PartialTopMenuComposer
+class CategoryComposer
 {
     /**
      * Bind data to the view.
@@ -15,6 +15,6 @@ class PartialTopMenuComposer
      */
     public function compose(View $view)
     {
-        $view->with('categories', Category::published()->parents()->topMenu()->with('children')->get());
+        $view->with('categories', Category::published()->parents()->with('children')->get());
     }
 }

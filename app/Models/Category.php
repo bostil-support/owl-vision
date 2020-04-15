@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Breadcrumbable;
+use App\Traits\MultiRenderable;
+use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -73,9 +76,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parents()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category topMenu()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category published()
+ * @property-read mixed $view
+ * @property-read mixed $breadcrumbs
  */
 class Category extends Model
 {
+    use Sluggable, MultiRenderable, Breadcrumbable;
+
     protected $with = ['children'];
 
     protected $fillable = ['name', 'slug', 'parent_id'];
@@ -92,7 +99,7 @@ class Category extends Model
 
     public function scopeTopMenu(Builder $query)
     {
-        return $query->whereNull('parent_id')->where('show_on_top_menu', true);
+        return $query->where('show_on_top_menu', true);
     }
 
     public function parent()
@@ -114,8 +121,11 @@ class Category extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('default_sort', function (Builder $builder) {
-            $builder->orderBy('default_sort');
-        });
+        static::addGlobalScope(
+            'default_sort',
+            function (Builder $builder) {
+                $builder->orderBy('default_sort');
+            }
+        );
     }
 }

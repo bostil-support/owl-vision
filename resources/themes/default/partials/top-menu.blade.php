@@ -11,7 +11,7 @@
                                 <span class="new">New</span>
                             @endif
                         </a>
-                        @if($category->children->count())
+                        @if($category->children)
                             <ul class="sub-menu">
                                 @foreach($category->children as $subcategory)
                                     <li><a href="#">{{ $subcategory->name }}</a></li>
