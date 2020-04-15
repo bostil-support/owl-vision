@@ -6,7 +6,7 @@ namespace App\Traits;
 
 trait Sluggable
 {
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }

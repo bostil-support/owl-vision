@@ -38,7 +38,7 @@ trait Breadcrumbable
         return $breadcrumbs;
     }
 
-    public function getRouterName()
+    public function getRouterName(): string
     {
         return 'shop.category';
     }

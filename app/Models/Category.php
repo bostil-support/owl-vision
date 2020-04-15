@@ -76,8 +76,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parents()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category topMenu()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category published()
- * @property-read mixed $view
- * @property-read mixed $breadcrumbs
+ * @property-read string $breadcrumbs
+ * @property-read array $view
  */
 class Category extends Model
 {
