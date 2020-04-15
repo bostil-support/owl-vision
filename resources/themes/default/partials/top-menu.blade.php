@@ -3,18 +3,18 @@
         <!-- menu -->
         <ul class="main-menu">
             <li><a href="{{ route('page.main') }}">Home</a></li>
-            @if($categories->count())
+            @if($categories)
                 @foreach($categories as $category)
                     <li>
-                        <a href="#">{{ $category->name }}
+                        <a href="{{ route('frontend.shop.category', $category->slug) }}">{{ $category->name }}
                             @if($loop->last)
                                 <span class="new">New</span>
                             @endif
                         </a>
                         @if($category->children)
                             <ul class="sub-menu">
-                                @foreach($category->children as $subcategory)
-                                    <li><a href="#">{{ $subcategory->name }}</a></li>
+                                @foreach($category->children as $child)
+                                    <li><a href="{{ route('frontend.shop.category', $child->slug) }}">{{ $child->name }}</a></li>
                                 @endforeach
                             </ul>
                         @endif
@@ -30,7 +30,7 @@
                     <li><a href="{{ route('page.contact') }}">Contact Page</a></li>
                 </ul>
             </li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="javascript:void(0);">Blog</a></li>
         </ul>
     </div>
 </nav>

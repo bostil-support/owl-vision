@@ -11,7 +11,6 @@ class ShopController extends Controller
     {
 //        return view('home');
         return view($category->view, [
-//            'breadcrumbs' => $category->breadcrumbs,
             'category' => $category
         ]);
     }
