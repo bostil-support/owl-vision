@@ -15,6 +15,6 @@ class CategoryComposer
      */
     public function compose(View $view)
     {
-        $view->with('categories', Category::published()->parents()->with('children')->get());
+        $view->with('categories', Category::published()->parents()->get());
     }
 }
