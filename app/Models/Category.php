@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\Breadcrumbable;
 use App\Traits\MultiRenderable;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,9 +37,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $hide_on_catalog
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $children
+ * @property-read int|null $children_count
+ * @property-read mixed $view
+ * @property-read \App\Models\Image|null $image
+ * @property-read \App\Models\Category|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parents()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category published()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category topMenu()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereAllowSelectPageSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereDefaultSort($value)
@@ -69,19 +78,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereTemplate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $children
- * @property-read int|null $children_count
- * @property-read \App\Models\Image|null $image
- * @property-read \App\Models\Category|null $parent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parents()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category topMenu()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category published()
- * @property-read string $breadcrumbs
- * @property-read array $view
  */
 class Category extends Model
 {
-    use Sluggable, MultiRenderable, Breadcrumbable;
+    use Sluggable, MultiRenderable;
 
     protected $with = ['children'];
 
@@ -115,6 +115,11 @@ class Category extends Model
     public function image()
     {
         return $this->belongsTo(Image::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 
     protected static function boot()

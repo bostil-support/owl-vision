@@ -1,9 +1,14 @@
+@php
+    /** @var \Illuminate\Support\Collection $categories */
+    /** @var \App\Models\Category $category */
+@endphp
+
 <nav class="main-navbar">
     <div class="container">
         <!-- menu -->
         <ul class="main-menu">
             <li><a href="{{ route('page.main') }}">Home</a></li>
-            @if($categories)
+            @if($categories->count())
                 @foreach($categories as $category)
                     <li>
                         <a href="{{ route('frontend.shop.category', $category->slug) }}">{{ $category->name }}
@@ -11,22 +16,20 @@
                                 <span class="new">New</span>
                             @endif
                         </a>
-                        @if($category->children)
+                        @if($category->children_count)
                             <ul class="sub-menu">
                                 @foreach($category->children as $child)
-                                    <li><a href="{{ route('frontend.shop.category', $child->slug) }}">{{ $child->name }}</a></li>
+                                    <li>
+                                        <a href="{{ route('frontend.shop.category', $child->slug) }}">{{ $child->name }}</a>
+                                    </li>
                                 @endforeach
                             </ul>
                         @endif
                     </li>
                 @endforeach
             @endif
-            <li><a href="#">Pages</a>
+            <li><a href="javascript:void(0);">Pages</a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('page.product') }}">Product Page</a></li>
-                    <li><a href="{{ route('page.category') }}">Category Page</a></li>
-                    <li><a href="{{ route('page.cart') }}">Cart Page</a></li>
-                    <li><a href="{{ route('page.checkout') }}">Checkout Page</a></li>
                     <li><a href="{{ route('page.contact') }}">Contact Page</a></li>
                 </ul>
             </li>
