@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('partials.page-info', ['breadcrumbs' => ['Your cart', 'Checkout']])
+    @include('partials.page-info')
 
 
     <!-- checkout section  -->

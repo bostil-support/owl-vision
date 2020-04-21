@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\Ecommercable;
+use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $meta_keywords
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read int|null $categories_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product query()
@@ -54,6 +58,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
+    use Sluggable, Ecommercable;
     const PRODUCT_TYPES = [
       'Simple'
     ];
@@ -61,4 +66,14 @@ class Product extends Model
     const DEFAULT_PRODUCT_TYPE = 'Simple';
 
     protected $fillable = ['name', 'slug', 'published'];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function getNameAttribute($name)
+    {
+        return ucfirst($name);
+    }
 }

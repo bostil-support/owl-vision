@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 7.1.0 on 2020-03-16 09:26:01.
+ * Generated for Laravel 7.1.0 on 2020-04-21 08:14:31.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1832,7 +1832,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \App\Models\User|null
+         * @return \App\Models\User|null 
          * @static 
          */ 
         public static function user()
@@ -1870,7 +1870,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \App\Models\User|false
+         * @return \App\Models\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1939,7 +1939,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \App\Models\User|false
+         * @return \App\Models\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -2018,7 +2018,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \App\Models\User
+         * @return \App\Models\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -2129,7 +2129,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \App\Models\User|null
+         * @return \App\Models\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -2179,7 +2179,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if current user is authenticated. If not, throw an exception.
          *
-         * @return \App\Models\User
+         * @return \App\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 
@@ -15132,6 +15132,1096 @@ namespace Illuminate\Support {
  
 }
 
+namespace App\Facades { 
+
+    /**
+     * 
+     *
+     */ 
+    class Basketlist {
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @param int $quantity
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function add($model, $quantity = 1)
+        {
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->add($model, $quantity);
+        }
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @param int $quantity
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function removeQty($model, $quantity = 1)
+        {
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->removeQty($model, $quantity);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function count_items()
+        {
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->count_items();
+        }
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function remove($model)
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->remove($model);
+        }
+        
+        /**
+         * 
+         *
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function destroy()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->destroy();
+        }
+        
+        /**
+         * 
+         *
+         * @return \App\Services\Collection 
+         * @static 
+         */ 
+        public static function items()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->items();
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     */ 
+    class Comparelist {
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function add($model)
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->add($model);
+        }
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function remove($model)
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->remove($model);
+        }
+        
+        /**
+         * 
+         *
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function destroy()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->destroy();
+        }
+        
+        /**
+         * 
+         *
+         * @return \App\Services\Collection 
+         * @static 
+         */ 
+        public static function items()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->items();
+        }
+        
+        /**
+         * 
+         *
+         * @return int 
+         * @static 
+         */ 
+        public static function count_items()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->count_items();
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     */ 
+    class Wishlist {
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function add($model)
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->add($model);
+        }
+        
+        /**
+         * 
+         *
+         * @param \App\Services\Model $model
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function remove($model)
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->remove($model);
+        }
+        
+        /**
+         * 
+         *
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function destroy()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->destroy();
+        }
+        
+        /**
+         * 
+         *
+         * @return \App\Services\Collection 
+         * @static 
+         */ 
+        public static function items()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->items();
+        }
+        
+        /**
+         * 
+         *
+         * @return int 
+         * @static 
+         */ 
+        public static function count_items()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->count_items();
+        }
+         
+    }
+ 
+}
+
+namespace Barryvdh\Debugbar { 
+
+    /**
+     * 
+     *
+     * @method static void alert(string $message)
+     * @method static void critical(string $message)
+     * @method static void debug(string $message)
+     * @method static void emergency(string $message)
+     * @method static void error(string $message)
+     * @method static void info(string $message)
+     * @method static void log(string $message)
+     * @method static void notice(string $message)
+     * @method static void warning(string $message)
+     * @see \Barryvdh\Debugbar\LaravelDebugbar
+     */ 
+    class Facade {
+        
+        /**
+         * Enable the Debugbar and boot, if not already booted.
+         *
+         * @static 
+         */ 
+        public static function enable()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->enable();
+        }
+        
+        /**
+         * Boot the debugbar (add collectors, renderer and listener)
+         *
+         * @static 
+         */ 
+        public static function boot()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->boot();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function shouldCollect($name, $default = false)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->shouldCollect($name, $default);
+        }
+        
+        /**
+         * Adds a data collector
+         *
+         * @param \Barryvdh\Debugbar\DataCollectorInterface $collector
+         * @throws DebugBarException
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function addCollector($collector)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addCollector($collector);
+        }
+        
+        /**
+         * Handle silenced errors
+         *
+         * @param $level
+         * @param $message
+         * @param string $file
+         * @param int $line
+         * @param array $context
+         * @throws \ErrorException
+         * @static 
+         */ 
+        public static function handleError($level, $message, $file = '', $line = 0, $context = [])
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->handleError($level, $message, $file, $line, $context);
+        }
+        
+        /**
+         * Starts a measure
+         *
+         * @param string $name Internal name, used to stop the measure
+         * @param string $label Public name
+         * @static 
+         */ 
+        public static function startMeasure($name, $label = null)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->startMeasure($name, $label);
+        }
+        
+        /**
+         * Stops a measure
+         *
+         * @param string $name
+         * @static 
+         */ 
+        public static function stopMeasure($name)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->stopMeasure($name);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @deprecated in favor of addThrowable
+         * @static 
+         */ 
+        public static function addException($e)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addException($e);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @static 
+         */ 
+        public static function addThrowable($e)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addThrowable($e);
+        }
+        
+        /**
+         * Returns a JavascriptRenderer for this instance
+         *
+         * @param string $baseUrl
+         * @param string $basePathng
+         * @return \Barryvdh\Debugbar\JavascriptRenderer 
+         * @static 
+         */ 
+        public static function getJavascriptRenderer($baseUrl = null, $basePath = null)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getJavascriptRenderer($baseUrl, $basePath);
+        }
+        
+        /**
+         * Modify the response and inject the debugbar (or data in headers)
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Symfony\Component\HttpFoundation\Response $response
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */ 
+        public static function modifyResponse($request, $response)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->modifyResponse($request, $response);
+        }
+        
+        /**
+         * Check if the Debugbar is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isEnabled()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isEnabled();
+        }
+        
+        /**
+         * Collects the data from the collectors
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collect()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->collect();
+        }
+        
+        /**
+         * Injects the web debug toolbar into the given Response.
+         *
+         * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
+         * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+         * @static 
+         */ 
+        public static function injectDebugbar($response)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->injectDebugbar($response);
+        }
+        
+        /**
+         * Disable the Debugbar
+         *
+         * @static 
+         */ 
+        public static function disable()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->disable();
+        }
+        
+        /**
+         * Adds a measure
+         *
+         * @param string $label
+         * @param float $start
+         * @param float $end
+         * @static 
+         */ 
+        public static function addMeasure($label, $start, $end)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addMeasure($label, $start, $end);
+        }
+        
+        /**
+         * Utility function to measure the execution of a Closure
+         *
+         * @param string $label
+         * @param \Closure $closure
+         * @static 
+         */ 
+        public static function measure($label, $closure)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->measure($label, $closure);
+        }
+        
+        /**
+         * Collect data in a CLI request
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collectConsole()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->collectConsole();
+        }
+        
+        /**
+         * Adds a message to the MessagesCollector
+         * 
+         * A message can be anything from an object to a string
+         *
+         * @param mixed $message
+         * @param string $label
+         * @static 
+         */ 
+        public static function addMessage($message, $label = 'info')
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addMessage($message, $label);
+        }
+        
+        /**
+         * Checks if a data collector has been added
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasCollector($name)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->hasCollector($name);
+        }
+        
+        /**
+         * Returns a data collector
+         *
+         * @param string $name
+         * @return \DebugBar\DataCollectorInterface 
+         * @throws DebugBarException
+         * @static 
+         */ 
+        public static function getCollector($name)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCollector($name);
+        }
+        
+        /**
+         * Returns an array of all data collectors
+         *
+         * @return \DebugBar\array[DataCollectorInterface] 
+         * @static 
+         */ 
+        public static function getCollectors()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCollectors();
+        }
+        
+        /**
+         * Sets the request id generator
+         *
+         * @param \DebugBar\RequestIdGeneratorInterface $generator
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setRequestIdGenerator($generator)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setRequestIdGenerator($generator);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\RequestIdGeneratorInterface 
+         * @static 
+         */ 
+        public static function getRequestIdGenerator()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getRequestIdGenerator();
+        }
+        
+        /**
+         * Returns the id of the current request
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getCurrentRequestId()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCurrentRequestId();
+        }
+        
+        /**
+         * Sets the storage backend to use to store the collected data
+         *
+         * @param \DebugBar\StorageInterface $storage
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStorage($storage = null)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStorage($storage);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\StorageInterface 
+         * @static 
+         */ 
+        public static function getStorage()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStorage();
+        }
+        
+        /**
+         * Checks if the data will be persisted
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isDataPersisted()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isDataPersisted();
+        }
+        
+        /**
+         * Sets the HTTP driver
+         *
+         * @param \DebugBar\HttpDriverInterface $driver
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setHttpDriver($driver)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setHttpDriver($driver);
+        }
+        
+        /**
+         * Returns the HTTP driver
+         * 
+         * If no http driver where defined, a PhpHttpDriver is automatically created
+         *
+         * @return \DebugBar\HttpDriverInterface 
+         * @static 
+         */ 
+        public static function getHttpDriver()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getHttpDriver();
+        }
+        
+        /**
+         * Returns collected data
+         * 
+         * Will collect the data if none have been collected yet
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getData()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getData();
+        }
+        
+        /**
+         * Returns an array of HTTP headers containing the data
+         *
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return array 
+         * @static 
+         */ 
+        public static function getDataAsHeaders($headerName = 'phpdebugbar', $maxHeaderLength = 4096, $maxTotalHeaderLength = 250000)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getDataAsHeaders($headerName, $maxHeaderLength, $maxTotalHeaderLength);
+        }
+        
+        /**
+         * Sends the data through the HTTP headers
+         *
+         * @param bool $useOpenHandler
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->sendDataInHeaders($useOpenHandler, $headerName, $maxHeaderLength);
+        }
+        
+        /**
+         * Stacks the data in the session for later rendering
+         *
+         * @static 
+         */ 
+        public static function stackData()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->stackData();
+        }
+        
+        /**
+         * Checks if there is stacked data in the session
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasStackedData()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->hasStackedData();
+        }
+        
+        /**
+         * Returns the data stacked in the session
+         *
+         * @param boolean $delete Whether to delete the data in the session
+         * @return array 
+         * @static 
+         */ 
+        public static function getStackedData($delete = true)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStackedData($delete);
+        }
+        
+        /**
+         * Sets the key to use in the $_SESSION array
+         *
+         * @param string $ns
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStackDataSessionNamespace($ns)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStackDataSessionNamespace($ns);
+        }
+        
+        /**
+         * Returns the key used in the $_SESSION array
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getStackDataSessionNamespace()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStackDataSessionNamespace();
+        }
+        
+        /**
+         * Sets whether to only use the session to store stacked data even
+         * if a storage is enabled
+         *
+         * @param boolean $enabled
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStackAlwaysUseSessionStorage($enabled = true)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStackAlwaysUseSessionStorage($enabled);
+        }
+        
+        /**
+         * Checks if the session is always used to store stacked data
+         * even if a storage is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isStackAlwaysUseSessionStorage()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isStackAlwaysUseSessionStorage();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetSet($key, $value)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetSet($key, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetGet($key)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetGet($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetExists($key)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetExists($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetUnset($key)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetUnset($key);
+        }
+         
+    }
+ 
+}
+
+namespace DaveJamesMiller\Breadcrumbs\Facades { 
+
+    /**
+     * Breadcrumbs facade - allows easy access to the Manager instance.
+     *
+     * @method static array getCurrentRoute()
+     * @mixin \Illuminate\Support\Traits\Macroable
+     * @see BreadcrumbsManager
+     */ 
+    class Breadcrumbs {
+        
+        /**
+         * Register a breadcrumb-generating callback for a page.
+         *
+         * @param string $name The name of the page.
+         * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
+         *     accept additional parameters.
+         * @return void 
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException If the given name has already been
+         *     used.
+         * @static 
+         */ 
+        public static function for($name, $callback)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        $instance->for($name, $callback);
+        }
+        
+        /**
+         * Register a breadcrumb-generating callback for a page.
+         * 
+         * For backwards-compatibility with v5.0.0 and below.
+         *
+         * @param string $name The name of the page.
+         * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
+         *     accept additional parameters.
+         * @return void 
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException If the given name has already been
+         *     used.
+         * @see self::for()
+         * @static 
+         */ 
+        public static function register($name, $callback)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        $instance->register($name, $callback);
+        }
+        
+        /**
+         * Register a closure to call before generating breadcrumbs for the current page.
+         * 
+         * For example, this can be used to always prepend the homepage without needing to manually add it to each page.
+         *
+         * @param callable $callback The callback, which should accept a Generator instance as the first and only parameter.
+         * @return void 
+         * @static 
+         */ 
+        public static function before($callback)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        $instance->before($callback);
+        }
+        
+        /**
+         * Register a closure to call after generating breadcrumbs for the current page.
+         * 
+         * For example, this can be used to append the current page number when using pagination.
+         *
+         * @param callable $callback The callback, which should accept a Generator instance as the first and only parameter.
+         * @return void 
+         * @static 
+         */ 
+        public static function after($callback)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        $instance->after($callback);
+        }
+        
+        /**
+         * Check if a breadcrumb with the given name exists.
+         * 
+         * If no name is given, defaults to the current route name.
+         *
+         * @param string|null $name The page name.
+         * @return bool Whether there is a registered callback with that name.
+         * @static 
+         */ 
+        public static function exists($name = null)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        return $instance->exists($name);
+        }
+        
+        /**
+         * Generate a set of breadcrumbs for a page.
+         *
+         * @param string|null $name The name of the current page.
+         * @param mixed $params The parameters to pass to the closure for the current page.
+         * @return \Illuminate\Support\Collection The generated breadcrumbs.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route
+         *     doesn't have an associated name.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names
+         *     are) not registered.
+         * @static 
+         */ 
+        public static function generate($name = null, ...$params)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        return $instance->generate($name, ...$params);
+        }
+        
+        /**
+         * Render breadcrumbs for a page with the specified view.
+         *
+         * @param string $view The name of the view to render.
+         * @param string|null $name The name of the current page.
+         * @param mixed $params The parameters to pass to the closure for the current page.
+         * @return \Illuminate\Support\HtmlString The generated HTML.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't have an associated name.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
+         * @static 
+         */ 
+        public static function view($view, $name = null, ...$params)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        return $instance->view($view, $name, ...$params);
+        }
+        
+        /**
+         * Render breadcrumbs for a page with the default view.
+         *
+         * @param string|null $name The name of the current page.
+         * @param mixed $params The parameters to pass to the closure for the current page.
+         * @return \Illuminate\Support\HtmlString The generated HTML.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't have an associated name.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
+         * @static 
+         */ 
+        public static function render($name = null, ...$params)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        return $instance->render($name, ...$params);
+        }
+        
+        /**
+         * Get the last breadcrumb for the current page.
+         * 
+         * Optionally pass a
+         *
+         * @return \stdClass|null The breadcrumb for the current page.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException if the current route doesn't have an associated name.
+         * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
+         * @static 
+         */ 
+        public static function current()
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        return $instance->current();
+        }
+        
+        /**
+         * Set the current route name and parameters to use when calling render() or generate() with no parameters.
+         *
+         * @param string $name The name of the current page.
+         * @param mixed $params The parameters to pass to the closure for the current page.
+         * @return void 
+         * @static 
+         */ 
+        public static function setCurrentRoute($name, ...$params)
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        $instance->setCurrentRoute($name, ...$params);
+        }
+        
+        /**
+         * Clear the previously set route name and parameters to use when calling render() or generate() with no parameters.
+         * 
+         * Next time it will revert to the default behaviour of using the current route from Laravel.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function clearCurrentRoute()
+        {
+                        /** @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager $instance */
+                        $instance->clearCurrentRoute();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+                        \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin, $replace = true)
+        {
+                        \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::mixin($mixin, $replace);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+                        return \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::hasMacro($name);
+        }
+         
+    }
+ 
+}
+
 namespace Facade\Ignition\Facades { 
 
     /**
@@ -19493,6 +20583,16 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
+
+    class Basketlist extends \App\Facades\Basketlist {}
+
+    class Comparelist extends \App\Facades\Comparelist {}
+
+    class Wishlist extends \App\Facades\Wishlist {}
+
+    class Debugbar extends \Barryvdh\Debugbar\Facade {}
+
+    class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
 
