@@ -19,12 +19,12 @@ abstract class Ecommerce
     /**
      * @var string $cacheKey
      */
-    protected $cacheKey;
+    private $cacheKey;
 
     /**
      * @var Guard $guard
      */
-    protected $guard;
+    private $guard;
 
     /**
      * @var Collection $items
@@ -50,12 +50,36 @@ abstract class Ecommerce
         $this->instance = $model;
         $this->guard = $guard;
         $this->items = collect();
-        $this->getItems();
+        $this->queryAndSetItems();
     }
 
-    protected function getItems()
+    private function queryAndSetItems(): void
     {
         $this->items = $this->instance->ofUser($this->cacheKey, $this->guard)->get();
+    }
+
+    /**
+     * @param Model $model
+     * @throws \Exception
+     */
+    protected function canModel(Model $model): void
+    {
+        switch (get_class($this)) {
+            case Basketlist::class:
+                $allowedModels = config('ecommerce.basketlist.models');
+                break;
+            case Wishlist::class:
+                $allowedModels = config('ecommerce.wishlist.models');
+                break;
+            default:
+                $allowedModels = [];
+                break;
+        }
+        if (!in_array(get_class($model), $allowedModels)) {
+            throw new \Exception(
+                sprintf('%s for %s not allowed', get_class($model), strtolower(class_basename($this)))
+            );
+        }
     }
 
     /**
@@ -91,7 +115,7 @@ abstract class Ecommerce
                 ]
             )
         )->touch();
-        $this->getItems();
+        $this->queryAndSetItems();
         return $add;
     }
 
@@ -103,8 +127,8 @@ abstract class Ecommerce
     public function remove(Model $model): ?bool
     {
         $this->canModel($model);
-        $remove = $this->instance->ofUser($this->cacheKey, $this->guard)->ByItem($model)->delete();
-        $this->getItems();
+        $remove = $this->instance->ofUser($this->cacheKey, $this->guard)->byItem($model)->delete();
+        $this->queryAndSetItems();
         return $remove;
     }
 
@@ -134,26 +158,18 @@ abstract class Ecommerce
     }
 
     /**
-     * @param Model $model
-     * @throws \Exception
+     * @return string
      */
-    protected function canModel(Model $model): void
+    public function cacheKey(): string
     {
-        switch (get_class($this)) {
-            case Basketlist::class:
-                $allowedModels = config('ecommerce.basketlist.models');
-                break;
-            case Wishlist::class:
-                $allowedModels = config('ecommerce.wishlist.models');
-                break;
-            default:
-                $allowedModels = [];
-                break;
-        }
-        if (!in_array(get_class($model), $allowedModels)) {
-            throw new \Exception(
-                sprintf('%s for %s not allowed', get_class($model), strtolower(class_basename($this)))
-            );
-        }
+        return $this->cacheKey;
+    }
+
+    /**
+     * @return Guard
+     */
+    public function guard(): Guard
+    {
+        return $this->guard;
     }
 }

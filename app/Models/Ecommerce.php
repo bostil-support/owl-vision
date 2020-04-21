@@ -20,12 +20,16 @@ abstract class Ecommerce extends Model implements IEcommerceModel
      */
     public function scopeOfUser(Builder $query, ?string $cacheID, ?Guard $guard = null)
     {
-        return $query->where(
+        $query->where(
             [
                 ['user_id', optional($guard)->id()],
                 ['guard', $guard ? get_class($guard->user()) : null]
             ]
-        )->orWhere('cache_id', $cacheID);
+        );
+        if ($cacheID) {
+            $query->orWhere('cache_id', $cacheID);
+        }
+        return $query;
     }
 
     public function scopeByItem(Builder $query, Model $model)

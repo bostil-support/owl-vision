@@ -58,7 +58,7 @@ class Basketlist extends Ecommerce
 
     /**
      * @param Model $model
-     * @return \App\Contracts\IEcommerceModel|\Illuminate\Database\Eloquent\Builder|Model
+     * @return IEcommerceModel|\Illuminate\Database\Eloquent\Builder|Model
      * @throws \Exception
      */
     private function getCartItem(Model $model)
