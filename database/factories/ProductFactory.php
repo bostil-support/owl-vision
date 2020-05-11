@@ -15,7 +15,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'sku' => $faker->numberBetween(1000000, 1999999),
         'price' => $faker->randomFloat(2, 5, 100),
         'stock_quantity' => rand(0, 100),
-        'product_type' => Arr::random(Product::PRODUCT_TYPES),
+        'product_type' => Arr::random(Product::TYPES),
         'image_id' => optional(Image::inRandomOrder()->first())->id,
         'excerpt' => $faker->text(100),
         'description' => $description = $faker->text(200),

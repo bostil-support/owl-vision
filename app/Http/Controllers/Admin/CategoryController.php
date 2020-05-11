@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
+
     /**
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
@@ -20,53 +21,72 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param CategoryRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \App\Http\Requests\CategoryRequest  $request
+     *
+     * @return \Illuminate\Http\JsonResponse|object
      */
     public function store(CategoryRequest $request)
     {
         $category = Category::create($request->validated());
-        return response()->json(['message' => 'Category added successfully', 'data' => $category], 201);
-    }
 
-    /**
-     * @param Category $category
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(Category $category)
-    {
-        return response()->json(new CategoryResource($category->load('parent')));
-    }
-
-    /**
-     * @param CategoryRequest $request
-     * @param Category $category
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(CategoryRequest $request, Category $category)
-    {
-        $category->update($request->validated());
-        return response()->json($category);
+        return (new CategoryResource($category))->response()->setStatusCode(201);
     }
 
     /**
      * @param $id
+     *
+     * @return \App\Http\Resources\CategoryResource
      */
-    public function destroy($id)
+    public function show($id)
     {
-        //
+        $category = Category::query()->findOrFail($id);
+
+        return new CategoryResource($category->load('parent'));
     }
 
     /**
-     * @param Request $request
+     * @param  \App\Http\Requests\CategoryRequest  $request
+     * @param $id
+     *
+     * @return \App\Http\Resources\CategoryResource
+     */
+    public function update(CategoryRequest $request, $id)
+    {
+        $category = Category::query()->findOrFail($id);
+        $category->update($request->validated());
+
+        return new CategoryResource($category);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $category = Category::query()->findOrFail($id);
+        $category->delete();
+
+        return response()->json(null, 204);
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function ordering(Request $request)
     {
-        $parentID = ($request->get('id')) ? Category::findOrFail($request->get('id'))->id : null;
+        $parentID = $request->get('id')
+            ? Category::findOrFail($request->get('id'))->id
+            : null;
+
         if ($children = $request->get('children')) {
             $order = 1;
+
             foreach ($children as $child) {
                 $child = Category::findOrFail($child['id']);
                 $child->parent_id = $parentID;
@@ -76,8 +96,10 @@ class CategoryController extends Controller
             }
         }else {
             Log::error(sprintf('[%s] Something went wrong', __METHOD__), $request->all());
+
             throw new \Exception('Something went wrong');
         }
+
         return response()->json(['message' => 'Menu reordered']);
     }
 }

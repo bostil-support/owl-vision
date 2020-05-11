@@ -13,13 +13,36 @@ class Product extends Model
     use Sluggable;
     use SoftDeletes;
 
-    const PRODUCT_TYPES = [
+    const TYPES = [
       'Simple'
     ];
 
-    const DEFAULT_PRODUCT_TYPE = 'Simple';
+    const DEFAULT_TYPE = 'Simple';
 
-    protected $fillable = ['name', 'slug', 'published'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'sku',
+        'price',
+        'stock_quantity',
+        'product_type',
+        'image_id',
+        'excerpt',
+        'description',
+        'admin_comment',
+        'show_on_home_page',
+        'tags',
+        'manufacturer_part_number',
+        'published',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+    ];
+
+    protected $casts = [
+        'show_on_home_page' => 'boolean',
+        'published' => 'boolean',
+    ];
 
     public function getNameAttribute($name)
     {

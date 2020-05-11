@@ -25,19 +25,33 @@ export const actions = {
       })
       .catch(e => console.log(e))
   },
-  fetchProduct ({ commit }, payload) {
-    axios.get('products/' + payload)
-      .then(response => {
-        commit('setProduct', response.data)
-      })
-      .catch(e => console.log(e))
+  fetchProduct ({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      axios.get('products/' + id)
+        .then(response => {
+          commit('setProduct', response.data.data)
+          resolve()
+        })
+        .catch(e => console.log(e))
+    })
+  },
+  storeProduct ({ commit, dispatch }, payload) {
+    return new Promise((resolve, reject) => {
+      axios.post('products', payload)
+        .then(response => {
+          dispatch('fetchProducts')
+          commit('setProduct', response.data.data)
+          resolve()
+        })
+        .catch(e => console.log(e))
+    })
   },
   updateProduct ({ commit, dispatch }, payload) {
     return new Promise((resolve, reject) => {
       axios.put('products/' + payload.id, payload)
         .then(response => {
           dispatch('fetchProducts')
-          commit('setProduct', response.data)
+          commit('setProduct', response.data.data)
           resolve()
         })
         .catch(e => console.log(e))

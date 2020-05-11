@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('sku')->nullable();
             $table->unsignedDecimal('price')->default(0);
             $table->integer('stock_quantity')->default(0);
-            $table->enum('product_type', Product::PRODUCT_TYPES)
-                ->default(Product::DEFAULT_PRODUCT_TYPE);
+            $table->enum('product_type', Product::TYPES)
+                ->default(Product::DEFAULT_TYPE);
             $table->unsignedBigInteger('image_id')->nullable();
             $table->foreign('image_id')->references('id')
                 ->on('images')->onDelete('set null');

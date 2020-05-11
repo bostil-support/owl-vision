@@ -20,46 +20,61 @@ class ProductController extends Controller
 
     /**
      * @param  \App\Http\Requests\ProductRequest  $request
+     *
+     * @return \Illuminate\Http\JsonResponse|object
      */
     public function store(ProductRequest $request)
     {
-        //
+        $product = Product::query()->create($request->validated());
+
+        return (new ProductResource($product))->response()->setStatusCode(201);
     }
 
     /**
-     * @param  \App\Models\Product  $product
+     * @param $id
      *
      * @return \App\Http\Resources\ProductResource
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = Product::query()->findOrFail($id);
+
         return new ProductResource($product);
     }
 
     /**
-     * @param ProductRequest $request
-     * @param Product $product
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \App\Http\Requests\ProductRequest  $request
+     * @param $id
+     *
+     * @return \App\Http\Resources\ProductResource
      */
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductRequest $request, $id)
     {
+        $product = Product::query()->findOrFail($id);
         $product->update($request->validated());
-        return response()->json($product);
+
+        return new ProductResource($product);
     }
 
     /**
-     * @param  \App\Models\Product  $product
+     * @param $id
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::query()->findOrFail($id);
         $product->delete();
 
         return response()->json(null, 204);
     }
 
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroyMultiple(Request $request)
     {
         $request->validate([
@@ -74,6 +89,11 @@ class ProductController extends Controller
         return response()->json(['deleted' => $count], 200);
     }
 
+    /**
+     * @param $id
+     *
+     * @return \App\Http\Resources\ProductResource
+     */
     public function restore($id)
     {
         $product = Product::withTrashed()->findOrFail($id);
@@ -83,6 +103,11 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function restoreMultiple(Request $request)
     {
         $request->validate([

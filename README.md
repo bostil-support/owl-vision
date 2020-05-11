@@ -2,7 +2,7 @@
 
 ## Installation
 
-- clone project from repository into your `project-directory`, example `git clone git@github.com:bostil-support/owl-vision.git project-directory`
+- clone project from the repository into your `project-directory`, example `git clone git@github.com:bostil-support/owl-vision.git project-directory`
 - run `sudo chown -R $USER:www-data project-directory`
 - run `sudo chmod -R g+rw project-directory`
 - run `sudo find project-directory -type d -print0 | sudo xargs -0 chmod g+s`
