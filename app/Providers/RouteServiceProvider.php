@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/profile';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -42,13 +42,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
-
         $this->mapAdminWebRoutes();
 
         $this->mapAdminApiRoutes();
+
+        $this->mapApiRoutes();
+
+        $this->mapWebRoutes();
     }
 
     /**

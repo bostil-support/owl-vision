@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Resources\CategoryListResource;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -40,7 +39,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CategoryRequest $request
      * @param Category $category
      * @return \Illuminate\Http\JsonResponse
      */
@@ -51,19 +50,11 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
     public function destroy($id)
     {
         //
-    }
-
-    public function list()
-    {
-        return CategoryListResource::collection(Category::parents()->get());
     }
 
     /**

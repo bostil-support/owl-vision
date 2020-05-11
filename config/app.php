@@ -229,6 +229,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Basketlist' => App\Facades\Basketlist::class,
+        'Comparelist' => App\Facades\Comparelist::class,
+        'Wishlist' => App\Facades\Wishlist::class,
     ],
 
 ];

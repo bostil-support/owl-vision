@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('partials.page-info', ['breadcrumbs' => ['Contact']])
+    @include('partials.page-info')
 
 
     <!-- Contact section -->

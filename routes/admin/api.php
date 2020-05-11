@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::group([/*'middleware' => ['auth']*/], function () {
         Route::apiResource('categories', 'CategoryController');
         Route::get('categories-list', 'CategoryController@list');
