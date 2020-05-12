@@ -31,14 +31,14 @@ class ProductRequest extends FormRequest
                 'required',
                 'string',
                 'max:32',
-                Rule::unique('products')->ignore($this->product, 'slug')
+                Rule::unique('products')->ignore($this->product)
             ],
             'sku' => 'nullable|string',
             'price' => 'numeric|min:0',
             'stock_quantity' => 'integer|min:0',
             'product_type' => [
                 'required',
-                'sting',
+                'string',
                 'regex:/^(' . implode('|', Product::TYPES) . ')$/'
             ],
             'image_id' => 'nullable|integer|exists:images,id',
@@ -46,12 +46,12 @@ class ProductRequest extends FormRequest
             'description' => 'nullable|string',
             'admin_comment' => 'nullable|string',
             'show_on_home_page' => 'required|boolean',
-            'tags' => 'nullable|json',
             'manufacturer_part_number' => 'nullable|string|max:255',
             'published' => 'required|boolean',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
             'meta_keywords' => 'nullable|string|max:255',
+            'tags' => 'array',
         ];
     }
 }

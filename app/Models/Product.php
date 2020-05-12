@@ -31,7 +31,6 @@ class Product extends Model
         'description',
         'admin_comment',
         'show_on_home_page',
-        'tags',
         'manufacturer_part_number',
         'published',
         'meta_title',
@@ -44,6 +43,8 @@ class Product extends Model
         'published' => 'boolean',
     ];
 
+    protected $with = ['tags'];
+
     public function getNameAttribute($name)
     {
         return ucfirst($name);
@@ -52,5 +53,10 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

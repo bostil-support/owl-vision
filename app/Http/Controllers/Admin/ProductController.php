@@ -121,4 +121,11 @@ class ProductController extends Controller
 
         return response()->json(['restored' => $productsQuery->count()]);
     }
+
+    public function getProductTypes()
+    {
+        return response()->json([
+            'data' => Product::TYPES
+        ]);
+    }
 }

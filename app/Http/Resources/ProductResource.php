@@ -27,7 +27,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'admin_comment' => $this->admin_comment,
             'show_on_home_page' => $this->show_on_home_page,
-            'tags' => $this->tags,
+            'tags' => TagResource::collection($this->whenLoaded('tags')),
             'manufacturer_part_number' => $this->manufacturer_part_number,
             'published' => $this->published,
             'meta_title' => $this->meta_title,

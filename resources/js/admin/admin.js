@@ -11,8 +11,11 @@ window.axios.defaults.baseURL = BACKEND_URL + '/api/admin';
 
 import Vue from 'vue'
 
-import Toasted from 'vue-toasted';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
+import Toasted from 'vue-toasted';
 Vue.use(Toasted, {
     position: 'bottom-right',
     duration: 3000
