@@ -7,15 +7,24 @@
         </div>
         <div class="flex border-b">
             <div class="sm:w-5/12 px-5 pt-2">
-                <div class="pt-2 flex flex-col">
-                    <text-field label="Name" v-model="addForm.name" />
-                    <text-field label="Slug" v-model="addForm.slug" />
-                    <select-field label="Parent category" v-model="addForm.parent_id" :options="categoriesList.map(({id, name}) => ({value: id, text: name}))" />
-
-                    <div class="flex items-center justify-between mt-2">
-                        <success-button @click="store">Add new category</success-button>
-                    </div>
-                </div>
+                <el-form size="small" label-width="150px" class="pt-5">
+                    <el-form-item label="Name" :error="getError('name')">
+                        <el-input v-model="addForm.name"/>
+                    </el-form-item>
+                    <el-form-item label="Slug" :error="getError('slug')">
+                        <el-input v-model="addForm.slug"/>
+                    </el-form-item>
+                    <el-form-item label="Parent category" :error="getError('parent_id')">
+                        <el-select v-model="addForm.parent_id" style="width: 100%">
+                            <el-option v-for="category in categoriesList"
+                                       :label="category.name"
+                                       :key="category.id"
+                                       :value="category.id"
+                            />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item><el-button type="primary" @click="store">Add new category</el-button></el-form-item>
+                </el-form>
             </div>
             <div class="flex-1 border-l">
                 <div class="panel-collapse">
@@ -38,7 +47,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import { mapActions, mapGetters, mapMutations } from 'vuex'
   import {VueNestable, VueNestableHandle} from 'vue-nestable';
   import TextField from '~/admin/fields/TextField';
   import SelectField from '~/admin/fields/SelectField';
@@ -55,37 +64,37 @@
     },
     data() {
       return {
-        addForm: {
-          name: '',
-          slug: '',
-          parent_id: ''
-        },
+        addForm: {},
         nestableItems: []
       }
     },
+    computed: {
+      ...mapGetters({
+        categories: 'category/categories',
+        categoriesList: 'category/categoriesList',
+        errors: 'category/errors',
+      })
+    },
+    watch: {
+      categories(value) {
+        this.nestableItems = value;
+      },
+      'addForm.name': function(value) {
+        this.addForm.slug = value ? slugify(value) : ''
+      }
+    },
     methods: {
+      ...mapActions({
+        fetchCategories: 'category/fetchCategories',
+        storeCategory: 'category/storeCategory',
+      }),
       store() {
-        if (!this.addForm.name || !this.addForm.slug) {
-          this.$toasted.error('"Name" and "Slug" fields are required')
-          return
-        }
         if (!this.addForm.parent_id) this.addForm.parent_id = null
-          axios
-          .post('categories', this.addForm)
-          .then(response => {
-            this.$toasted.success(response.data.message || 'Operation was successful')
-            this.$emit('fetch')
-            this.addForm.name = ''
-            this.addForm.slug = ''
-            this.addForm.parent_id = ''
-          })
-          .catch(error => {
-            if (error.response.data.errors) {
-              Object.values(error.response.data.errors).forEach(item => this.$toasted.error(item[0]))
-            }else {
-              this.$toasted.error(error.response.data.message || error.message)
-            }
-          })
+
+        this.storeCategory(this.addForm).then(() => {
+          this.fetchCategories()
+          this.addForm = {}
+        })
       },
       sorting(category, {items, pathTo}) {
         if (!pathTo) return
@@ -107,22 +116,11 @@
           .post('categories/ordering', data)
           .then(response => this.$toasted.success(response.data.message || 'Operation was successful'))
           .catch(error => this.$toasted.error(error.response.data.message || error.message))
-          .finally(() => this.$emit('fetch'))
-      }
-    },
-    computed: {
-      ...mapGetters({
-        categories: 'category/categories',
-        categoriesList: 'category/categoriesList'
-      })
-    },
-    watch: {
-      categories(value) {
-        this.nestableItems = value;
+          .finally(() => this.fetchCategories())
       },
-      'addForm.name': function(value) {
-        this.addForm.slug = slugify(value)
-      }
+      getError(field) {
+        return this.errors[field] ? this.errors[field][0] : null
+      },
     },
     mounted() {
       this.nestableItems = this.categories;

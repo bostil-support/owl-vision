@@ -5,74 +5,106 @@
                 Category {{id ? 'edit': 'create'}}
             </h3>
         </div>
-        <div class="categoriesCreate-wrapper">
-            <div class="form-create">
 
-                <span class="name-input">Name <i class="fas fa-info-circle"></i></span>
-                <input type="text" v-model="category.name">
-
-                <span class="name-input">Description <i class="fas fa-info-circle"></i></span>
-                <textarea id="mytextarea" v-model="category.description">Hello, World!</textarea>
-
-                <span class="name-input">Category template <i class="fas fa-info-circle"></i></span>
-                <select v-model="category.template">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-
-                <span class="name-input">Picture <i class="fas fa-info-circle"></i></span>
-                <input type="file" name="">
-
-                <span class="name-input">Parent category <i class="fas fa-info-circle"></i></span>
-                <select name="" id="" v-model="category.parent_id">
-                    <option v-for="option in categoriesList" :value="option.id">{{ option.name }}</option>
-                </select>
-
-                <span class="name-input">Price ranges <i class="fas fa-info-circle"></i></span>
-                <input type="text" v-model="category.price_range">
-
-                <span class="name-input">Show on home page <i class="fas fa-info-circle"></i></span>
-                <span> <input type="checkbox" v-model="category.show_on_home_page" id="cb11"><label for="cb11"></label></span>
-
-                <span class="name-input">Show featured products on home page <i class="fas fa-info-circle"></i></span>
-                <span> <input type="checkbox" v-model="category.featured_on_home_page" id="cb2"><label for="cb2"></label></span>
-
-                <span class="name-input">Include in top menu <i class="fas fa-info-circle"></i></span>
-                <span> <input type="checkbox" v-model="category.show_on_top_menu" id="cb3"><label for="cb3"></label></span>
-
-                <span class="name-input">Show category on search box <i class="fas fa-info-circle"></i></span>
-                <span> <input type="checkbox" v-model="category.show_on_search_box" id="cb4"><label for="cb4"></label></span>
-
-                <span class="name-input">Display order <i class="fas fa-info-circle"></i></span>
-                <span> <input type="number" v-model="category.search_box_order"></span>
-
-                <span class="name-input">Flag <i class="fas fa-info-circle"></i></span>
-                <input type="text" v-model="category.flag">
-
-
-                <span class="name-input">Price ranges <i class="fas fa-info-circle"></i></span>
-                <input type="text" v-model="category.price_range">
-
-                <span class="name-input">Hide category on category page <i class="fas fa-info-circle"></i></span>
-                <span> <input type="checkbox" v-model="category.hide_on_catalog" id="cb1"><label for="cb1"></label></span>
-            </div>
-            <div>
-                <button v-if="id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-                        @click="save">
-                    Save
-                </button>
-                <button v-else class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-                        @click="store">
-                    Create
-                </button>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+        <el-form size="small" label-width="250px">
+            <el-form-item label="Name" :error="getError('name')">
+                <el-input v-model="category.name"/>
+            </el-form-item>
+            <el-form-item label="Slug" :error="getError('slug')">
+                <el-input v-model="category.slug"/>
+            </el-form-item>
+            <el-form-item label="Description" :error="getError('description')">
+                <el-input type="textarea" :autosize="{minRows: 2, maxRows: 5}" v-model="category.description"/>
+            </el-form-item>
+            <el-form-item label="Category template" :error="getError('template')">
+                <el-select v-model="category.template" style="width: 100%">
+                    <el-option v-for="template in 5"
+                               :label="template"
+                               :key="template"
+                               :value="template"
+                    />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="Parent category" :error="getError('parent_id')">
+                <el-select v-model="category.parent_id" style="width: 100%">
+                    <el-option v-for="category in categoriesList"
+                               :label="category.name"
+                               :key="category.id"
+                               :value="category.id"
+                    />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="Picture" :error="getError('picture')">
+<!--                <el-upload v-model="category.picture"/>-->
+            </el-form-item>
+            <el-form-item label="Page size" :error="getError('page_size')">
+                <el-input-number :min="0" :precision="2" v-model="category.page_size"/>
+            </el-form-item>
+            <el-form-item label="Allow select page size" :error="getError('allow_select_page_size')">
+                <el-checkbox v-model="category.allow_select_page_size"/>
+            </el-form-item>
+            <el-form-item label="Page size options" :error="getError('page_size_options')">
+                <el-input v-model="category.page_size_options"/>
+            </el-form-item>
+            <el-form-item label="Price ranges" :error="getError('price_range')">
+                <el-input v-model="category.price_range"/>
+            </el-form-item>
+            <el-form-item label="Show on home page" :error="getError('show_on_home_page')">
+                <el-checkbox v-model="category.show_on_home_page"/>
+            </el-form-item>
+            <el-form-item label="Show featured on home page" :error="getError('featured_on_home_page')">
+                <el-checkbox v-model="category.featured_on_home_page"/>
+            </el-form-item>
+            <el-form-item label="Show category on search box" :error="getError('show_on_search_box')">
+                <el-checkbox v-model="category.show_on_search_box"/>
+            </el-form-item>
+            <el-form-item label="Search box order" :error="getError('search_box_order')">
+                <el-input-number :min="0" v-model="category.search_box_order"/>
+            </el-form-item>
+            <el-form-item label="Show on top menu" :error="getError('show_on_top_menu')">
+                <el-checkbox v-model="category.show_on_top_menu"/>
+            </el-form-item>
+            <el-form-item label="Published" :error="getError('published')">
+                <el-checkbox v-model="category.published"/>
+            </el-form-item>
+            <el-form-item label="Flag" :error="getError('flag')">
+                <el-input v-model="category.flag"/>
+            </el-form-item>
+            <el-form-item label="Flag style" :error="getError('flag_style')">
+                <el-input v-model="category.flag_style"/>
+            </el-form-item>
+            <el-form-item label="Icon" :error="getError('icon')">
+                <el-input v-model="category.icon"/>
+            </el-form-item>
+            <el-form-item label="Default sort" :error="getError('default_sort')">
+                <el-input-number :min="0" v-model="category.default_sort"/>
+            </el-form-item>
+            <el-form-item label="Hide on catalog" :error="getError('hide_on_catalog')">
+                <el-checkbox v-model="category.hide_on_catalog"/>
+            </el-form-item>
+            <el-form-item label="Meta title" :error="getError('meta_title')">
+                <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="category.meta_title"/>
+            </el-form-item>
+            <el-form-item label="Meta description" :error="getError('meta_description')">
+                <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="category.meta_description"/>
+            </el-form-item>
+            <el-form-item label="Meta keywords" :error="getError('meta_keywords')">
+                <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="category.meta_keywords"/>
+            </el-form-item>
+            <el-form-item>
+                <div class="flex justify-between">
+                    <el-button @click="$router.push({name: 'admin.catalog.categories.list'})">Cancel</el-button>
+                    <el-button v-if="id" type="primary" @click="update" class="">Save</el-button>
+                    <el-button v-else type="primary" @click="store" class="">Create</el-button>
+                </div>
+            </el-form-item>
+        </el-form>
     </main>
 </template>
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
+  import { router } from '../../router'
 
   export default {
     props: {
@@ -85,21 +117,29 @@
       ...mapGetters({
         categoriesList: 'category/categoriesList',
         category: 'category/category',
+        errors: 'category/errors',
       })
     },
     methods: {
       ...mapActions({
-        update: 'category/updateCategory'
+        fetchCategory: 'category/fetchCategory',
+        storeCategory: 'category/storeCategory',
+        updateCategory: 'category/updateCategory',
       }),
-      save() {
-        this.update(this.category).then(() => this.$toasted.success('Saved'))
-      },
       store() {
-        alert(1)
-      }
+        this.storeCategory(this.category).then(() => {
+          router.push({name: 'admin.catalog.categories.edit', params: {id: this.category.id}})
+        })
+      },
+      update() {
+        this.updateCategory(this.category)
+      },
+      getError(field) {
+        return this.errors[field] ? this.errors[field][0] : null
+      },
     },
     mounted() {
-      if (this.id) this.$store.dispatch('category/fetchCategory', this.id)
+      if (this.id) this.fetchCategory(this.id)
     }
   }
 </script>

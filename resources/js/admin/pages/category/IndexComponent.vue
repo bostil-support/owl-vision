@@ -1,5 +1,5 @@
 <template>
-    <router-view @fetch="fetch"/>
+    <router-view/>
 </template>
 
 <script>
@@ -8,11 +8,11 @@
   export default {
     methods: {
       ...mapActions({
-        fetch: 'category/fetchCategories'
+        fetchCategories: 'category/fetchCategories'
       })
     },
     mounted () {
-      this.fetch()
+      this.fetchCategories()
     }
   }
 </script>

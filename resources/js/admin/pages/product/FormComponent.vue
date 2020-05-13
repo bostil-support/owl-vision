@@ -23,7 +23,7 @@
                 <el-input-number :min="0" v-model="product.stock_quantity"/>
             </el-form-item>
             <el-form-item label="Product type" :error="getError('product_type')">
-                <el-select v-model="product.product_type">
+                <el-select v-model="product.product_type" style="width: 100%">
                     <el-option v-for="type in productTypes"
                                :label="type"
                                :key="type"
@@ -82,8 +82,8 @@
             <el-form-item>
                 <div class="flex justify-between">
                     <el-button @click="$router.push({name: 'admin.catalog.products.list'})">Cancel</el-button>
-                    <el-button v-if="id" type="primary" @click="updateProduct" class="">Save</el-button>
-                    <el-button v-else type="primary" @click="storeProduct" class="">Create</el-button>
+                    <el-button v-if="id" type="primary" @click="update" class="">Save</el-button>
+                    <el-button v-else type="primary" @click="store" class="">Create</el-button>
                 </div>
             </el-form-item>
         </el-form>
@@ -111,27 +111,27 @@
         product: 'product/product',
         productTypes: 'product/productTypes',
         tags: 'tag/tags',
-        errors: 'product/errors'
+        errors: 'product/errors',
       }),
     },
     methods: {
       ...mapActions({
         fetchProduct: 'product/fetchProduct',
         fetchTags: 'tag/fetchTags',
-        update: 'product/updateProduct',
-        store: 'product/storeProduct',
+        updateProduct: 'product/updateProduct',
+        storeProduct: 'product/storeProduct',
       }),
       ...mapMutations({
         clearProduct: 'product/clearProduct',
       }),
-      storeProduct() {
-        this.store(this.product).then(() => {
+      store() {
+        this.storeProduct(this.product).then(() => {
           this.fetchProductTags()
           router.push({name: 'admin.catalog.products.edit', params: {id: this.product.id}})
         })
       },
-      updateProduct() {
-        this.update(this.product).then(() => this.fetchProductTags())
+      update() {
+        this.updateProduct(this.product).then(() => this.fetchProductTags())
       },
       async searchTags(query) {
         if (query.length >= 2) {

@@ -1,3 +1,5 @@
+import { Notification } from 'element-ui'
+
 const flat = (item, parent) => {
   const resultItem = {
     id: item.id,
@@ -9,13 +11,15 @@ const flat = (item, parent) => {
 export const state = {
   categories: [],
   categoriesList: [],
-  category: {}
+  category: {},
+  errors: {},
 }
 
 export const getters = {
   categories: state => state.categories,
   categoriesList: state => state.categoriesList,
-  category: state => state.category
+  category: state => state.category,
+  errors: state => state.errors,
 }
 
 export const mutations = {
@@ -27,7 +31,16 @@ export const mutations = {
   },
   setCategory: (state, payload) => {
     state.category = payload
-  }
+  },
+  clearCategory: (state) => {
+    state.category = {}
+  },
+  setErrors: (state, payload) => {
+    state.errors = payload
+  },
+  clearErrors: (state) => {
+    state.errors = {}
+  },
 }
 
 export const actions = {
@@ -37,24 +50,67 @@ export const actions = {
         commit('setCategories', response.data.data)
         commit('setCategoriesList', response.data.data.flatMap(flat))
       })
-      .catch(e => console.log(e))
-  },
-  fetchCategory ({ commit }, payload) {
-    axios.get('categories/' + payload)
-      .then(response => {
-        commit('setCategory', response.data)
+      .catch(e => {
+        Notification.error({
+          title: "Fetch categories",
+          message: e.message,
+        })
       })
-      .catch(e => console.log(e))
+  },
+  fetchCategory ({ commit }, id) {
+    axios.get('categories/' + id)
+      .then(response => {
+        commit('setCategory', response.data.data)
+      })
+      .catch(e => {
+        Notification.error({
+          title: "Fetch category #"+id,
+          message: e.message,
+        })
+      })
+  },
+  storeCategory ({ commit, dispatch }, payload) {
+    return new Promise((resolve, reject) => {
+      axios.post('categories', payload)
+        .then(response => {
+          dispatch('fetchCategories')
+          commit('clearErrors')
+          commit('setCategory', response.data.data)
+          resolve()
+          Notification.success("Category created successfully")
+        })
+        .catch(e => {
+          if (e.response.status === 422) {
+            commit('setErrors', e.response.data.errors)
+          }
+
+          Notification.error({
+            title: "Store category",
+            message: e.response.status === 422 ? 'Validation error' : e.message,
+          })
+        })
+    })
   },
   updateCategory ({ commit, dispatch }, payload) {
     return new Promise((resolve, reject) => {
       axios.put('categories/' + payload.id, payload)
         .then(response => {
           dispatch('fetchCategories')
-          commit('setCategory', response.data)
+          commit('clearErrors')
+          commit('setCategory', response.data.data)
           resolve()
+          Notification.success("Category updated successfully")
         })
-        .catch(e => console.log(e))
+        .catch(e => {
+          if (e.response.status === 422) {
+            commit('setErrors', e.response.data.errors)
+          }
+
+          Notification.error({
+            title: "Update category",
+            message: e.response.status === 422 ? 'Validation error' : e.message,
+          })
+        })
     })
-  }
+  },
 }

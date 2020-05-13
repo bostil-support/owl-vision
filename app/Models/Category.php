@@ -84,9 +84,44 @@ class Category extends Model
     use MultiRenderable;
     use Sluggable;
 
-    protected $with = ['children'];
+    protected $fillable = [
+        'name',
+        'description',
+        'slug',
+        'template',
+        'parent_id',
+        'image_id',
+        'page_size',
+        'allow_select_page_size',
+        'page_size_options',
+        'price_range',
+        'show_on_home_page',
+        'featured_on_home_page',
+        'show_on_search_box',
+        'search_box_order',
+        'show_on_top_menu',
+        'published',
+        'flag',
+        'flag_style',
+        'icon',
+        'default_sort',
+        'hide_on_catalog',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+    ];
 
-    protected $fillable = ['name', 'slug', 'parent_id'];
+    protected $casts = [
+        'allow_select_page_size' => 'boolean',
+        'show_on_home_page' => 'boolean',
+        'featured_on_home_page' => 'boolean',
+        'show_on_search_box' => 'boolean',
+        'show_on_top_menu' => 'boolean',
+        'published' => 'boolean',
+        'hide_on_catalog' => 'boolean',
+    ];
+
+    protected $with = ['children'];
 
     public function scopePublished(Builder $query)
     {
