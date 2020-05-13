@@ -23,6 +23,10 @@ class TagController extends Controller
             $tagsQuery->where('title', 'like', "%" . $request->search . "%");
         }
 
+        if ($request->has('ids')) {
+            $tagsQuery->whereIn('id', $request->ids);
+        }
+
         if ($request->page === '-1') {
             $tags = $tagsQuery->get();
         } else {

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   import BooleanField from '~/admin/fields/BooleanField'
 
   export default {
@@ -56,6 +56,14 @@
       ...mapGetters({
         products: 'product/products'
       })
+    },
+    methods: {
+      ...mapActions({
+        fetch: 'product/fetchProducts'
+      })
+    },
+    mounted () {
+      this.fetch()
     }
   }
 </script>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\Tag;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -21,13 +23,16 @@ class ProductController extends Controller
     /**
      * @param  \App\Http\Requests\ProductRequest  $request
      *
+     * @param  \App\Services\ProductService  $service
+     *
      * @return \Illuminate\Http\JsonResponse|object
+     * @throws \Throwable
      */
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request, ProductService $service)
     {
-        $product = Product::query()->create($request->validated());
+        $product = $service->store($request->validated());
 
-        return (new ProductResource($product))->response()->setStatusCode(201);
+        return (new ProductResource($product->load('tags')))->response()->setStatusCode(201);
     }
 
     /**
@@ -46,14 +51,19 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\ProductRequest  $request
      * @param $id
      *
+     * @param  \App\Services\ProductService  $service
+     *
      * @return \App\Http\Resources\ProductResource
+     * @throws \Throwable
      */
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request, $id, ProductService $service)
     {
+        /** @var Product $product */
         $product = Product::query()->findOrFail($id);
-        $product->update($request->validated());
 
-        return new ProductResource($product);
+        $service->update($product, $request->validated());
+
+        return new ProductResource($product->load('tags'));
     }
 
     /**

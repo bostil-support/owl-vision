@@ -4,12 +4,14 @@ export const state = {
   products: [],
   product: {},
   productTypes: [],
+  errors: {},
 }
 
 export const getters = {
   products: state => state.products,
   product: state => state.product,
   productTypes: state => state.productTypes,
+  errors: state => state.errors,
 }
 
 export const mutations = {
@@ -19,8 +21,17 @@ export const mutations = {
   setProduct: (state, payload) => {
     state.product = payload
   },
+  clearProduct: (state) => {
+    state.product = {}
+  },
   setProductTypes: (state, payload) => {
     state.productTypes = payload
+  },
+  setErrors: (state, payload) => {
+    state.errors = payload
+  },
+  clearErrors: (state) => {
+    state.errors = {}
   },
 }
 
@@ -57,14 +68,19 @@ export const actions = {
       axios.post('products', payload)
         .then(response => {
           dispatch('fetchProducts')
+          commit('clearErrors')
           commit('setProduct', response.data.data)
           resolve()
           Notification.success("Product created successfully")
         })
         .catch(e => {
+          if (e.response.status === 422) {
+            commit('setErrors', e.response.data.errors)
+          }
+
           Notification.error({
             title: "Store product",
-            message: e.message,
+            message: e.response.status === 422 ? 'Validation error' : e.message,
           })
         })
     })
@@ -74,14 +90,19 @@ export const actions = {
       axios.put('products/' + payload.id, payload)
         .then(response => {
           dispatch('fetchProducts')
+          commit('clearErrors')
           commit('setProduct', response.data.data)
           resolve()
           Notification.success("Product updated successfully")
         })
         .catch(e => {
+          if (e.response.status === 422) {
+            commit('setErrors', e.response.data.errors)
+          }
+
           Notification.error({
             title: "Update product",
-            message: e.message,
+            message: e.response.status === 422 ? 'Validation error' : e.message,
           })
         })
     })

@@ -14,6 +14,9 @@ export const mutations = {
   setTags: (state, payload) => {
     state.tags = payload
   },
+  clearTags: (state) => {
+    state.tags = []
+  },
   setTag: (state, payload) => {
     state.tag = payload
   },

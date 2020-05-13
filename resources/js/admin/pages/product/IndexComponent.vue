@@ -7,11 +7,11 @@
   export default {
     methods: {
       ...mapActions({
-        fetch: 'product/fetchProducts'
+        fetchProductTypes: 'product/fetchProductTypes'
       })
     },
     mounted() {
-      this.fetch()
+      this.fetchProductTypes()
     }
   }
 </script>
