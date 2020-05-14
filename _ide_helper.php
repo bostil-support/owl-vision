@@ -2,8 +2,8 @@
 // @formatter:off
 
 /**
- * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 7.1.0 on 2020-04-21 11:02:34.
+ * A helper file for Laravel, to provide autocomplete information to your IDE
+ * Generated for Laravel 7.10.3 on 2020-05-14 06:43:32.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -701,6 +701,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Add new prefix to list of absolute path prefixes.
+         *
+         * @param string $prefix
+         * @return \Illuminate\Foundation\Application 
+         * @static 
+         */ 
+        public static function addAbsoluteCachePathPrefix($prefix)
+        {
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        return $instance->addAbsoluteCachePathPrefix($prefix);
+        }
+        
+        /**
          * Determine if the application is currently down for maintenance.
          *
          * @return bool 
@@ -1228,9 +1241,10 @@ namespace Illuminate\Support\Facades {
          * Call the given Closure / class@method and inject its dependencies.
          *
          * @param callable|string $callback
-         * @param array $parameters
+         * @param \Illuminate\Container\array<string,  mixed>  $parameters
          * @param string|null $defaultMethod
          * @return mixed 
+         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function call($callback, $parameters = [], $defaultMethod = null)
@@ -1260,6 +1274,7 @@ namespace Illuminate\Support\Facades {
          * @param string $abstract
          * @param array $parameters
          * @return mixed 
+         * @throws \Illuminate\Contracts\Container\BindingResolutionException
          * @static 
          */ 
         public static function makeWith($abstract, $parameters = [])
@@ -1288,7 +1303,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Instantiate a concrete instance of the given type.
          *
-         * @param string $concrete
+         * @param \Closure|string $concrete
          * @return mixed 
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
          * @static 
@@ -2631,14 +2646,15 @@ namespace Illuminate\Support\Facades {
          * Compile a class component opening.
          *
          * @param string $component
+         * @param string $alias
          * @param string $data
          * @param string $hash
          * @return string 
          * @static 
          */ 
-        public static function compileClassComponentOpening($component, $data, $hash)
+        public static function compileClassComponentOpening($component, $alias, $data, $hash)
         {
-                        return \Illuminate\View\Compilers\BladeCompiler::compileClassComponentOpening($component, $data, $hash);
+                        return \Illuminate\View\Compilers\BladeCompiler::compileClassComponentOpening($component, $alias, $data, $hash);
         }
         
         /**
@@ -2651,6 +2667,31 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
                         return $instance->compileEndComponentClass();
+        }
+        
+        /**
+         * Sanitize the given component attribute value.
+         *
+         * @param mixed $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function sanitizeComponentAttribute($value)
+        {
+                        return \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($value);
+        }
+        
+        /**
+         * Compile Blade echos into valid PHP.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function compileEchos($value)
+        {
+                        /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
+                        return $instance->compileEchos($value);
         }
          
     }
@@ -2848,7 +2889,6 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $command
          * @return mixed 
-         * @throws \RuntimeException
          * @static 
          */ 
         public static function dispatchToQueue($command)
@@ -2900,7 +2940,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if a job was dispatched based on a truth-test callback.
          *
-         * @param string $command
+         * @param string|\Closure $command
          * @param callable|int|null $callback
          * @return void 
          * @static 
@@ -2928,7 +2968,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if a job was dispatched based on a truth-test callback.
          *
-         * @param string $command
+         * @param string|\Closure $command
          * @param callable|null $callback
          * @return void 
          * @static 
@@ -2942,7 +2982,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if a job was dispatched after the response was sent based on a truth-test callback.
          *
-         * @param string $command
+         * @param string|\Closure $command
          * @param callable|int|null $callback
          * @return void 
          * @static 
@@ -2970,7 +3010,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if a job was dispatched based on a truth-test callback.
          *
-         * @param string $command
+         * @param string|\Closure $command
          * @param callable|null $callback
          * @return void 
          * @static 
@@ -3040,6 +3080,8 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     * @method static \Illuminate\Contracts\Cache\Lock lock(string $name, int $seconds = 0, mixed $owner = null)
+     * @method static \Illuminate\Contracts\Cache\Lock restoreLock(string $name, string $owner)
      * @see \Illuminate\Cache\CacheManager
      * @see \Illuminate\Cache\Repository
      */ 
@@ -3929,7 +3971,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key
          * @param mixed $default
          * @param string|null $path
-         * @return \Symfony\Component\HttpFoundation\Cookie 
+         * @return \Symfony\Component\HttpFoundation\Cookie|null 
          * @static 
          */ 
         public static function queued($key, $default = null, $path = null)
@@ -5397,7 +5439,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if an event was dispatched based on a truth-test callback.
          *
-         * @param string $event
+         * @param string|\Closure $event
          * @param callable|int|null $callback
          * @return void 
          * @static 
@@ -5425,7 +5467,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if an event was dispatched based on a truth-test callback.
          *
-         * @param string $event
+         * @param string|\Closure $event
          * @param callable|null $callback
          * @return void 
          * @static 
@@ -6491,7 +6533,7 @@ namespace Illuminate\Support\Facades {
      *
      * @method static \Illuminate\Http\Client\PendingRequest asJson()
      * @method static \Illuminate\Http\Client\PendingRequest asForm()
-     * @method static \Illuminate\Http\Client\PendingRequest attach(string $name, string $contents, string|null $filename = null, array $headers)
+     * @method static \Illuminate\Http\Client\PendingRequest attach(string $name, string $contents, string|null $filename = null, array $headers = [])
      * @method static \Illuminate\Http\Client\PendingRequest asMultipart()
      * @method static \Illuminate\Http\Client\PendingRequest bodyFormat(string $format)
      * @method static \Illuminate\Http\Client\PendingRequest contentType(string $contentType)
@@ -6611,6 +6653,44 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Http\Client\Factory $instance */
                         $instance->assertSent($callback);
+        }
+        
+        /**
+         * Assert that a request / response pair was not recorded matching a given truth test.
+         *
+         * @param callable $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function assertNotSent($callback)
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        $instance->assertNotSent($callback);
+        }
+        
+        /**
+         * Assert that no request / response pair was recorded.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function assertNothingSent()
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        $instance->assertNothingSent();
+        }
+        
+        /**
+         * Assert how many requests have been recorded.
+         *
+         * @param $count
+         * @return void 
+         * @static 
+         */ 
+        public static function assertSentCount($count)
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        $instance->assertSentCount($count);
         }
         
         /**
@@ -7340,7 +7420,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if a mailable was sent based on a truth-test callback.
          *
-         * @param string $mailable
+         * @param string|\Closure $mailable
          * @param callable|int|null $callback
          * @return void 
          * @static 
@@ -7380,7 +7460,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if a mailable was queued based on a truth-test callback.
          *
-         * @param string $mailable
+         * @param string|\Closure $mailable
          * @param callable|int|null $callback
          * @return void 
          * @static 
@@ -7715,7 +7795,7 @@ namespace Illuminate\Support\Facades {
          * Assert if a notification was sent based on a truth-test callback.
          *
          * @param mixed $notifiable
-         * @param string $notification
+         * @param string|\Closure $notification
          * @param callable|null $callback
          * @return void 
          * @throws \Exception
@@ -7746,7 +7826,7 @@ namespace Illuminate\Support\Facades {
          * Determine if a notification was sent based on a truth-test callback.
          *
          * @param mixed $notifiable
-         * @param string $notification
+         * @param string|\Closure $notification
          * @param callable|null $callback
          * @return void 
          * @throws \Exception
@@ -8084,7 +8164,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if a job was pushed based on a truth-test callback.
          *
-         * @param string $job
+         * @param string|\Closure $job
          * @param callable|int|null $callback
          * @return void 
          * @static 
@@ -8099,7 +8179,7 @@ namespace Illuminate\Support\Facades {
          * Assert if a job was pushed based on a truth-test callback.
          *
          * @param string $queue
-         * @param string $job
+         * @param string|\Closure $job
          * @param callable|null $callback
          * @return void 
          * @static 
@@ -8142,7 +8222,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if a job was pushed based on a truth-test callback.
          *
-         * @param string $job
+         * @param string|\Closure $job
          * @param callable|null $callback
          * @return void 
          * @static 
@@ -8561,6 +8641,40 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Create a new redirect response to a signed named route.
+         *
+         * @param string $route
+         * @param mixed $parameters
+         * @param \DateTimeInterface|\DateInterval|int|null $expiration
+         * @param int $status
+         * @param array $headers
+         * @return \Illuminate\Http\RedirectResponse 
+         * @static 
+         */ 
+        public static function signedRoute($route, $parameters = [], $expiration = null, $status = 302, $headers = [])
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->signedRoute($route, $parameters, $expiration, $status, $headers);
+        }
+        
+        /**
+         * Create a new redirect response to a signed named route.
+         *
+         * @param string $route
+         * @param \DateTimeInterface|\DateInterval|int|null $expiration
+         * @param mixed $parameters
+         * @param int $status
+         * @param array $headers
+         * @return \Illuminate\Http\RedirectResponse 
+         * @static 
+         */ 
+        public static function temporarySignedRoute($route, $expiration, $parameters = [], $status = 302, $headers = [])
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->temporarySignedRoute($route, $expiration, $parameters, $status, $headers);
+        }
+        
+        /**
          * Create a new redirect response to a controller action.
          *
          * @param string|array $action
@@ -8898,7 +9012,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the client user agent.
          *
-         * @return string 
+         * @return string|null 
          * @static 
          */ 
         public static function userAgent()
@@ -10116,7 +10230,9 @@ namespace Illuminate\Support\Facades {
          * Gets the preferred format for the response by inspecting, in the following order:
          *   * the request format set using setRequestFormat
          *   * the values of the Accept HTTP header
-         *   * the content type of the body of the request.
+         * 
+         * Note that if you use this method, you should send the "Vary: Accept" header
+         * in the response to prevent any issues with intermediary HTTP caches.
          *
          * @static 
          */ 
@@ -10957,7 +11073,7 @@ namespace Illuminate\Support\Facades {
          * Create a new redirect response to a named route.
          *
          * @param string $route
-         * @param array $parameters
+         * @param mixed $parameters
          * @param int $status
          * @param array $headers
          * @return \Illuminate\Http\RedirectResponse 
@@ -10973,7 +11089,7 @@ namespace Illuminate\Support\Facades {
          * Create a new redirect response to a controller action.
          *
          * @param string $action
-         * @param array $parameters
+         * @param mixed $parameters
          * @param int $status
          * @param array $headers
          * @return \Illuminate\Http\RedirectResponse 
@@ -11318,13 +11434,14 @@ namespace Illuminate\Support\Facades {
          * Merge the given array with the last group stack.
          *
          * @param array $new
+         * @param bool $prependExistingPrefix
          * @return array 
          * @static 
          */ 
-        public static function mergeWithLastGroup($new)
+        public static function mergeWithLastGroup($new, $prependExistingPrefix = true)
         {
                         /** @var \Illuminate\Routing\Router $instance */
-                        return $instance->mergeWithLastGroup($new);
+                        return $instance->mergeWithLastGroup($new, $prependExistingPrefix);
         }
         
         /**
@@ -11352,6 +11469,21 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Routing\Router $instance */
                         return $instance->addRoute($methods, $uri, $action);
+        }
+        
+        /**
+         * Create a new Route object.
+         *
+         * @param array|string $methods
+         * @param string $uri
+         * @param mixed $action
+         * @return \Illuminate\Routing\Route 
+         * @static 
+         */ 
+        public static function newRoute($methods, $uri, $action)
+        {
+                        /** @var \Illuminate\Routing\Router $instance */
+                        return $instance->newRoute($methods, $uri, $action);
         }
         
         /**
@@ -12308,6 +12440,30 @@ namespace Illuminate\Support\Facades {
      * @see \Illuminate\Session\Store
      */ 
     class Session {
+        
+        /**
+         * Determine if requests for the same session should wait for each to finish before executing.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function shouldBlock()
+        {
+                        /** @var \Illuminate\Session\SessionManager $instance */
+                        return $instance->shouldBlock();
+        }
+        
+        /**
+         * Get the name of the cache store / driver that should be used to acquire session locks.
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function blockDriver()
+        {
+                        /** @var \Illuminate\Session\SessionManager $instance */
+                        return $instance->blockDriver();
+        }
         
         /**
          * Get the session configuration.
@@ -13286,7 +13442,8 @@ namespace Illuminate\Support\Facades {
          * @return bool 
          * @static 
          */ 
-        public static function prepend($path, $data, $separator = '')
+        public static function prepend($path, $data, $separator = '
+')
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
                         return $instance->prepend($path, $data, $separator);
@@ -13301,7 +13458,8 @@ namespace Illuminate\Support\Facades {
          * @return bool 
          * @static 
          */ 
-        public static function append($path, $data, $separator = '')
+        public static function append($path, $data, $separator = '
+')
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
                         return $instance->append($path, $data, $separator);
@@ -15222,6 +15380,32 @@ namespace App\Facades {
                         /** @var \App\Services\Basketlist $instance */
                         return $instance->items();
         }
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function cacheKey()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->cacheKey();
+        }
+        
+        /**
+         * 
+         *
+         * @return \App\Services\Guard 
+         * @static 
+         */ 
+        public static function guard()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Basketlist $instance */
+                        return $instance->guard();
+        }
          
     }
 
@@ -15300,6 +15484,32 @@ namespace App\Facades {
                         /** @var \App\Services\Comparelist $instance */
                         return $instance->count_items();
         }
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function cacheKey()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->cacheKey();
+        }
+        
+        /**
+         * 
+         *
+         * @return \App\Services\Guard 
+         * @static 
+         */ 
+        public static function guard()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Comparelist $instance */
+                        return $instance->guard();
+        }
          
     }
 
@@ -15377,6 +15587,32 @@ namespace App\Facades {
             //Method inherited from \App\Services\Ecommerce            
                         /** @var \App\Services\Wishlist $instance */
                         return $instance->count_items();
+        }
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function cacheKey()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->cacheKey();
+        }
+        
+        /**
+         * 
+         *
+         * @return \App\Services\Guard 
+         * @static 
+         */ 
+        public static function guard()
+        {
+            //Method inherited from \App\Services\Ecommerce            
+                        /** @var \App\Services\Wishlist $instance */
+                        return $instance->guard();
         }
          
     }
@@ -19844,7 +20080,7 @@ namespace  {
             /**
              * Add an "order by" clause to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $column
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $column
              * @param string $direction
              * @return \Illuminate\Database\Query\Builder 
              * @throws \InvalidArgumentException
@@ -19990,6 +20226,18 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->forPageAfterId($perPage, $lastId, $column);
+            }
+         
+            /**
+             * Remove all existing orders and optionally add a new order.
+             *
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */ 
+            public static function reorder($column = null, $direction = 'asc')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->reorder($column, $direction);
             }
          
             /**

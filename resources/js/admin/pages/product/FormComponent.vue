@@ -6,9 +6,9 @@
             </h3>
         </div>
 
-        <el-form size="small" label-width="250px">
+        <el-form size="small" label-width="300px">
             <el-form-item label="Name" :error="getError('name')">
-                <el-input v-model="product.name"/>
+                <el-input v-model="product.name" @input="changeSlug"/>
             </el-form-item>
             <el-form-item label="Slug" :error="getError('slug')">
                 <el-input v-model="product.slug"/>
@@ -93,6 +93,7 @@
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import { router } from '../../router'
+  import slugify from 'slug-generator'
 
   export default {
     props: {
@@ -150,6 +151,9 @@
       },
       getError(field) {
         return this.errors[field] ? this.errors[field][0] : null
+      },
+      changeSlug(value) {
+        this.product.slug = value ? slugify(value) : ''
       },
     },
     async mounted() {

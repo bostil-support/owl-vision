@@ -14,10 +14,7 @@ class TagService
      */
     public function firstOrCreate(string $title): Tag
     {
-        /** @var Tag $tag */
-        $tag = Tag::query()->firstOrCreate(['title' => $title]);
-
-        return $tag;
+        return Tag::firstOrCreate(['title' => $title]);
     }
 
     /**

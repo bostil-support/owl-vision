@@ -18,8 +18,7 @@ class ProductService
         try {
             \DB::beginTransaction();
 
-            /** @var Product $product */
-            $product = Product::query()->create($data);
+            $product = Product::create($data);
 
             $tags = array_key_exists('tags', $data) ? $data['tags'] : null;
             $this->syncTags($product, $tags);

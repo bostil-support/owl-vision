@@ -7,16 +7,28 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Ecommerce
+ *
+ * @package App\Models
+ */
 abstract class Ecommerce extends Model implements IEcommerceModel
 {
-    protected $fillable = ['user_id', 'guard', 'cache_id', 'product_id', 'model', 'updated_at'];
+    protected $fillable = [
+        'user_id',
+        'guard',
+        'cache_id',
+        'product_id',
+        'model',
+        'updated_at',
+    ];
 
     /**
-     * @param Builder $query
-     * @param string|null $cacheID
-     * @param Guard|null $guard
-     * @return Builder
-     * @throws \Exception
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string|null  $cacheID
+     * @param  \Illuminate\Contracts\Auth\Guard|null  $guard
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|mixed
      */
     public function scopeOfUser(Builder $query, ?string $cacheID, ?Guard $guard = null)
     {
@@ -32,6 +44,12 @@ abstract class Ecommerce extends Model implements IEcommerceModel
         return $query;
     }
 
+    /**
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|mixed
+     */
     public function scopeByItem(Builder $query, Model $model)
     {
         return $query->where(
