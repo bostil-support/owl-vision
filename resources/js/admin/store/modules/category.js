@@ -3,7 +3,7 @@ import { Notification } from 'element-ui'
 const flat = (item, parent) => {
   const resultItem = {
     id: item.id,
-    name: parent.name ? parent.name + ' > ' + item.name: item.name,
+    name: parent.name ? parent.name + ' > ' + item.name : item.name,
   }
   return [resultItem, ...item.children.flatMap(child => flat(child, resultItem))]
 }
@@ -45,72 +45,66 @@ export const mutations = {
 
 export const actions = {
   fetchCategories ({ commit }) {
-    axios.get('categories')
+    return axios.get('categories')
       .then(response => {
         commit('setCategories', response.data.data)
         commit('setCategoriesList', response.data.data.flatMap(flat))
       })
       .catch(e => {
         Notification.error({
-          title: "Fetch categories",
+          title: 'Fetch categories',
           message: e.message,
         })
       })
   },
   fetchCategory ({ commit }, id) {
-    axios.get('categories/' + id)
+    return axios.get('categories/' + id)
       .then(response => {
         commit('setCategory', response.data.data)
       })
       .catch(e => {
         Notification.error({
-          title: "Fetch category #"+id,
+          title: 'Fetch category #' + id,
           message: e.message,
         })
       })
   },
   storeCategory ({ commit, dispatch }, payload) {
-    return new Promise((resolve, reject) => {
-      axios.post('categories', payload)
-        .then(response => {
-          dispatch('fetchCategories')
-          commit('clearErrors')
-          commit('setCategory', response.data.data)
-          resolve()
-          Notification.success("Category created successfully")
-        })
-        .catch(e => {
-          if (e.response.status === 422) {
-            commit('setErrors', e.response.data.errors)
-          }
+    return axios.post('categories', payload)
+      .then(response => {
+        dispatch('fetchCategories')
+        commit('clearErrors')
+        commit('setCategory', response.data.data)
+        Notification.success('Category created successfully')
+      })
+      .catch(e => {
+        if (e.response.status === 422) {
+          commit('setErrors', e.response.data.errors)
+        }
 
-          Notification.error({
-            title: "Store category",
-            message: e.response.status === 422 ? 'Validation error' : e.message,
-          })
+        Notification.error({
+          title: 'Store category',
+          message: e.response.status === 422 ? 'Validation error' : e.message,
         })
-    })
+      })
   },
   updateCategory ({ commit, dispatch }, payload) {
-    return new Promise((resolve, reject) => {
-      axios.put('categories/' + payload.id, payload)
-        .then(response => {
-          dispatch('fetchCategories')
-          commit('clearErrors')
-          commit('setCategory', response.data.data)
-          resolve()
-          Notification.success("Category updated successfully")
-        })
-        .catch(e => {
-          if (e.response.status === 422) {
-            commit('setErrors', e.response.data.errors)
-          }
+    return axios.put('categories/' + payload.id, payload)
+      .then(response => {
+        dispatch('fetchCategories')
+        commit('clearErrors')
+        commit('setCategory', response.data.data)
+        Notification.success('Category updated successfully')
+      })
+      .catch(e => {
+        if (e.response.status === 422) {
+          commit('setErrors', e.response.data.errors)
+        }
 
-          Notification.error({
-            title: "Update category",
-            message: e.response.status === 422 ? 'Validation error' : e.message,
-          })
+        Notification.error({
+          title: 'Update category',
+          message: e.response.status === 422 ? 'Validation error' : e.message,
         })
-    })
+      })
   },
 }

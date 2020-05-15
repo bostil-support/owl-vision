@@ -64,4 +64,9 @@ class Product extends Model
     {
         return $this->belongsTo(Image::class);
     }
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class);
+    }
 }

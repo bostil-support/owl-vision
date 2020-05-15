@@ -9,13 +9,15 @@
             <div class="sm:w-5/12 px-5 pt-2">
                 <el-form size="small" label-width="150px" class="pt-5">
                     <el-form-item label="Name" :error="getError('name')">
-                        <el-input v-model="addForm.name"/>
+                        <el-input v-model="addForm.name" :disabled="loadingStore"/>
                     </el-form-item>
                     <el-form-item label="Slug" :error="getError('slug')">
-                        <el-input v-model="addForm.slug"/>
+                        <el-input v-model="addForm.slug" :disabled="loadingStore"/>
                     </el-form-item>
                     <el-form-item label="Parent category" :error="getError('parent_id')">
-                        <el-select v-model="addForm.parent_id" style="width: 100%">
+                        <el-select v-model="addForm.parent_id"
+                                   style="width: 100%"
+                                   :disabled="loadingStore">
                             <el-option v-for="category in categoriesList"
                                        :label="category.name"
                                        :key="category.id"
@@ -23,7 +25,11 @@
                             />
                         </el-select>
                     </el-form-item>
-                    <el-form-item><el-button type="primary" @click="store">Add new category</el-button></el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="store" :disabled="loadingStore" :loading="loadingStore">
+                            Add new category
+                        </el-button>
+                    </el-form-item>
                 </el-form>
             </div>
             <div class="flex-1 border-l">
@@ -47,25 +53,18 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters, mapMutations } from 'vuex'
-  import {VueNestable, VueNestableHandle} from 'vue-nestable';
-  import TextField from '~/admin/fields/TextField';
-  import SelectField from '~/admin/fields/SelectField';
-  import SuccessButton from '~/admin/components/SuccessButton';
+  import { mapActions, mapGetters } from 'vuex'
+  import { Notification } from 'element-ui'
+  import {VueNestable, VueNestableHandle} from 'vue-nestable'
   import slugify from 'slug-generator'
 
   export default {
-    components: {
-      TextField,
-      SelectField,
-      SuccessButton,
-      VueNestable,
-      VueNestableHandle
-    },
+    components: { VueNestable, VueNestableHandle },
     data() {
       return {
         addForm: {},
-        nestableItems: []
+        nestableItems: [],
+        loadingStore: false
       }
     },
     computed: {
@@ -91,10 +90,11 @@
       store() {
         if (!this.addForm.parent_id) this.addForm.parent_id = null
 
+        this.loadingStore = true
         this.storeCategory(this.addForm).then(() => {
           this.fetchCategories()
           this.addForm = {}
-        })
+        }).finally(() => this.loadingStore = false)
       },
       sorting(category, {items, pathTo}) {
         if (!pathTo) return
@@ -112,10 +112,9 @@
         })
         data.id = data.root ? null : parent.id
         data.children = data.root ? parent : parent.children.map(({id}) => ({id}))
-        axios
-          .post('categories/ordering', data)
-          .then(response => this.$toasted.success(response.data.message || 'Operation was successful'))
-          .catch(error => this.$toasted.error(error.response.data.message || error.message))
+        axios.post('categories/ordering', data)
+          .then(response => Notification.success(response.data.message || 'Operation was successful'))
+          .catch(error => Notification.error(error.response.data.message || error.message))
           .finally(() => this.fetchCategories())
       },
       getError(field) {

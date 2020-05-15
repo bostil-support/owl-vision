@@ -76,7 +76,23 @@
             <el-form-item label="Meta keywords" :error="getError('meta_keywords')">
                 <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="product.meta_keywords"/>
             </el-form-item>
-            <el-form-item label="Picture" :error="getError('picture')">
+            <el-form-item label="Main image" :error="getError('image_id')">
+<!--                <el-upload v-model="product.image_id" action=""/>-->
+<!--                <el-image v-if="product.image"-->
+<!--                        style="width: 100px; height: 100px"-->
+<!--                        :src="product.image.url"-->
+<!--                        fit="contain"></el-image>-->
+                <el-upload
+                        :action="imagesUrl"
+                        :data="{path: 'products'}"
+                        name="image"
+                        list-type="picture-card"
+                        :on-remove="handleRemoveImage"
+                        :on-success="handleSuccessUpload">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="Product images" :error="getError('images')">
 <!--                <el-upload v-model="product.picture"/>-->
             </el-form-item>
             <el-form-item>
@@ -94,6 +110,7 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import { router } from '../../router'
   import slugify from 'slug-generator'
+  import axios from 'axios'
 
   export default {
     props: {
@@ -105,6 +122,7 @@
     data() {
       return {
         loadingTags: false,
+        imagesUrl: axios.defaults.baseURL+'/images'
       }
     },
     computed: {
@@ -154,6 +172,12 @@
       },
       changeSlug(value) {
         this.product.slug = value ? slugify(value) : ''
+      },
+      handleRemoveImage(file, fileList) {
+        console.log(file, fileList);
+      },
+      handleSuccessUpload(response, file, fileList) {
+        console.log(response, file, fileList);
       },
     },
     async mounted() {

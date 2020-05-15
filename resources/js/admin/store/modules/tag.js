@@ -24,46 +24,40 @@ export const mutations = {
 
 export const actions = {
   fetchTags ({ commit }, params) {
-    axios.get('tags', { params })
+    return axios.get('tags', { params })
       .then(response => {
         commit('setTags', response.data.data)
       })
       .catch(e => {
         Notification.error({
-          title: "Fetch tags",
+          title: 'Fetch tags',
           message: e.message,
         })
       })
   },
   fetchTag ({ commit }, id) {
-    return new Promise((resolve, reject) => {
-      axios.get('tags/' + id)
-        .then(response => {
-          commit('setTag', response.data.data)
-          resolve()
+    return axios.get('tags/' + id)
+      .then(response => {
+        commit('setTag', response.data.data)
+      })
+      .catch(e => {
+        Notification.error({
+          title: 'Fetch tag #' + id,
+          message: e.message,
         })
-        .catch(e => {
-          Notification.error({
-            title: "Fetch tag #"+id,
-            message: e.message,
-          })
-        })
-    })
+      })
   },
   storeTag ({ commit, dispatch }, payload) {
-    return new Promise((resolve, reject) => {
-      axios.post('tags', payload)
-        .then(response => {
-          dispatch('fetchTags')
-          commit('setTag', response.data.data)
-          resolve()
+    return axios.post('tags', payload)
+      .then(response => {
+        dispatch('fetchTags')
+        commit('setTag', response.data.data)
+      })
+      .catch(e => {
+        Notification.error({
+          title: 'Store Tag',
+          message: e.message,
         })
-        .catch(e => {
-          Notification.error({
-            title: "Store Tag",
-            message: e.message,
-          })
-        })
-    })
+      })
   },
 }
