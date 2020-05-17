@@ -52,8 +52,8 @@ class ProductRequest extends FormRequest
             'meta_description' => 'nullable|string|max:255',
             'meta_keywords' => 'nullable|string|max:255',
             'tags' => 'array',
-            'images' => 'array',
-            'images.*' => 'required|distinct|integer|exists:images,id',
+            'product_images' => 'array',
+            'product_images.*' => 'required|distinct|integer|exists:images,id',
         ];
     }
 }

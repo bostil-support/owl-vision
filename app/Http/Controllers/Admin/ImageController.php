@@ -19,7 +19,7 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
-        $imagesQuery = Image::query();
+        $imagesQuery = Image::query()->latest();
 
         if ($request->page === "-1") {
             $images = $imagesQuery->get();

@@ -77,28 +77,57 @@
                 <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="product.meta_keywords"/>
             </el-form-item>
             <el-form-item label="Main image" :error="getError('image_id')">
-<!--                <el-upload v-model="product.image_id" action=""/>-->
-<!--                <el-image v-if="product.image"-->
-<!--                        style="width: 100px; height: 100px"-->
-<!--                        :src="product.image.url"-->
-<!--                        fit="contain"></el-image>-->
-                <el-upload
-                        :action="imagesUrl"
-                        :data="{path: 'products'}"
-                        name="image"
-                        list-type="picture-card"
-                        :on-remove="handleRemoveImage"
-                        :on-success="handleSuccessUpload">
-                    <i class="el-icon-plus"></i>
-                </el-upload>
+                <div class="relative inline-block">
+                    <el-image :class="['image', {'upload-image': !product.image}]"
+                              :src="product.image ? product.image.url : ''"
+                              fit="contain">
+                        <div slot="error" class="image-slot" @click="mainImageBrowserVisible = true">
+                            <i class="el-icon-plus uploader-icon"></i>
+                        </div>
+                    </el-image>
+                    <div v-if="product.image" class="absolute top-0 right-0 w-5 h-5 leading-5 text-center text-white rounded-full border border-red-400 bg-red-300 hover:border-red-500 hover:bg-red-400 cursor-pointer"
+                         @click="clearMainImage">
+                        <i class="el-icon-close"></i>
+                    </div>
+                </div>
+
+                <images-browser v-if="mainImageBrowserVisible" :visible="mainImageBrowserVisible"
+                               :multiple="false"
+                               :selected-images="product.image ? [product.image.id] : []"
+                               @close="mainImageBrowserVisible = false"
+                               @selected="changeMainImage"
+                />
             </el-form-item>
             <el-form-item label="Product images" :error="getError('images')">
-<!--                <el-upload v-model="product.picture"/>-->
+                <div class="flex flex-row flex-wrap">
+                    <div class="image upload-image" @click="productImagesBrowserVisible = true">
+                        <i class="el-icon-plus uploader-icon"></i>
+                    </div>
+
+                    <div v-for="image in product.images" class="relative inline-block">
+                        <el-image class="image"
+                                  :src="image.url || ''"
+                                  fit="contain">
+                            <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div>
+                        </el-image>
+                        <div class="absolute top-0 right-0 w-5 h-5 leading-5 text-center text-white rounded-full border border-red-400 bg-red-300 hover:border-red-500 hover:bg-red-400 cursor-pointer"
+                             @click="clearProductImage(image)">
+                            <i class="el-icon-close"></i>
+                        </div>
+                    </div>
+
+                    <images-browser v-if="productImagesBrowserVisible" :visible="productImagesBrowserVisible"
+                                    :multiple="true"
+                                    :selected-images="product.images ? product.images.map(i => i.id) : []"
+                                    @close="productImagesBrowserVisible = false"
+                                    @selected="changeProductImages"
+                    />
+                </div>
             </el-form-item>
             <el-form-item>
                 <div class="flex justify-between">
                     <el-button @click="$router.push({name: 'admin.catalog.products.list'})">Cancel</el-button>
-                    <el-button v-if="id" type="primary" @click="update" class="">Save</el-button>
+                    <el-button v-if="id" type="primary" @click="update" class="">Update</el-button>
                     <el-button v-else type="primary" @click="store" class="">Create</el-button>
                 </div>
             </el-form-item>
@@ -110,9 +139,10 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import { router } from '../../router'
   import slugify from 'slug-generator'
-  import axios from 'axios'
+  import ImagesBrowser from '../../components/ImagesBrowser'
 
   export default {
+    components: { ImagesBrowser },
     props: {
       id: {
         type: [String, Number],
@@ -122,7 +152,8 @@
     data() {
       return {
         loadingTags: false,
-        imagesUrl: axios.defaults.baseURL+'/images'
+        mainImageBrowserVisible: false,
+        productImagesBrowserVisible: false,
       }
     },
     computed: {
@@ -132,6 +163,11 @@
         tags: 'tag/tags',
         errors: 'product/errors',
       }),
+    },
+    watch: {
+      'product.images': function(images) {
+        this.product.product_images = images.map(i => i.id)
+      },
     },
     methods: {
       ...mapActions({
@@ -173,11 +209,19 @@
       changeSlug(value) {
         this.product.slug = value ? slugify(value) : ''
       },
-      handleRemoveImage(file, fileList) {
-        console.log(file, fileList);
+      clearMainImage() {
+        this.product.image = null
+        this.product.image_id = null
       },
-      handleSuccessUpload(response, file, fileList) {
-        console.log(response, file, fileList);
+      changeMainImage(selected) {
+        this.product.image = selected || null
+        this.product.image_id = selected.id || null
+      },
+      clearProductImage(image) {
+        this.product.images = this.product.images.filter(i => i.id !== image.id)
+      },
+      changeProductImages(selected) {
+        this.product.images = selected || []
       },
     },
     async mounted() {
@@ -189,3 +233,31 @@
     },
   }
 </script>
+
+<style scoped>
+    .image {
+        margin: 0.5rem;
+        border-radius: 0.5rem;
+        border: 2px solid #d9d9d9;
+        background-color: white;
+        width: 150px;
+        height: 150px;
+        position: relative;
+        overflow: hidden;
+    }
+    .upload-image {
+        border: 1px dashed #d9d9d9;
+        cursor: pointer;
+    }
+    .upload-image:hover {
+        border-color: #409EFF;
+    }
+    .uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 150px;
+        height: 150px;
+        line-height: 150px;
+        text-align: center;
+    }
+</style>

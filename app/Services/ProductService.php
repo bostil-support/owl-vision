@@ -28,7 +28,7 @@ class ProductService
             $tags = array_key_exists('tags', $data) ? $data['tags'] : null;
             $this->syncTags($product, $tags);
 
-            isset($data['images']) and $product->images()->sync($data['images']);
+            isset($data['product_images']) and $product->images()->sync($data['product_images']);
 
             \DB::commit();
         } catch (\Throwable $exception) {
@@ -57,7 +57,7 @@ class ProductService
             $tags = array_key_exists('tags', $data) ? $data['tags'] : null;
             $this->syncTags($product, $tags);
 
-            isset($data['images']) and $product->images()->sync($data['images']);
+            isset($data['product_images']) and $product->images()->sync($data['product_images']);
 
             \DB::commit();
         } catch (\Throwable $exception) {

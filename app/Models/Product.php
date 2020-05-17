@@ -43,7 +43,7 @@ class Product extends Model
         'published' => 'boolean',
     ];
 
-    protected $with = ['tags'];
+    protected $with = ['image', 'images', 'tags'];
 
     public function getNameAttribute($name)
     {

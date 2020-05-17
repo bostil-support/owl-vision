@@ -32,7 +32,8 @@ class ProductController extends Controller
     {
         $product = $service->store($request->validated());
 
-        return (new ProductResource($product->load('tags')))->response()->setStatusCode(201);
+        return (new ProductResource($product->load(['image', 'images', 'tags'])))
+            ->response()->setStatusCode(201);
     }
 
     /**
@@ -63,7 +64,7 @@ class ProductController extends Controller
 
         $service->update($product, $request->validated());
 
-        return new ProductResource($product->load('tags'));
+        return new ProductResource($product->load(['image', 'images', 'tags']));
     }
 
     /**

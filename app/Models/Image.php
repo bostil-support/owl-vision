@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Image extends Model
 {
@@ -14,6 +15,11 @@ class Image extends Model
         'original_name',
         'original_extension',
     ];
+
+    public function getUrlAttribute()
+    {
+        return Storage::disk('images')->url($this->path);
+    }
 
     public function categories()
     {

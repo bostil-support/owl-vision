@@ -14,13 +14,13 @@ export const getters = {
 
 export const mutations = {
   setImages: (state, payload) => {
-    state.products = payload
+    state.images = payload
   },
   setImage: (state, payload) => {
-    state.product = payload
+    state.image = payload
   },
   clearImage: (state) => {
-    state.product = {}
+    state.image = {}
   },
   setErrors: (state, payload) => {
     state.errors = payload
@@ -32,7 +32,7 @@ export const mutations = {
 
 export const actions = {
   fetchImages ({ commit }, params) {
-    return axios.get('images', { params })
+    return axios.get('images', { params } || null)
       .then(response => {
         commit('setImages', response.data.data)
       })
