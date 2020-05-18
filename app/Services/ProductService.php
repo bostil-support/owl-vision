@@ -6,6 +6,11 @@ use App\Models\Product;
 
 class ProductService
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService) {
+        $this->imageService = $imageService;
+    }
 
     /**
      * @param  array  $data
@@ -22,6 +27,8 @@ class ProductService
 
             $tags = array_key_exists('tags', $data) ? $data['tags'] : null;
             $this->syncTags($product, $tags);
+
+            isset($data['product_images']) and $product->images()->sync($data['product_images']);
 
             \DB::commit();
         } catch (\Throwable $exception) {
@@ -49,6 +56,8 @@ class ProductService
 
             $tags = array_key_exists('tags', $data) ? $data['tags'] : null;
             $this->syncTags($product, $tags);
+
+            isset($data['product_images']) and $product->images()->sync($data['product_images']);
 
             \DB::commit();
         } catch (\Throwable $exception) {

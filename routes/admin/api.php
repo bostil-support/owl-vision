@@ -16,5 +16,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::get('product-types', 'ProductController@getProductTypes')->name('products.get_product_types');
 
         Route::apiResource('tags', 'TagController')->only(['index', 'store', 'show']);
+        Route::apiResource('images', 'ImageController')->except(['update']);
     });
 });

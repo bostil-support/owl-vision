@@ -43,7 +43,7 @@ class Product extends Model
         'published' => 'boolean',
     ];
 
-    protected $with = ['tags'];
+    protected $with = ['image', 'images', 'tags'];
 
     public function getNameAttribute($name)
     {
@@ -63,5 +63,10 @@ class Product extends Model
     public function image()
     {
         return $this->belongsTo(Image::class);
+    }
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class);
     }
 }

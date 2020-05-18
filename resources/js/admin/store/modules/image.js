@@ -14,13 +14,13 @@ export const getters = {
 
 export const mutations = {
   setImages: (state, payload) => {
-    state.products = payload
+    state.images = payload
   },
   setImage: (state, payload) => {
-    state.product = payload
+    state.image = payload
   },
   clearImage: (state) => {
-    state.product = {}
+    state.image = {}
   },
   setErrors: (state, payload) => {
     state.errors = payload
@@ -32,74 +32,61 @@ export const mutations = {
 
 export const actions = {
   fetchImages ({ commit }, params) {
-    axios.get('images', { params })
+    return axios.get('images', { params } || null)
       .then(response => {
         commit('setImages', response.data.data)
       })
       .catch(e => {
         Notification.error({
-          title: "Fetch images",
+          title: 'Fetch images',
           message: e.message,
         })
       })
   },
   fetchImage ({ commit }, id) {
-    return new Promise((resolve, reject) => {
-      axios.get('images/' + id)
-        .then(response => {
-          commit('setImage', response.data.data)
-          resolve()
+    return axios.get('images/' + id)
+      .then(response => {
+        commit('setImage', response.data.data)
+      })
+      .catch(e => {
+        Notification.error({
+          title: 'Fetch image #' + id,
+          message: e.message,
         })
-        .catch(e => {
-          Notification.error({
-            title: "Fetch image #"+id,
-            message: e.message,
-          })
-        })
-    })
+      })
   },
   storeImage ({ commit, dispatch }, payload) {
-    return new Promise((resolve, reject) => {
-      axios.post('images', payload)
-        .then(response => {
-          dispatch('fetchImages')
-          commit('clearErrors')
-          commit('setImage', response.data.data)
-          resolve()
-          Notification.success("Image created successfully")
-        })
-        .catch(e => {
-          if (e.response.status === 422) {
-            commit('setErrors', e.response.data.errors)
-          }
+    return axios.post('images', payload)
+      .then(response => {
+        dispatch('fetchImages')
+        commit('clearErrors')
+        commit('setImage', response.data.data)
+        Notification.success('Image created successfully')
+      })
+      .catch(e => {
+        if (e.response.status === 422) {
+          commit('setErrors', e.response.data.errors)
+        }
 
-          Notification.error({
-            title: "Store image",
-            message: e.response.status === 422 ? 'Validation error' : e.message,
-          })
+        Notification.error({
+          title: 'Store image',
+          message: e.response.status === 422 ? 'Validation error' : e.message,
         })
-    })
+      })
   },
-  updateImage ({ commit, dispatch }, payload) {
-    return new Promise((resolve, reject) => {
-      axios.put('images/' + payload.id, payload)
-        .then(response => {
-          dispatch('fetchImages')
-          commit('clearErrors')
-          commit('setImage', response.data.data)
-          resolve()
-          Notification.success("Image updated successfully")
+  deleteImage ({ commit, dispatch }, id) {
+    return axios.delete('images/' + id)
+      .then(response => {
+        dispatch('fetchImages')
+        commit('clearErrors')
+        commit('clearImage')
+        Notification.success('Image deleted successfully')
+      })
+      .catch(e => {
+        Notification.error({
+          title: 'Delete image',
+          message: e.message,
         })
-        .catch(e => {
-          if (e.response.status === 422) {
-            commit('setErrors', e.response.data.errors)
-          }
-
-          Notification.error({
-            title: "Update image",
-            message: e.response.status === 422 ? 'Validation error' : e.message,
-          })
-        })
-    })
+      })
   },
 }

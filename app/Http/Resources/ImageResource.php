@@ -21,6 +21,7 @@ class ImageResource extends JsonResource
             'mime_type' => $this->mime_type,
             'original_name' => $this->original_name,
             'original_extension' => $this->original_extension,
+            'url' => $this->url,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
