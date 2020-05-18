@@ -1,9 +1,21 @@
 <template>
     <div class="w-full">
-        <div class="flex items-center border-b pt-2 pb-3">
-            <h3 class="px-4 text-3xl flex-initial">
+        <div class="flex items-center border-b mb-10">
+            <h3 class="text-3xl flex-initial">
                 Categories
+                <div class="py-4 pt-1">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item :to="{ name: 'admin.dashboard' }">Dashboard</el-breadcrumb-item>
+                        <el-breadcrumb-item>Categories</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
             </h3>
+            <div class="flex-1 px-4 flex justify-end">
+                <router-link class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                             :to="{name: 'admin.catalog.categories.add'}">
+                    Add category
+                </router-link>
+            </div>
         </div>
         <div class="flex border-b">
             <div class="sm:w-5/12 px-5 pt-2">

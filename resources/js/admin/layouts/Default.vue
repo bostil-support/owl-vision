@@ -1,185 +1,93 @@
 <template>
-    <div class="app-inner">
-        <aside class="panel">
-            <Logo/>
-            <ul class="list">
-                <li>
-                    <i class="fas fa-desktop"></i>
-                    <span>
-                        <router-link :to="{name: 'admin.dashboard'}">Dashboard</router-link>
-                    </span>
-                </li>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e,'catalog')" @mouseover="(e) => show(e,'catalog')">
-                        <i class="fas fa-book"></i>
-                        <span class="item">Catalog <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu catalog" @mouseleave="hide('catalog')">
-                        <li class="header"></li>
-                        <li>
-                            <i class="far fa-dot-circle"></i>
-                            <router-link :to="{name: 'admin.catalog.products.list'}">Products</router-link>
-                        </li>
-                        <li>
-                            <i class="far fa-dot-circle"></i>
-                            <router-link :to="{name: 'admin.catalog.categories.list'}">Categories</router-link>
-                        </li>
-                        <li><i class="far fa-dot-circle"></i> Manufacturers</li>
-                        <li><i class="far fa-dot-circle"></i> Product reviews</li>
-                        <li><i class="far fa-dot-circle"></i> Product tags</li>
-                        <li><i class="far fa-dot-circle"></i> Attributes</li>
-                    </ul>
+    <div class="flex w-full" :class="{'sidemenu-showed': displaySidebarMenu}">
+        <div class="w-full h-full fixed max-w-xs bg-gray-700 side">
+            <div class="text-white text-center text-2xl uppercase" style="line-height: 60px;">Owl Vision</div>
+            <el-menu
+                    background-color="#4a5568"
+                    text-color="#fff"
+                    class="el-menu-vertical-demo">
+                <el-menu-item index="1">
+                    <i class="el-icon-menu"></i>
+                    <router-link :to="{name: 'admin.dashboard'}">
+                        <span>Dashboard</span>
+                    </router-link>
+                </el-menu-item>
+                <el-submenu index="2">
+                    <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span slot="title">Catalog</span>
+                    </template>
+                    <el-menu-item-group>
+                        <span slot="title">Category</span>
+                        <router-link :to="{name: 'admin.catalog.categories.list'}">
+                            <el-menu-item index="2-1">Categories</el-menu-item>
+                        </router-link>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="Product">
+                        <router-link :to="{name: 'admin.catalog.products.list'}">
+                            <el-menu-item index="2-2">Products</el-menu-item>
+                        </router-link>
+                    </el-menu-item-group>
+                </el-submenu>
+                <el-menu-item index="3">
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">Navigator Two</span>
+                </el-menu-item>
+                <el-menu-item index="4" disabled>
+                    <i class="el-icon-document"></i>
+                    <span slot="title">Navigator Three</span>
+                </el-menu-item>
+                <el-menu-item index="5">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">Navigator Four</span>
+                </el-menu-item>
+            </el-menu>
+        </div>
+        <div class="w-full flex flex-col content">
+            <div class="flex bg-gray-700">
+                <div class="flex items-center px-4" title="Toggle menu">
+                    <i class="el-icon-s-operation text-3xl cursor-pointer"
+                       @click="displaySidebarMenu = !displaySidebarMenu"></i>
                 </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'sales')" @mouseover="(e) => show(e, 'sales')">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="item">Sales <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu sales" @mouseleave="hide('sales')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Orders</li>
-                        <li><i class="far fa-dot-circle"></i> Shipments</li>
-                        <li><i class="far fa-dot-circle"></i> Return requests</li>
-                        <li><i class="far fa-dot-circle"></i> Recurring payments</li>
-                        <li><i class="far fa-dot-circle"></i> Gift cards</li>
-                        <li><i class="far fa-dot-circle"></i>Shopping carts and wishlists</li>
-                    </ul>
-                </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'customers')" @mouseover="(e) => show(e, 'customers')">
-                        <i class="fas fa-user"></i>
-                        <span class="item">Customers <i class="fas fa-angle-left"></i></span>
-                    </li>
+                <div class="flex-1">
+                    <el-menu
+                            class="pl-3"
+                            mode="horizontal"
+                            background-color="#4a5568"
+                            text-color="#fff"
+                            active-text-color="#ffd04b">
+                        <el-menu-item index="1">
+                            <router-link :to="{name: 'admin.dashboard'}">
+                                <span>Dashboard</span>
+                            </router-link>
+                        </el-menu-item>
+                        <el-submenu index="2">
+                            <template slot="title">Add new</template>
 
-                    <ul class="item-menu customers" @mouseleave="hide('customers')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Customers</li>
-                        <li><i class="far fa-dot-circle"></i> Customer roles</li>
-                        <li><i class="far fa-dot-circle"></i> Online customers</li>
-                        <li><i class="far fa-dot-circle"></i> Vendors</li>
-                        <li><i class="far fa-dot-circle"></i> Activity log</li>
-                        <li><i class="far fa-dot-circle"></i> Activity Types</li>
-                        <li><i class="far fa-dot-circle"></i> GDPR requests (log)</li>
-                    </ul>
+                            <router-link :to="{name: 'admin.catalog.categories.add'}">
+                                <el-menu-item index="2-1">
+                                    <span>Category</span>
+                                </el-menu-item>
+                            </router-link>
+                            <router-link :to="{name: 'admin.catalog.products.add'}">
+                                <el-menu-item index="2-2">
+                                    <span>Product</span>
+                                </el-menu-item>
+                            </router-link>
+                        </el-submenu>
+                        <el-menu-item index="3" disabled>Info</el-menu-item>
+                        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">Orders</a></el-menu-item>
+                    </el-menu>
                 </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'promotions')" @mouseover="(e) => show(e, 'promotions')">
-                        <i class="fas fa-tags"></i>
-                        <span class="item">Promotions <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu promotions" @mouseleave="hide('promotions')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Discounts</li>
-                        <li><i class="far fa-dot-circle"></i> Affiliates</li>
-                        <li><i class="far fa-dot-circle"></i> Newsletter subscribers</li>
-                        <li><i class="far fa-dot-circle"></i> Campaigns</li>
-                    </ul>
+                <div class="flex">
+                    <div class="flex items-center px-4 text-white">{{ user.name }}</div>
+                    <div class="flex items-center px-4 cursor-pointer" title="Logout" @click.prevent="logout"><i
+                            class="el-icon-switch-button"></i></div>
                 </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'content')" @mouseover="(e) => show(e, 'content')">
-                        <i class="fas fa-cubes"></i>
-                        <span class="item">Content management <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu content" @mouseleave="hide('content')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Topics (pages)</li>
-                        <li><i class="far fa-dot-circle"></i> Message templates</li>
-                        <li><i class="far fa-dot-circle"></i> News items</li>
-                        <li><i class="far fa-dot-circle"></i> News comments</li>
-                        <li><i class="far fa-dot-circle"></i> Blog posts</li>
-                        <li><i class="far fa-dot-circle"></i> Blog comments</li>
-                        <li><i class="far fa-dot-circle"></i> Polls</li>
-                        <li><i class="far fa-dot-circle"></i> Forums</li>
-                    </ul>
-                </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'configuration')" @mouseover="(e) => show(e, 'configuration')">
-                        <i class="fas fa-cogs"></i>
-                        <span class="item">
-                        Configuration
-                        <i class="fas fa-angle-left"></i>
-                    </span>
-                    </li>
-                    <ul class="item-menu configuration" @mouseleave="hide('configuration')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Settings</li>
-                        <li><i class="far fa-dot-circle"></i> Email accounts</li>
-                        <li><i class="far fa-dot-circle"></i> Stores</li>
-                        <li><i class="far fa-dot-circle"></i> Countries</li>
-                        <li><i class="far fa-dot-circle"></i> Languages</li>
-                        <li><i class="far fa-dot-circle"></i> Currencies</li>
-                        <li><i class="far fa-dot-circle"></i> Payment restrictions</li>
-                        <li><i class="far fa-dot-circle"></i> Tax providers</li>
-                        <li><i class="far fa-dot-circle"></i> Tax categories</li>
-                        <li><i class="far fa-dot-circle"></i> Shipping</li>
-                        <li><i class="far fa-dot-circle"></i> Access control list</li>
-                        <li><i class="far fa-dot-circle"></i> Widgets</li>
-                        <li><i class="far fa-dot-circle"></i> External authentication</li>
-                        <li><i class="far fa-dot-circle"></i> Local plugins</li>
-                        <li><i class="far fa-dot-circle"></i> All plugins and themes</li>
-                    </ul>
-                </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'system')" @mouseover="(e) => show(e, 'system')">
-                        <i class="fas fa-cube"></i>
-                        <span class="item">System <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu system" @mouseleave="hide('system')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> System configuration</li>
-                        <li><i class="far fa-dot-circle"></i> Log</li>
-                        <li><i class="far fa-dot-circle"></i> Warnings</li>
-                        <li><i class="far fa-dot-circle"></i> Maintenance</li>
-                        <li><i class="far fa-dot-circle"></i> Message queue</li>
-                        <li><i class="far fa-dot-circle"></i> Schedule tasks</li>
-                        <li><i class="far fa-dot-circle"></i> Search engine friendly page names</li>
-                        <li><i class="far fa-dot-circle"></i> Templates</li>
-                    </ul>
-                </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'reports')" @mouseover="(e) => show(e, 'reports')">
-                        <i class="fas fa-chart-line"></i>
-                        <span class="item">Reports <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu reports" @mouseleave="hide('reports')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Low stock</li>
-                        <li><i class="far fa-dot-circle"></i> Bestsellers</li>
-                        <li><i class="far fa-dot-circle"></i> Products never purchased</li>
-                        <li><i class="far fa-dot-circle"></i> Country sales</li>
-                        <li><i class="far fa-dot-circle"></i> Customer reports</li>
-                    </ul>
-                </div>
-                <div class="item-container">
-                    <li @click="(e) => showItems(e, 'help')" @mouseover="(e) => show(e, 'help')">
-                        <i class="fas fa-question-circle"></i>
-                        <span class="item">Help <i class="fas fa-angle-left"></i></span>
-                    </li>
-                    <ul class="item-menu help" @mouseleave="hide('help')">
-                        <li class="header"></li>
-                        <li><i class="far fa-dot-circle"></i> Help topics</li>
-                        <li><i class="far fa-dot-circle"></i> Community forums</li>
-                        <li><i class="far fa-dot-circle"></i> Premium support services</li>
-                    </ul>
-                </div>
-            </ul>
-        </aside>
-        <div class="section">
-            <header class="header">
-                <button class="toggle" @click="toggle1">
-                    <i class="fas fa-bars" style="font-size:15px;color:white;"></i>
-                </button>
-                <a v-if="$store.getters['auth/user']" href="#" class="name">{{ user.name }}</a>
-                <a @click.prevent="logout" href="#">Logout</a>
-                <button class="toggle settings">
-                    <i class="fas fa-cogs" style="font-size:15px;color:white;"></i>
-                    <span class="setting-down">
-                    <div>settings</div>
-                    <div>about</div>
-                </span>
-                </button>
-            </header>
-            <router-view/>
+            </div>
+            <main class="p-4">
+                <router-view></router-view>
+            </main>
         </div>
     </div>
 </template>
@@ -194,92 +102,15 @@
     },
     data () {
       return {
-        toggle: null,
-        panel: null,
-        prevElement: null,
-        currentElement: null,
+        displaySidebarMenu: true
       }
     },
     methods: {
-      toggle1 () {
-        let elements = document.querySelectorAll('ul.list li span')
-        let largeImage = document.getElementsByClassName('large')[0]
-        let minImage = document.getElementsByClassName('mini')[0]
-        let items = document.querySelectorAll('.list li')
-
-        for (let i = 0; i < elements.length; i++) {
-          let subItems = document.getElementsByClassName('item-menu')
-
-          if (elements[i].style.display === 'none') {
-            setTimeout(() => elements[i].style.display = 'flex', 250)
-            for (let i = 0; i < subItems.length; i++) {
-              subItems[i].classList.remove('hover')
-              subItems[i].style.display = 'none'
-            }
-          } else {
-            setTimeout(() => elements[i].style.display = 'none', 100)
-            for (let i = 0; i < subItems.length; i++) {
-              subItems[i].style.display = 'none'
-            }
-            for (let j = 0; j < items.length; j++) {
-              items[j].classList.remove('show')
-            }
-          }
-        }
-        if (this.panel.classList.contains('turnOn')) {
-          minImage.style.display = 'none'
-          largeImage.style.display = 'block'
-        } else {
-          minImage.style.display = 'block'
-          largeImage.style.display = 'none'
-        }
-        return this.panel.classList.toggle('turnOn')
-      },
-      showItems (event, type) {
-        let element = event.currentTarget
-        if (!this.panel.classList.contains('turnOn')) {
-          let elementMenu = document.getElementsByClassName(type)[0]
-
-          if (!element.classList.contains('show')) {
-            element.classList.add('show')
-            elementMenu.style.display = 'block'
-            document.querySelector(`.${type} .header`).textContent = ''
-            document.querySelector(`.${type} .header`).style.padding = '0'
-          } else {
-            element.classList.remove('show')
-            elementMenu.style.display = 'none'
-            document.querySelector(`.${type} .header`).style.padding = '5px 15px'
-          }
-        }
-      },
-      show (event, type) {
-        if (this.panel.classList.contains('turnOn')) {
-          let context = event.currentTarget.textContent.trim()
-          this.currentElement = document.getElementsByClassName(type)[0]
-          if (!this.prevElement) {
-            this.prevElement = this.currentElement
-          } else {
-            this.prevElement.style.display = 'none'
-            this.prevElement.classList.remove('hover')
-            this.currentElement.style.display = 'block'
-            this.currentElement.classList.add('hover')
-            document.querySelector(`.${type} .header`).textContent = `${context}`
-            this.prevElement = this.currentElement
-          }
-        }
-      },
-      hide (type) {
-        if (this.panel.classList.contains('turnOn')) {
-          let element = document.getElementsByClassName(type)[0]
-          element.style.display = 'none'
-          element.classList.remove('hover')
-        }
-      },
       logout () {
         axios.post(BACKEND_URL + '/logout', this.form)
           .then(response => this.$router.go(0))
           .catch(error => console.error(error))
-      },
+      }
     },
     computed: {
       ...mapGetters({
@@ -289,16 +120,44 @@
     mounted () {
       this.toggle = document.getElementsByClassName('toggle')[0]
       this.panel = document.getElementsByClassName('panel')[0]
-      $('#menu-toggle').click(function (e) {
-        e.preventDefault()
-        $('#wrapper').toggleClass('toggled')
+      $('.hamburger').click(function () {
+        $(this).toggleClass('is-active')
       })
     }
   }
 </script>
 
-<style>
-    .app-inner {
-        display: flex;
+<style scoped>
+    * {
+        user-select: none;
+    }
+
+
+    .el-menu {
+        border: 0;
+    }
+
+
+    i {
+        color: white;
+    }
+
+
+    .side, .content {
+        margin-left: 0;
+        transition: 300ms ease margin-left, 300ms ease width;
+    }
+
+    .side {
+        margin-left: -320px;
+    }
+
+    .sidemenu-showed > .side {
+        margin: 0;
+    }
+
+    .sidemenu-showed > .content {
+        margin-left: 320px;
+        width: calc(100% - 320px);
     }
 </style>

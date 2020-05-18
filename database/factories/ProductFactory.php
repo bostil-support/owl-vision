@@ -21,7 +21,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'description' => $description = $faker->text(200),
         'admin_comment' => $faker->text(50),
         'show_on_home_page' => $faker->boolean,
-        'tags' => null,
         'manufacturer_part_number' => $faker->randomNumber(6),
         'published' => $faker->boolean,
         'meta_title' => $name,

@@ -1,8 +1,14 @@
 <template>
     <div class="w-full">
-        <div class="flex items-center border-b pt-2 pb-3">
-            <h3 class="px-4 text-3xl flex-initial">
+        <div class="flex items-center border-b mb-10">
+            <h3 class="text-3xl flex-initial">
                 Products
+                <div class="py-4 pt-1">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item :to="{ name: 'admin.dashboard' }">Dashboard</el-breadcrumb-item>
+                        <el-breadcrumb-item>Products</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
             </h3>
             <div class="flex-1 px-4 flex justify-end">
                 <router-link class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -11,36 +17,58 @@
                 </router-link>
             </div>
         </div>
-        <table class="table-auto w-full">
-            <thead>
-            <tr>
-                <th class="px-4 py-2">Picture</th>
-                <th class="px-4 py-2">Product name</th>
-                <th class="px-4 py-2">SKU</th>
-                <th class="px-4 py-2">Price</th>
-                <th class="px-4 py-2">Stock quantity</th>
-                <th class="px-4 py-2">Product type</th>
-                <th class="px-4 py-2">Published</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="product in products" :key="product.id">
-                <td class="border px-4 py-2">{{ product.image_id }}</td>
-                <td class="border px-4 py-2">
-                    <router-link class="text-blue-500 hover:text-blue-900 no-underline" :to="{name: 'admin.catalog.products.edit', params: {id: product.id}}">
-                        {{ product.name }}
+        <el-table
+                :data="products"
+                style="width: 100%">
+            <el-table-column
+                    prop="id"
+                    label="ID"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="name"
+                    label="Name"
+                    width="auto">
+            </el-table-column>
+            <el-table-column
+                    prop="sku"
+                    label="SKU"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="price"
+                    label="Price"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="stock_quantity"
+                    label="Stock quantity"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="product_type"
+                    label="Product type"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="published"
+                    label="Published"
+                    width="120"
+                    align="center"
+            >
+                <boolean-field :value="published"/>
+            </el-table-column>
+            <el-table-column
+                    fixed="right"
+                    label="Operations"
+                    width="120">
+                <template slot-scope="scope">
+                    <router-link :to="{name: 'admin.catalog.products.edit', params: {id: scope.row.id}}">
+                        <el-button type="text" size="small">Edit</el-button>
                     </router-link>
-                </td>
-                <td class="border px-4 py-2 text-center">{{ product.sku }}</td>
-                <td class="border px-4 py-2 text-center">{{ product.price }}</td>
-                <td class="border px-4 py-2 text-center">{{ product.stock_quantity }}</td>
-                <td class="border px-4 py-2 text-center">{{ product.product_type }}</td>
-                <td class="border px-4 py-2 text-center">
-                    <boolean-field :value="product.published"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 

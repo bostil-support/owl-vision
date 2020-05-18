@@ -1,11 +1,17 @@
 <template>
-    <main class="categoriesCreate">
-        <div class="flex items-center border-b pb-3">
-            <h3 class="px-4 text-3xl flex-initial">
+    <div class="w-full">
+        <div class="flex items-center border-b mb-10">
+            <h3 class="text-3xl flex-initial">
                 Product {{ id ? 'edit' : 'create' }}
+                <div class="py-4 pt-1">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item :to="{ name: 'admin.dashboard' }">Dashboard</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{ name: 'admin.catalog.products.list' }">Products</el-breadcrumb-item>
+                        <el-breadcrumb-item>{{ id ? product.name : 'Product create' }}</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
             </h3>
         </div>
-
         <el-form size="small" label-width="300px">
             <el-form-item label="Name" :error="getError('name')">
                 <el-input v-model="product.name" @input="changeSlug"/>
@@ -77,7 +83,7 @@
                 <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="product.meta_keywords"/>
             </el-form-item>
             <el-form-item label="Picture" :error="getError('picture')">
-<!--                <el-upload v-model="product.picture"/>-->
+                <!--                <el-upload v-model="product.picture"/>-->
             </el-form-item>
             <el-form-item>
                 <div class="flex justify-between">
@@ -87,7 +93,7 @@
                 </div>
             </el-form-item>
         </el-form>
-    </main>
+    </div>
 </template>
 
 <script>

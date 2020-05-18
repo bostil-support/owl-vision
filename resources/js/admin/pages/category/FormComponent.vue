@@ -1,11 +1,17 @@
 <template>
-    <main class="categoriesCreate">
-        <div class="flex items-center border-b pb-3">
-            <h3 class="px-4 text-3xl flex-initial">
-                Category {{id ? 'edit': 'create'}}
+    <div class="w-full">
+        <div class="flex items-center border-b mb-10">
+            <h3 class="text-3xl flex-initial">
+                Category {{ id ? 'edit' : 'create' }}
+                <div class="py-4 pt-1">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item :to="{ name: 'admin.dashboard' }">Dashboard</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{ name: 'admin.catalog.categories.list' }">Categories</el-breadcrumb-item>
+                        <el-breadcrumb-item>{{ id ? category.name : 'Category create' }}</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
             </h3>
         </div>
-
         <el-form size="small" label-width="300px">
             <el-form-item label="Name" :error="getError('name')">
                 <el-input v-model="category.name" @input="changeSlug"/>
@@ -35,7 +41,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Picture" :error="getError('picture')">
-<!--                <el-upload v-model="category.picture"/>-->
+                <!--                <el-upload v-model="category.picture"/>-->
             </el-form-item>
             <el-form-item label="Page size" :error="getError('page_size')">
                 <el-input-number :min="0" :precision="2" v-model="category.page_size"/>
@@ -99,7 +105,7 @@
                 </div>
             </el-form-item>
         </el-form>
-    </main>
+    </div>
 </template>
 
 <script>
