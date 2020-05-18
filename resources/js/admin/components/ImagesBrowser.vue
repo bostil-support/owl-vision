@@ -4,7 +4,7 @@
                @close="$emit('close')"
                center
     >
-        <div class="flex flex-row flex-wrap justify-center">
+        <div class="flex flex-row flex-wrap justify-between">
             <el-upload
                     :action="imagesUrl"
                     :data="{path: 'products'}"

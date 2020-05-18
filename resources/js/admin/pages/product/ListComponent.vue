@@ -26,6 +26,16 @@
                     width="70">
             </el-table-column>
             <el-table-column
+                    label="Image"
+                    width="100">
+                <el-image slot-scope="scope" v-if="scope.row.image"
+                          :src="scope.row.image.url"
+                          style="width: 80px; height: 80px"
+                          class="border rounded"
+                          fit="cover">
+                </el-image>
+            </el-table-column>
+            <el-table-column
                     prop="name"
                     label="Name"
                     width="auto">
@@ -56,17 +66,15 @@
                     width="120"
                     align="center"
             >
-                <boolean-field :value="published"/>
+                <boolean-field slot-scope="scope" :value="scope.published"/>
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="Operations"
                     width="120">
-                <template slot-scope="scope">
-                    <router-link :to="{name: 'admin.catalog.products.edit', params: {id: scope.row.id}}">
-                        <el-button type="text" size="small">Edit</el-button>
-                    </router-link>
-                </template>
+                <router-link slot-scope="scope" :to="{name: 'admin.catalog.products.edit', params: {id: scope.row.id}}">
+                    <el-button type="text" size="small">Edit</el-button>
+                </router-link>
             </el-table-column>
         </el-table>
     </div>
