@@ -98,6 +98,7 @@
                 </div>
 
                 <images-browser v-if="mainImageBrowserVisible" :visible="mainImageBrowserVisible"
+                               path="products"
                                :multiple="false"
                                :selected-images="product.image ? [product.image.id] : []"
                                @close="mainImageBrowserVisible = false"
@@ -123,6 +124,7 @@
                     </div>
 
                     <images-browser v-if="productImagesBrowserVisible" :visible="productImagesBrowserVisible"
+                                    path="products"
                                     :multiple="true"
                                     :selected-images="product.images ? product.images.map(i => i.id) : []"
                                     @close="productImagesBrowserVisible = false"

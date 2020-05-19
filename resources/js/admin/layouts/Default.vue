@@ -44,7 +44,7 @@
             </el-menu>
         </div>
         <div class="w-full flex flex-col content">
-            <div class="flex bg-gray-700">
+            <div class="flex bg-gray-700 sticky top-0 z-10">
                 <div class="flex items-center px-4" title="Toggle menu">
                     <i class="el-icon-s-operation text-3xl cursor-pointer"
                        @click="displaySidebarMenu = !displaySidebarMenu"></i>
