@@ -3,33 +3,32 @@
                :visible="visible"
                @close="$emit('close')"
                center
+               width="94%"
     >
-        <div class="flex flex-row flex-wrap images-browser">
-            <div class="grid-container">
-                <el-upload
-                        action=""
-                        :http-request="store"
-                        :show-file-list="false"
-                        list-type="picture-card"
-                        :on-success="handleSuccessUpload"
-                        class="m-2"
-                >
-                    <i class="el-icon-plus"></i>
-                </el-upload>
+        <div class="grid-container grid gap-1 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
+            <el-upload
+                    action=""
+                    :http-request="store"
+                    :show-file-list="false"
+                    list-type="picture-card"
+                    :on-success="handleSuccessUpload"
+                    class="m-2"
+            >
+                <i class="el-icon-plus"></i>
+            </el-upload>
 
-                <el-image v-for="image in images"
-                          :key="image.id"
-                          :src="image.url"
-                          fit="contain"
-                          style="width: 150px; height: 150px"
-                          :class="[
-                        'm-2 rounded-lg border-4 border-grey-600  bg-white',
-                        {'border-green-400': selected.some(i => i.id === image.id)}
-                      ]"
-                          @click="toggleSelect(image)"
-                          lazy
-                />
-            </div>
+            <el-image v-for="image in images"
+                      :key="image.id"
+                      :src="image.url"
+                      fit="contain"
+                      style="width: 150px; height: 150px"
+                      :class="[
+                    'm-2 rounded-lg border-4 border-grey-600  bg-white',
+                    {'border-green-400': selected.some(i => i.id === image.id)}
+                  ]"
+                      @click="toggleSelect(image)"
+                      lazy
+            />
         </div>
     </el-dialog>
 </template>
@@ -114,43 +113,8 @@
   }
 </script>
 
-<style>
-    .images-browser .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
-    .images-browser .grid-container > div,
-    .images-browser .grid-container .el-upload--picture-card {
-        width: auto !important;
-        height: auto !important;
-    }
-    .images-browser .grid-container .el-upload--picture-card {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100% !important;
-    }
-    @media screen and (max-width: 1200px) {
-        .images-browser .grid-container {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-    }
-    @media screen and (max-width: 992px) {
-        .images-browser .grid-container {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-    }
-    @media screen and (max-width: 768px) {
-        .images-browser .grid-container {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-    @media screen and (max-width: 576px) {
-        .images-browser .grid-container {
-            grid-template-columns: 1fr;
-        }
-        .images-browser .grid-container .el-upload--picture-card {
-            height: 100px !important;
-        }
+<style scoped>
+    .grid-container > * {
+        @apply mx-auto;
     }
 </style>
