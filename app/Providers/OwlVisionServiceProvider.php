@@ -6,10 +6,10 @@ use App\Models\Cart;
 use App\Models\Setting;
 use App\Models\Wish;
 use App\Services\Basketlist;
-use App\Services\Compare;
 use App\Services\Comparelist;
 use App\Services\Wishlist;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class OwlVisionServiceProvider extends ServiceProvider
@@ -94,19 +94,19 @@ class OwlVisionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($theme = optional(Setting::query()->where('key', 'theme')->first('value'))->value) {
-            config(
-                [
-                    'view.paths' => array_merge(
-                        [
-                            resource_path(
-                                sprintf('themes/%s', $theme)
-                            )
-                        ],
-                        config('view.paths')
-                    )
-                ]
-            );
+        try {
+            if ($theme = optional(Setting::query()->where('key', 'theme')->first('value'))->value) {
+                config(
+                    [
+                        'view.paths' => array_merge(
+                            [resource_path(sprintf('themes/%s', $theme))],
+                            config('view.paths')
+                        )
+                    ]
+                );
+            }
+        } catch (\Throwable $exception) {
+            //
         }
     }
 }
